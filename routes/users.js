@@ -16,11 +16,12 @@ router.get('/login', function(req, res){
 });
 
 router.get('/selectInstructor', function(req, res){
-	res.render('login');
+	res.render('./layouts/instructorLayout');
+	// res.render('login');
 });
 
 router.get('/selectStudent', function(req, res){
-	res.render('login');
+	res.render('./layouts/studentLayout');
 });
 // Open Instructor
 
