@@ -16,22 +16,12 @@ router.get('/login', function(req, res){
 });
 
 router.get('/selectInstructor', function(req, res){
-<<<<<<< HEAD
 	res.render('login');
 });
 
 router.get('/selectStudent', function(req, res){
 	res.render('login');
-=======
-	//res.render('login');
-	res.render('instructorLayout');
 });
-
-router.get('/selectStudent', function(req, res){
-	res.render('studentLayout');
->>>>>>> 25db5a234800d4a031b08896f5fbc5bd4b9efc4b
-});
-
 // Open Instructor
 
 // Register User
