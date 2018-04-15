@@ -15,6 +15,8 @@ router.get('/login', function(req, res){
 	res.render('login');
 });
 
+// Open Instructor
+
 // Register User
 router.post('/register', function(req, res){
 	var name = req.body.name;
