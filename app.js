@@ -22,7 +22,8 @@ var app = express();
 
 // View Engine
 app.set('views', path.join(__dirname, 'views'));
-app.engine('handlebars', exphbs({defaultLayout:'startPage'}));
+// app.engine('handlebars', exphbs({defaultLayout:'startPage'}));
+app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 
 // BodyParser Middleware

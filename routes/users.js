@@ -16,8 +16,11 @@ router.get('/login', function(req, res){
 });
 
 router.get('/selectInstructor', function(req, res){
-	console.log('selected instructor');
-	res.render('login');
+	res.render('./layouts/instructorLayout');
+});
+
+router.get('/selectStudent', function(req, res){
+	res.render('./layouts/studentLayout');
 });
 
 // Open Instructor
