@@ -15,6 +15,11 @@ router.get('/login', function(req, res){
 	res.render('login');
 });
 
+router.get('/selectInstructor', function(req, res){
+	console.log('selected instructor');
+	res.render('login');
+});
+
 // Open Instructor
 
 // Register User
