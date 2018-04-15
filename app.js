@@ -22,8 +22,13 @@ var app = express();
 
 // View Engine
 app.set('views', path.join(__dirname, 'views'));
+<<<<<<< HEAD
 app.engine('handlebars', exphbs({defaultLayout:'instructorLayout'}));
 // app.engine('handlebars', exphbs());
+=======
+//app.engine('handlebars', exphbs({defaultLayout:'instructorLayout'}));
+app.engine('handlebars', exphbs());
+>>>>>>> 25db5a234800d4a031b08896f5fbc5bd4b9efc4b
 app.set('view engine', 'handlebars');
 
 // BodyParser Middleware
