@@ -2,20 +2,33 @@ var express = require('express');
 var router = express.Router();
 
 // Get Homepage
-router.get('/', function(req, res){
-	res.render('./layouts/startPage');
-});
-// router.get('/', ensureAuthenticated, function(req, res){
-// 	res.render('index');
+// router.get('/', function(req, res){
+// 	res.render('./layouts/startPage');
 // });
+router.get('/', function(req, res, next) {
+	if(req.isAuthenticated() && !req.user.isAdmin)
+		res.redirect('/dashboard')
+  	else
+  		res.render('./layouts/instructorLayout', {'errors':null});
+});
 
-// function ensureAuthenticated(req, res, next){
-// 	if(req.isAuthenticated()){
-// 		return next();
-// 	} else {
-// 		//req.flash('error_msg','You are not logged in');
-// 		res.redirect('/users/login');
-// 	}
-// }
+router.get('/dashboard', ensureAunthenticatedSoc, (req,res,next) => {
+	res.render('./layouts/iLogin', {'user': req.user.username})
+})
+
+function ensureAunthenticatedAdmin(req,res,next){
+	if(req.isAuthenticated() && req.user.isAdmin)
+		return next()
+	else{
+		res.redirect('/')
+	}
+}
+function ensureAunthenticatedSoc(req,res,next){
+	if(req.isAuthenticated() && !req.user.isAdmin)
+		return next()
+	else{
+		res.redirect('/')
+	}
+}
 
 module.exports = router;

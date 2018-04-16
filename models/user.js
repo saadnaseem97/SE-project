@@ -1,6 +1,4 @@
 var mongoose = require('mongoose');
-
-// password hashing function
 var bcrypt = require('bcryptjs');
 
 // User Schema
