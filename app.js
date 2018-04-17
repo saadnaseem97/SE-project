@@ -10,10 +10,8 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
-// mongoose.connect('mongodb://localhost/SEDB');
-mongoose.connect('mongodb://saadn22:Saad7223@ds131137.mlab.com:31137/tapro');
- // mongoose.connect('mongodb://heroku_b0b381kh:rl9trhq1tm1rvm2iigsd518bpa@ds151207.mlab.com:51207/heroku_b0b381kh')
 
+mongoose.connect('mongodb://saadn22:72237223@ds131137.mlab.com:31137/tapro');
 var db = mongoose.connection;
 
 var routes = require('./routes/index');
@@ -24,7 +22,7 @@ var app = express();
 
 // View Engine
 app.set('views', path.join(__dirname, 'views'));
-// app.engine('handlebars', exphbs({defaultLayout:'instructorLayout'}));
+//app.engine('handlebars', exphbs({defaultLayout:'iLogin'}));
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 

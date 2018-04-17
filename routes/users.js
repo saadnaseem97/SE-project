@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
-var localStrategy = require('passport-local');
-var mongoose = require('mongoose');
+var LocalStrategy = require('passport-local').Strategy;
+
 var User = require('../models/user');
 
 // Register
@@ -12,31 +12,17 @@ router.get('/register', function(req, res){
 
 // Login
 router.get('/login', function(req, res){
-	res.render('./layouts/instructorLayout');
+	res.render('login');
 });
 
-function ensureAunthenticatedAdmin(req,res,next){
-	if(req.isAuthenticated() && req.user.isAdmin)
-		return next()
-	else{
-		res.redirect('/')
-	}
-}
-function ensureAunthenticatedSoc(req,res,next){
-	if(req.isAuthenticated() && !req.user.isAdmin)
-		return next()
-	else{
-		res.redirect('/')
-	}
-}
+router.get('/selectInstructor', function(req, res){
+	res.render('./layouts/instructorLayout');
+	// res.render('login');
+});
 
-// router.get('/selectInstructor', function(req, res){
-// 	res.render('./layouts/instructorLayout');
-// });
-
-// router.get('/selectStudent', function(req, res){
-// 	res.render('./layouts/studentLayout');
-// });
+router.get('/selectStudent', function(req, res){
+	res.render('./layouts/studentLayout');
+});
 // Open Instructor
 
 // Register User
@@ -80,20 +66,23 @@ router.post('/register', function(req, res){
 	}
 });
 
-passport.use(new localStrategy(
+passport.use(new LocalStrategy(
   function(username, password, done) {
-  	User.getUserByUsername(username, (err,user)=>{
-  		if(err) throw err;
-  		if(!user)
-  			return done(null,false, {message: 'incorrect Username or Password'})
+   User.getUserByUsername(username, function(err, user){
+   	if(err) throw err;
+   	if(!user){
+   		return done(null, false, {message: 'Unknown User'});
+   	}
 
-  		User.comparePassword(password, user.password, (err, isMatch) => {
-  			if(err) throw err
-  			if(!isMatch)
-  				return done(null, false, {message: 'incorrect Username or Password'})
-  			return done(null, user)
-  		})
-  	})
+   	User.comparePassword(password, user.password, function(err, isMatch){
+   		if(err) throw err;
+   		if(isMatch){
+   			return done(null, user);
+   		} else {
+   			return done(null, false, {message: 'Invalid password'});
+   		}
+   	});
+   });
   }));
 
 passport.serializeUser(function(user, done) {
