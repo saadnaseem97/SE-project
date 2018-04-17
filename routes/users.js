@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
+var LocalStrategy = require('passport-local');
 
 var User = require('../models/user');
 
@@ -12,7 +12,7 @@ router.get('/register', function(req, res){
 
 // Login
 router.get('/login', function(req, res){
-	res.render('./layouts/studentLayout');
+	res.render('./layouts/SignInSignUp');
 });
 
 // router.get('/selectInstructor', function(req, res){
@@ -112,16 +112,13 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-// router.post('/login',
-//   passport.authenticate('local', {successRedirect:'/', failureRedirect:'/users/login',failureFlash: true}),
-//   function(req, res) {
-//   	console.log(req.body)
-//     res.redirect('/');
-//   });
+router.post('/login',
+  passport.authenticate('local', {successRedirect:'/', failureRedirect:'/users/login',failureFlash: true}),
+  function(req, res) {
+  	console.log(req.body)
+    res.redirect('/');
+  });
 
-router.post('/login', passport.authenticate('local'), function(req, res){
-  console.log("passport user", req.user);
-});
 
 router.get('/logout', function(req, res){
 	req.logout();
