@@ -15,16 +15,6 @@ router.get('/login', function(req, res){
 	res.render('./layouts/SignInSignUp');
 });
 
-// router.get('/selectInstructor', function(req, res){
-// 	res.render('./layouts/instructorLayout');
-// 	// res.render('login');
-// });
-
-// router.get('/selectStudent', function(req, res){
-// 	res.render('./layouts/studentLayout');
-// });
-// Open Instructor
-
 // Register User
 router.post('/register', function(req, res){
 	var firstName = req.body.firstName;
