@@ -7,44 +7,55 @@ var User = require('../models/user');
 
 // Register
 router.get('/register', function(req, res){
-	res.render('register');
+	res.render('SignInSignUp');
 });
 
 // Login
 router.get('/login', function(req, res){
-	res.render('login');
+	res.render('SignInSignUp');
 });
 
-router.get('/selectInstructor', function(req, res){
-	res.render('./layouts/instructorLayout');
-	// res.render('login');
-});
+// router.get('/selectInstructor', function(req, res){
+// 	res.render('./layouts/instructorLayout');
+// 	// res.render('login');
+// });
 
-router.get('/selectStudent', function(req, res){
-	res.render('./layouts/studentLayout');
-});
+// router.get('/selectStudent', function(req, res){
+// 	res.render('./layouts/studentLayout');
+// });
 // Open Instructor
 
 // Register User
 router.post('/register', function(req, res){
-	var name = req.body.name;
+	var firstName = req.body.firstName;
+	var lastName = req.body.lastName;
 	var email = req.body.email;
-	var username = req.body.username;
+	// var username = req.body.username;
 	var password = req.body.password;
 	var password2 = req.body.password2;
+	var ContactNumber = req.body.ContactNumber;
+
+	console.log(req.body)
+	if (password == password2)
+		console.log("FIT");
+	else
+		console.log(typeof password2);
+
 
 	// Validation
-	req.checkBody('name', 'Name is required').notEmpty();
+	req.checkBody('firstName', 'First Name is required').notEmpty();
+	req.checkBody('lastName', 'Last Name is required').notEmpty();
 	req.checkBody('email', 'Email is required').notEmpty();
 	req.checkBody('email', 'Email is not valid').isEmail();
-	req.checkBody('username', 'Username is required').notEmpty();
+	req.checkBody('ContactNumber', 'Email is not valid').notEmpty();
 	req.checkBody('password', 'Password is required').notEmpty();
-	req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
+	req.checkBody('password', 'Passwords do not match').equals(req.body.password2);
 
 	var errors = req.validationErrors();
-
+	console.log(errors)
 	if(errors){
-		res.render('register',{
+		console.log("test");
+		res.render('./layouts/SignInSignUp',{
 			errors:errors
 		});
 	} else {
@@ -62,7 +73,7 @@ router.post('/register', function(req, res){
 
 		req.flash('success_msg', 'You are registered and can now login');
 
-		res.redirect('/users/login');
+		res.redirect('/');
 	}
 });
 

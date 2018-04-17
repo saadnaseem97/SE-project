@@ -3,7 +3,7 @@ var router = express.Router();
 
 // Get Homepage
 router.get('/', function(req, res){
-	res.render('./layouts/iLogin');
+	res.render('./layouts/SignInSignUp');
 });
 // router.get('/', ensureAuthenticated, function(req, res){
 // 	res.render('index');
