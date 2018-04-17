@@ -6,7 +6,7 @@ var router = express.Router();
 // 	res.render('./layouts/SignInSignUp');
 // });
 router.get('/', ensureAuthenticated, function(req, res){
-	res.render('index');
+	res.render('./layouts/TEMPLATE');
 });
 
 function ensureAuthenticated(req, res, next){

@@ -77,8 +77,10 @@ router.post('/register', function(req, res){
 	}
 });
 
-passport.use(new LocalStrategy(
+passport.use(new LocalStrategy( {usernameField: 'email',  
+    passwordField: 'password'},
   function(email, password, done) {
+  	
    	console.log('wtf123')
 
    User.getUserByEmail(email, function(err, user){
