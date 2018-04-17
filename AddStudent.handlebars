@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TA_Pro</title>
+  <link rel="stylesheet" href="/css/bootstrap.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+  table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+  }
+  th, td {
+      padding: 5px;
+      text-align: left;
+  }
+  </style>
+
+</head>
+<body>
+  <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right" style="margin-top:5%;margin-right: 10%">
+              <li role="presentation"><a href="/users/logout">Logout</a></li>
+          </ul>
+        </nav>
+
+<ul class="nav nav-tabs" style="margin-top:5%;margin-left: 10%">
+	<!-- <ul> -->
+  <li class="active"><a href="#">Home</a></li>
+  <li><a href="#" style="color:#420c7a">Menu 1</a></li>
+  <li><a href="#" style="color:#420c7a">Menu 2</a></li>
+  <li><a href="#" style="color:#420c7a">Menu 3</a></li>
+</ul>
+
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="margin-top: 2%;">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link active" href="#">
+                  <span data-feather="home"></span>
+                  HOME <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="file"></span>
+                  PROFILE
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="layers"></span>
+                  COURSES
+                </a>
+              </li>
+            </ul>
+
+          </div>        
+        </nav>
+          <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <div style="float:right;margin-top:1%;margin-right: 80%">
+        <h1 class="h2" style="margin-right:0%; color:#420c7a">Add Student</h1>
+        </div>
+        <div style="float:right;margin-top:1%;margin-right: 80%">
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <div style="float:right;margin-top:5%;margin-left: -20%">
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="Password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <div class="checkbox mb-3">
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" style="background: #7f00c7">Add Student</button>
+        </div>
+      </div>
+      </div>
+    </div>
+  </body>
+  </html>
