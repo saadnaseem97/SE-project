@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TA_Pro</title>
+  <link rel="stylesheet" href="/css/bootstrap.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <!-- <link rel="stylesheet" href="/css/dashboard.css" /> -->
+
+  <style>
+  table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+  }
+  th, td {
+      padding: 5px;
+      text-align: left;
+  }
+  </style>
+
+</head>
+<body>
+  <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right" style="margin-top:5%;margin-right: 10%">
+              <li role="presentation"><a href="/users/logout" style="color:#420c7a">Logout</a></li>
+          </ul>
+        </nav>
+        <!-- <h3 class="text-muted">Instructor's Name</h3> -->
+
+<ul class="nav nav-tabs" style="margin-top:5%; margin-left: 0%">
+  <li class="active"><a href="#">Resources</a></li>
+  <li><a href="#" style="color:#420c7a">Assignments</a></li>
+  <li><a href="#" style="color:#420c7a">Gradebook</a></li>
+  <li><a href="#" style="color:#420c7a">Attendance</a></li>
+  <li><a href="#" style="color:#420c7a">Roster</a></li>
+                <!-- Should go to AddStudent screen -->
+  <li><a href="http://google.com" style="color:#420c7a">Add Student</a></li>
+
+  <li><a href="#" style="color:#420c7a">Research Log</a></li>
+</ul>
+
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="margin-top: 2%;">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                                            <!-- redirect to TEMPLATE.handlebars -->
+                <a class="nav-link active" href="http://google.com" style="color:#420c7a">
+                  <span data-feather="home"></span>
+                  HOME <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                                              <!-- redirect to ProfileInst.handlebars -->
+                <a class="nav-link" href="http://google.com" style="color:#420c7a">
+                  <span data-feather="file"></span>
+                  PROFILE
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="#" style="color:#420c7a">
+                  <span data-feather="layers"></span>
+                  COURSES
+                </a>
+              </li>
+            </ul>
+
+          </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+         
+            <h1 class="h2 mb-3 font-weight-normal" style="margin-top: 4%;margin-left:2%; color:#420c7a"><b>Resources </b></h1>
+           <!--  <form class="form-signin" style="width:120 " method="post" action="/users/register">
+ 
+            <div class="btn-toolbar mb-2 mb-md-0">
+              <div class="btn-group mr-2">
+            <h1 class="h3 mb-3 font-weight-normal" style="color:#420c7a; margin-top: 10%">Edit Your Profile as you desire</h1>
+        <label for="fname" class="sr-only" >First Name</label>
+        <input type="fname" id="fname" class="form-control" placeholder="First Name" style ="margin-top: 10%;" required autofocus name="fname">
+        <label for="lname" class="sr-only" >Last Name</label>
+        <input type="lname" id="lname" class="form-control" placeholder="Last Name" style ="margin-top: 5%;" required autofocus name="lname">
+        <label for="course" class="sr-only" >Add Course</label>
+        <input type="course" id="course" class="form-control" placeholder="Add Course" style ="margin-top: 5%;" required autofocus name="course">
+
+        <label for="inputContact" class="sr-only">Contact No.</label>
+        <input type="tel" id="inputContact" class="form-control" placeholder="Contact No." style ="margin-top: 5%" required autofocus name="ContactNumber">
+        <label for="inputPassword" class="sr-only">Enter New Password</label>
+        <input type="password" id="inputOldPassword" class="form-control" placeholder="Enter New Password" style ="margin-top: 5%" required autofocus name="password">
+        <label for="inputPassword" class="sr-only">Confirm Password</label>
+        <input type="password" id="inputNewPassword" class="form-control" placeholder="Confirm Password" style ="margin-top: 5%;" required autofocus name="password2"> -->
+       
+            <div class="panel-body" runat="server" style="overflow-y: scroll; height: 500px; margin-right:22%; margin-top: 2%">
+              <div class="mid-width wrapItems" style="background-color:#f1f1f1; height:800px; margin-top: -0.5%; margin-left: 1%; ">
+
+                <!-- <div id="Test1" runat="server" width="100%"></div> -->
+                <!-- <div id="Test2" runat="server" width="100%"></div> -->
+                <div class="tab">
+                  <button class="tablinks" onclick="openCity(event, 'London')">London</button>
+                  <button class="tablinks" onclick="openCity(event, 'Paris')">Paris</button>
+                  <button class="tablinks" onclick="openCity(event, 'Tokyo')">Tokyo</button>
+                </div>
+              </div>
+            </div>
+
+            <span class="btn btn-lg btn-file" style="background: #7f00c7; margin-left: 67%;margin-top:5% ;color: white">
+            Add Resource <input type="file"> 
+            </span>
+        
+          </div>
+
+
+          <div id="head_nav">
+
+          
+        </main>
+
+      </div>
+    </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../../../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../../../dist/js/bootstrap.min.js"></script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+
+    <!-- Graphs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    
+  </body>
+</html>
