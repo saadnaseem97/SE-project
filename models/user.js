@@ -13,7 +13,10 @@ var UserSchema = new Schema({
 	},
 	firstName: String,
 	lastName: String,
-	ContactNumber: String
+	ContactNumber: String,
+	type: String,
+	ParentName: String,
+	ParentContact: String
 });
 
 var User = module.exports = mongoose.model('User', UserSchema);

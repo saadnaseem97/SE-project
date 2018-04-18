@@ -6,7 +6,10 @@ var router = express.Router();
 // 	res.render('./layouts/SignInSignUp');
 // });
 router.get('/', ensureAuthenticated, function(req, res){
-	res.render('./layouts/TEMPLATE');
+	if (req.user.firstName == "")
+		res.render('./layouts/Edit_Profile_Student')
+	else
+		res.render('./layouts/TEMPLATE');
 });
 
 function ensureAuthenticated(req, res, next){
@@ -18,4 +21,14 @@ function ensureAuthenticated(req, res, next){
 	}
 }
 
+router.get('/profile', ensureAuthenticated, function(req,res){
+	res.render('./layouts/ProfileInst');
+})
+router.get('/courses', ensureAuthenticated, function(req,res){
+	res.render('./layouts/Resources_Instructor');
+})
+
+router.get('/addStudent', ensureAuthenticated, function(req,res){
+	res.render('./layouts/AddStudent');
+})
 module.exports = router;

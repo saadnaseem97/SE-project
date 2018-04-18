@@ -2,8 +2,14 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
+var mongo = require('mongodb');
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://saadn22:Saad7223@ds131137.mlab.com:31137/tapro');
+var db = mongoose.connection;
 
 var User = require('../models/user');
+
+
 
 // Register
 router.get('/register', function(req, res){
@@ -25,12 +31,7 @@ router.post('/register', function(req, res){
 	var password2 = req.body.password2;
 	var ContactNumber = req.body.ContactNumber;
 
-	console.log(req.body)
-	if (password == password2)
-		console.log("FIT");
-	else
-		console.log(typeof password2);
-
+	// console.log(req.body)
 
 	// Validation
 	req.checkBody('firstName', 'First Name is required').notEmpty();
@@ -41,6 +42,7 @@ router.post('/register', function(req, res){
 	req.checkBody('password', 'Password is required').notEmpty();
 	req.checkBody('password', 'Passwords do not match').equals(req.body.password2);
 
+
 	var errors = req.validationErrors();
 	console.log(errors)
 	if(errors){
@@ -48,22 +50,104 @@ router.post('/register', function(req, res){
 			errors:errors
 		});
 	} else {
-		var newUser = new User({
-			firstName: firstName,
-			lastName: lastName,
-			email:email,
-			password: password,
-			ContactNumber: ContactNumber,
+
+	// 	User.getUserByEmail(email, function(err, user){
+	// 	   	if(err) {
+	// 	   		console.log(err)
+	// 	   	};
+	// 	   	if(user){
+	// 	   		console.log("DUPLICATE");
+	// req.flash('success_msg', 'You are logged out');
+	// 	   		// req.flash('error_msg', 'Email already exists');
+	// 	   		res.redirect('/users/login');
+	// 	   	}
+	//    	});
+		console.log(email);
+		var emailCheck = false;
+		db.collection('users').findOne({email: email}, function(err, doc) {
+		    if (err) {
+		      console.log(err)
+		    } else {
+		    	if(doc) {
+		    		req.flash('error_msg', 'Email already exists');
+		    		console.log("REDIRECT DUPLICATE")
+					res.redirect('/users/login');
+		      	}
+		      	else{
+		      		var newUser = new User({
+						firstName: firstName,
+						lastName: lastName,
+						email:email,
+						password: password,
+						ContactNumber: ContactNumber,
+						type: 'Instructor',
+						ParentName: null,
+						ParentContact: null
+					});
+
+					User.createUser(newUser, function(err, user){
+						if(err) throw err;
+						console.log(user);
+					});
+
+					req.flash('success_msg', 'You are registered and can now login');
+					console.log('flash message')
+					res.redirect('/users/login');
+		      	}
+		    }
+		});
+	}
+});
+
+router.post('/addStudent', function(req, res){
+	var email = req.body.email;
+	var password = req.body.password;
+
+	req.checkBody('email', 'Email is required').notEmpty();
+	req.checkBody('email', 'Email is not valid').isEmail();
+	req.checkBody('password', 'Password is required').notEmpty();
+	var errors = req.validationErrors();
+	console.log(errors)
+	if(errors){
+		res.render('./layouts/AddStudent',{
+			errors:errors
+		});
+	} else {
+
+		var emailCheck = false;
+		db.collection('users').findOne({email: email}, function(err, doc) {
+		    if (err) {
+		      console.log(err)
+		    } else {
+		    	if(doc) {
+		    		console.log("ERROR")
+		    		req.flash('error_msg', 'Email already exists');
+					res.redirect('/addStudent');
+		      	}
+		      	else{
+		      		var newUser = new User({
+						firstName: "",
+						lastName: "",
+						email:email,
+						password: password,
+						ContactNumber: "",
+						type: 'Student',
+						ParentName: "",
+						ParentContact: ""
+					});
+
+					User.createUser(newUser, function(err, user){
+						if(err) throw err;
+						console.log(user);
+					});
+					console.log("ADDED ")
+					req.flash('success_msg', 'Added User');
+					console.log('flash message')
+					res.redirect('/addStudent');
+		      	}
+		    }
 		});
 
-		User.createUser(newUser, function(err, user){
-			if(err) throw err;
-			console.log(user);
-		});
-
-		req.flash('success_msg', 'You are registered and can now login');
-		console.log('flash message')
-		res.redirect('/');
 	}
 });
 
@@ -74,7 +158,6 @@ passport.use(new LocalStrategy( {usernameField: 'email',
 
    User.getUserByEmail(email, function(err, user){
    	if(err) {
-   		console.log(err);
    		throw err
    	};
    	if(!user){
