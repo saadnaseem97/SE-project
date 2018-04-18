@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TA_Pro</title>
+  <link rel="stylesheet" href="/css/bootstrap.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <!-- <link rel="stylesheet" href="/css/dashboard.css" /> -->
+
+  <style>
+  table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+  }
+  th, td {
+      padding: 5px;
+      text-align: left;
+  }
+  </style>
+
+</head>
+<body>
+  <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right" style="margin-top:5%;margin-right: 10%">
+              <li role="presentation"><a href="/users/logout">Logout</a></li>
+          </ul>
+        </nav>
+        <!-- <h3 class="text-muted">Instructor's Name</h3> -->
+
+<!-- <ul class="nav nav-tabs" style="margin-top:5%;">
+  <li class="active"><a href="#">Home</a></li>
+  <li><a href="#">Menu 1</a></li>
+  <li><a href="#">Menu 2</a></li>
+  <li><a href="#">Menu 3</a></li>
+</ul>
+
+ -->      </div>
+    </div>
+
+    <!-- <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="margin-top: 2%;">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link active" href="#">
+                  <span data-feather="home"></span>
+                  HOME <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="file"></span>
+                  PROFILE
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="layers"></span>
+                  COURSES
+                </a>
+              </li>
+            </ul>
+
+          </div>
+        </nav> -->
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <!-- <h1 class="h2">Welcome Instructor!</h1> -->
+            <h1 class="h2 mb-3 font-weight-normal" style="margin-left:19%; color:#420c7a"><b>Welcome to TApro! </b></h1>
+            <form class="form-signin" style="width:120 " method="post" action="/users/register">
+ 
+            <div class="btn-toolbar mb-2 mb-md-0">
+              <div class="btn-group mr-2">
+            <h1 class="h3 mb-3 font-weight-normal" style="color:#420c7a; margin-top: 1%;margin-left:30%;">Since this is your first login, we need you to set up your account.<br />Please fill in the following:</h1>
+        <label for="fname" class="sr-only" >First Name</label>
+        <input type="fname" id="fname" class="form-control" placeholder="First Name" style ="margin-top: 2.5%; margin-left: 30%; width: 30%" required autofocus name="fname">
+        <label for="lname" class="sr-only" >Last Name</label>
+        <input type="lname" id="lname" class="form-control" placeholder="Last Name" style ="margin-top: 3%;margin-left: 30%; width: 30%" required autofocus name="lname">
+        <label for="course" class="sr-only" >Add Course</label>
+        <input type="course" id="course" class="form-control" placeholder="Add Course" style ="margin-top: 3%;margin-left: 30%; width: 30%" required autofocus name="course">
+
+        <label for="inputContact" class="sr-only">Contact No.</label>
+        <input type="tel" id="inputContact" class="form-control" placeholder="Contact No." style ="margin-top: 3%;margin-left: 30%; width: 30%" required autofocus name="ContactNumber">
+        <label for="pname" class="sr-only" >Parent Name</label>
+        <input type="pname" id="pname" class="form-control" placeholder="Parent Name" style ="margin-top: 3%;margin-left: 30%; width: 30%" required autofocus name="pname">
+        <label for="inputPContact" class="sr-only">PContact No.</label>
+        <input type="tel" id="inputPContact" class="form-control" placeholder="Parent Contact No." style ="margin-top: 3%;margin-left: 30%; width: 30%" required autofocus name="ParentContactNumber">
+        <label for="inputPassword" class="sr-only">Enter New Password</label>
+        <input type="password" id="inputOldPassword" class="form-control" placeholder="Enter New Password" style ="margin-top: 3%;margin-left: 30%; width: 30%" required autofocus name="password">
+        <label for="inputPassword" class="sr-only">Confirm Password</label>
+        <input type="password" id="inputNewPassword" class="form-control" placeholder="Confirm Password" style ="margin-top: 3%;margin-left: 30%; width: 30%" required autofocus name="password2">
+        <a href="http://google.com"><button class="btn btn-lg btn-primary " type="submit" style="background: #7f00c7; margin-top: 5%; width:20; margin-left:35%; ">Save Changes </button></a>
+        
+          </div>
+
+          <!-- <canvas class="my-4 w-100" id="myChart" width="900" height="50"></canvas> -->
+          <!-- <table width="80%" align="" style="margin-top: -2%" border=”2”> -->
+
+          <div id="head_nav">
+
+                <!-- <button class="btn btn-sm btn-outline-secondary" style="margin-top:1%;margin-left:75%">Edit</button>
+ -->
+          
+        </main>
+
+      </div>
+    </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../../../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../../../dist/js/bootstrap.min.js"></script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+
+    <!-- Graphs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    
+  </body>
+</html>
