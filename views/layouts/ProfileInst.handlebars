@@ -23,19 +23,18 @@
       <div class="header clearfix">
         <nav>
           <ul class="nav nav-pills pull-right" style="margin-top:5%;margin-right: 10%">
-              <li role="presentation"><a href="/users/logout">Logout</a></li>
+              <li role="presentation"><a href="/users/logout" style="color:#420c7a">Logout</a></li>
           </ul>
         </nav>
         <!-- <h3 class="text-muted">Instructor's Name</h3> -->
 
-<!-- <ul class="nav nav-tabs" style="margin-top:5%;">
-  <li class="active"><a href="#">Home</a></li>
+<ul class="nav nav-tabs" style="margin-top:5%;">
+<!--   <li class="active"><a href="#">Home</a></li>
   <li><a href="#">Menu 1</a></li>
   <li><a href="#">Menu 2</a></li>
-  <li><a href="#">Menu 3</a></li>
+  <li><a href="#">Menu 3</a></li> -->
 </ul>
-
- -->      </div>
+      </div>
     </div>
 
     <div class="container-fluid">
@@ -44,20 +43,21 @@
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link active" href="#">
+                                              <!-- redirect to Template page -->
+                <a class="nav-link active" href="http://google.com" style="color:#420c7a">
                   <span data-feather="home"></span>
                   HOME <span class="sr-only">(current)</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="#" style="color:#420c7a">
                   <span data-feather="file"></span>
                   PROFILE
                 </a>
               </li>
 
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="#" style="color:#420c7a">
                   <span data-feather="layers"></span>
                   COURSES
                 </a>
@@ -70,26 +70,27 @@
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <!-- <h1 class="h2">Welcome Instructor!</h1> -->
-            <h1 class="h2 mb-3 font-weight-normal" style="margin-top: 0;color:#420c7a"><b>Edit Your Profile </b></h1>
+            <h1 class="h2 mb-3 font-weight-normal" style="margin-top: 3%; margin-left: 2%;color:#420c7a"><b>Edit Your Profile </b></h1>
             <form class="form-signin" style="width:120 " method="post" action="/users/register">
  
             <div class="btn-toolbar mb-2 mb-md-0">
               <div class="btn-group mr-2">
-            <h1 class="h3 mb-3 font-weight-normal" style="color:#420c7a; margin-top: 10%">Edit Your Profile as you desire</h1>
+            <h1 class="h3 mb-3 font-weight-normal" style="color:#420c7a; margin-top: 10%; margin-left:9%;">Edit Your Profile as you desire</h1>
         <label for="fname" class="sr-only" >First Name</label>
-        <input type="fname" id="fname" class="form-control" placeholder="First Name" style ="margin-top: 10%;" required autofocus name="fname">
+        <input type="fname" id="fname" class="form-control" placeholder="First Name" style ="margin-top: 10%;margin-left:9%" required autofocus name="fname">
         <label for="lname" class="sr-only" >Last Name</label>
-        <input type="lname" id="lname" class="form-control" placeholder="Last Name" style ="margin-top: 5%;" required autofocus name="lname">
+        <input type="lname" id="lname" class="form-control" placeholder="Last Name" style ="margin-top: 5%;margin-left:9%" required autofocus name="lname">
         <label for="course" class="sr-only" >Add Course</label>
-        <input type="course" id="course" class="form-control" placeholder="Add Course" style ="margin-top: 5%;" required autofocus name="course">
+        <input type="course" id="course" class="form-control" placeholder="Add Course" style ="margin-top: 5%;margin-left:9%" required autofocus name="course">
 
         <label for="inputContact" class="sr-only">Contact No.</label>
-        <input type="tel" id="inputContact" class="form-control" placeholder="Contact No." style ="margin-top: 5%" required autofocus name="ContactNumber">
+        <input type="tel" id="inputContact" class="form-control" placeholder="Contact No." style ="margin-top: 5%;margin-left:9%" required autofocus name="ContactNumber">
         <label for="inputPassword" class="sr-only">Enter New Password</label>
-        <input type="password" id="inputOldPassword" class="form-control" placeholder="Enter New Password" style ="margin-top: 5%" required autofocus name="password">
+        <input type="password" id="inputOldPassword" class="form-control" placeholder="Enter New Password" style ="margin-top: 5%;margin-left:9%" required autofocus name="password">
         <label for="inputPassword" class="sr-only">Confirm Password</label>
-        <input type="password" id="inputNewPassword" class="form-control" placeholder="Confirm Password" style ="margin-top: 5%;" required autofocus name="password2">
-        <button class="btn btn-lg btn-primary " type="submit" style="background: #7f00c7; margin-top: 10%; width:20; margin-left:25%; ">Save Changes</button>
+        <input type="password" id="inputNewPassword" class="form-control" placeholder="Confirm Password" style ="margin-top: 5%;margin-left:9%" required autofocus name="password2">
+                                        <!-- redirect to template page -->
+         <a href="http://google.com"><button class="btn btn-lg btn-primary " type="submit" style="background: #7f00c7; margin-top: 10%; width:20; margin-left:35%; ">Save Changes</button></a>
         
           </div>
 
