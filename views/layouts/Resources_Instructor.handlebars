@@ -18,18 +18,16 @@
   </style>
 
 </head>
-<body>
   <div class="container">
       <div class="header clearfix">
-        <nav>
           <ul class="nav nav-pills pull-right" style="margin-top:5%;margin-right: 10%;position: relative">
-              <li role="presentation"><a href="/users/logout" style="color:#420c7a;position: relative">Logout</a></li>
+              <li><a href="/users/logout" style="color:#420c7a;position: relative">Logout</a></li>
           </ul>
-        </nav>
       </div>
     </div>
+<body>
 
-<ul class="nav nav-tabs" style="margin-top:-3%; margin-left: 19.5%; position: relative">
+<ul class="nav nav-tabs" style="max-width:55%;margin-top:-3%; margin-left: 19.5%; position: relative">
   <li class="active"><a href="#">Resources</a></li>
   <li><a href="#" style="color:#420c7a">Assignments</a></li>
   <li><a href="#" style="color:#420c7a">Gradebook</a></li>
@@ -77,11 +75,16 @@
          
             <h1 class="h2 mb-3 font-weight-normal" style="margin-top: 4%;margin-left:2%; color:#420c7a; position: relative"><b>Resources </b></h1>
         
-            <h1 class="h3 mb-3 font-weight-normal" style="color:#420c7a; margin-top: 2%;margin-left: 2%; position: relative">Resource Name &emsp; &emsp; &emsp; &emsp;Date Uploaded &emsp; &emsp; &emsp; &emsp; Time</h1>
+            <h1 class="h3 mb-3 font-weight-normal" style="float:left;color:#420c7a; margin-top: 2%;margin-left: 2%;max-width: 20%; position: relative">
+            Resource Name</h1>
+            <h1 class="h3 mb-3 font-weight-normal" style="float:left;color:#420c7a; margin-top: 2%;margin-left: 10%;max-width: 20%; position: relative">
+            Date Uploaded</h1>
+            <h1 class="h3 mb-3 font-weight-normal" style="float:left;color:#420c7a; margin-top: 2%;margin-left: 12.5%;max-width: 0%; position: relative">
+            Time</h1>
             <!-- <div class="boxed">
               Resource Name
             </div> --> 
-            <div class="panel-body" runat="server" style="overflow-y: scroll; height: 500px; margin-right:22%; margin-top: 1%;position: relative">
+            <div class="panel-body" runat="server" style="clear:left;overflow-y: scroll; height: 500px; margin-right:22%; margin-top: 1%;position: relative">
               <div class="mid-width wrapItems" style="background-color:#f1f1f1; height:800px; margin-top: -0.5%; margin-left: 1%; position: relative">
 
                 <!-- <div id="Test1" runat="server" width="100%"></div> -->
