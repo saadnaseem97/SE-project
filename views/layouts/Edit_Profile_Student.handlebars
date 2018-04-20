@@ -69,17 +69,43 @@
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+
+            <div class="row" style="clear:left">
+    <div class="col-lg-12">
+      {{#if success_msg}}
+        <div class="alert alert-success">{{success_msg}}</div>
+      {{/if}}
+
+      {{#if error_msg}}
+        <div class="alert alert-danger">{{error_msg}}</div>
+      {{/if}}
+
+      {{#if error}}
+        <div class="alert alert-danger">{{error}}</div>
+      {{/if}}
+      
+      {{{body}}}
+    </div>
+    <h2 class="page-header"></h2>
+        {{#if errors}}
+              {{#each errors}}
+                <div class="alert alert-danger">{{msg}}</div>
+              {{/each}}
+        {{/if}}
+      </div>
+
+
             <!-- <h1 class="h2">Welcome Instructor!</h1> -->
             <h1 class="h2 mb-3 font-weight-normal" style="margin-left:19%; color:#420c7a"><b>Welcome to TApro! </b></h1>
-            <form class="form-signin" style="width:120 " method="post" action="/users/register">
+            <form class="form-signin" style="width:120 " method="post" action="/users/registerStudent">
  
             <div class="btn-toolbar mb-2 mb-md-0">
               <div class="btn-group mr-2">
             <h1 class="h3 mb-3 font-weight-normal" style="color:#420c7a; margin-top: 1%;margin-left:30%;">Since this is your first login, we need you to set up your account.<br />Please fill in the following:</h1>
         <label for="fname" class="sr-only" >First Name</label>
-        <input type="fname" id="fname" class="form-control" placeholder="First Name" style ="margin-top: 2.5%; margin-left: 30%; width: 30%" required autofocus name="fname">
+        <input type="fname" id="fname" class="form-control" placeholder="First Name" style ="margin-top: 2.5%; margin-left: 30%; width: 30%" required autofocus name="firstName">
         <label for="lname" class="sr-only" >Last Name</label>
-        <input type="lname" id="lname" class="form-control" placeholder="Last Name" style ="margin-top: 3%;margin-left: 30%; width: 30%" required autofocus name="lname">
+        <input type="lname" id="lname" class="form-control" placeholder="Last Name" style ="margin-top: 3%;margin-left: 30%; width: 30%" required autofocus name="lastName">
         <label for="course" class="sr-only" >Add Course</label>
         <input type="course" id="course" class="form-control" placeholder="Add Course" style ="margin-top: 3%;margin-left: 30%; width: 30%" required autofocus name="course">
 

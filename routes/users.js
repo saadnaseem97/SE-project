@@ -7,9 +7,24 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://saadn22:Saad7223@ds131137.mlab.com:31137/tapro');
 var db = mongoose.connection;
 
+var multer = require('multer')
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/uploads/');
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + file.originalname);
+    }
+});
+
+var upload = multer({ storage: storage }).any();
+
 var User = require('../models/user');
 
-
+router.post('/addAssignment', upload, (req, res, next) => {
+  console.log(req.files)
+  res.redirect('/')
+});
 
 // Register
 router.get('/register', function(req, res){
@@ -38,7 +53,7 @@ router.post('/register', function(req, res){
 	req.checkBody('lastName', 'Last Name is required').notEmpty();
 	req.checkBody('email', 'Email is required').notEmpty();
 	req.checkBody('email', 'Email is not valid').isEmail();
-	req.checkBody('ContactNumber', 'Email is not valid').notEmpty();
+	req.checkBody('ContactNumber', 'Contact Number is required').notEmpty();
 	req.checkBody('password', 'Password is required').notEmpty();
 	req.checkBody('password', 'Passwords do not match').equals(req.body.password2);
 
@@ -96,6 +111,53 @@ router.post('/register', function(req, res){
 		      	}
 		    }
 		});
+	}
+});
+
+router.post('/registerStudent', function(req, res){
+	var firstName = req.body.firstName;
+	var lastName = req.body.lastName;
+	// var username = req.body.username;
+	var password = req.body.password;
+	var password2 = req.body.password2;
+	var ContactNumber = req.body.ContactNumber;
+	var ParentContactNumber = req.body.ParentContactNumber;
+	var pname = req.body.pname;
+
+
+	// console.log(req.body)
+
+	// Validation
+	req.checkBody('firstName', 'First Name is required').notEmpty();
+	req.checkBody('pname', 'Parent Name is required').notEmpty();
+	req.checkBody('lastName', 'Last Name is required').notEmpty();
+	req.checkBody('ContactNumber', 'Contact Number is required').notEmpty();
+	req.checkBody('ParentContactNumber', 'Parent Contact Number is required').notEmpty();
+	req.checkBody('password', 'Password is required').notEmpty();
+	req.checkBody('password', 'Passwords do not match').equals(req.body.password2);
+
+
+	var errors = req.validationErrors();
+	console.log(errors)
+	if(errors){
+		res.render('./layouts/Edit_Profile_Student',{
+			errors:errors
+		});
+	} else {
+		let user = req.user;
+		console.log(user)
+		user.firstName = firstName;
+		user.lastName = lastName;
+		user.pname = pname;
+		user.ContactNumber = ContactNumber;
+		user.ParentContactNumber = ParentContactNumber;
+
+		db.collection('users').updateOne({ 'email': user.email }, {$set : user}, function(err, docy) {
+          if (err) {
+             console.log(err);
+           }
+           res.redirect('/');
+        });
 	}
 });
 

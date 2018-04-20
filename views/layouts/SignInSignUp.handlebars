@@ -5,12 +5,9 @@
   <link rel="stylesheet" href="/css/bootstrap.css" />
   <link rel="stylesheet" href="/css/styleLogin.css" />
 </head>
-<!-- 
-  <img class="mb-4" src="http://telesens-academy.com/wp-content/uploads/2016/11/cropped-TA-Logo-Violet-Background.png" width="120" height="120" style="position:relative">
- -->
 
-  <div class="row" style="clear:left">
-    <div class="col-lg-12">
+<div class="row">
+    <div>
       {{#if success_msg}}
         <div class="alert alert-success">{{success_msg}}</div>
       {{/if}}
@@ -31,8 +28,15 @@
                 <div class="alert alert-danger">{{msg}}</div>
               {{/each}}
         {{/if}}
+      </div>
+
+<!-- 
+  <img class="mb-4" src="http://telesens-academy.com/wp-content/uploads/2016/11/cropped-TA-Logo-Violet-Background.png" width="120" height="120" style="position:relative">
+ -->
+
    <div style="margin-top: -20%;margin-left: 54%; position: relative; border-right:5px dotted #420c7a;padding-right: 10%" position="relative">
      <body class="text-center">
+
       <form class="form-signin" method="post" action="/users/login">
         <h1 class="h3 mb-3 font-weight-normal" style="color:#420c7a "><b>Login</b></h1>
         <label for="inputEmail" class="sr-only">Email address</label>
@@ -55,7 +59,7 @@
   </div>
 
 
-  </div>
+
   <div style="float:left;margin-top:0%; position: relative;padding-left:7%" position=relative>
     <body class="text-center">
       <form class="form-signin" method="post" action="/users/register">
@@ -82,7 +86,6 @@
         </div>
       </form>
     </body>
-  </div>
 
  <!--  <p class="mt-5 mb-3 text-muted" position="fixed" style="margin-top: 90%;margin-left: 46%">&copy; 2017-2018</p> -->
 </html>
