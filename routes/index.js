@@ -29,11 +29,15 @@ router.get('/profile', ensureAuthenticated, function(req,res){
 	res.render('./layouts/ProfileInst');
 })
 
-router.get('/courses', ensureAuthenticated, function(req,res){
+/*router.get('/courses', ensureAuthenticated, function(req,res){
 	if(req.user.type == "Instructor")
 			res.render('./layouts/Resources_Instructor');
 	else if (req.user.type == "Student")
 		res.render('./layouts/Resources_Student');
+})*/
+
+router.get('/courses', ensureAuthenticated, function(req,res) {
+	res.render('./layouts/courseList');
 })
 
 router.get('/assignments', ensureAuthenticated, function(req,res){

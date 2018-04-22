@@ -15,6 +15,15 @@
       padding: 5px;
       text-align: left;
   }
+
+  /* Style the input */
+  input {
+    width: 85%;
+    padding: 10px;
+    float: left;
+    font-size: 20px;
+  }
+
   </style>
 
 </head>
@@ -43,7 +52,7 @@
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
               <li class="nav-item">
-                                              <!-- redirect to Template page -->
+                <!-- redirect to Template page -->
                 <a class="nav-link active" href="/" style="color:#420c7a">
                   <span data-feather="home"></span>
                   HOME <span class="sr-only">(current)</span>
@@ -70,42 +79,85 @@
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <!-- <h1 class="h2">Welcome Instructor!</h1> -->
-            <h1 class="h2 mb-3 font-weight-normal" style="margin-top: 3%; margin-left: 2%;color:#420c7a"><b>Edit Your Profile </b></h1>
+            <h1 class="h2 mb-3 font-weight-normal" style="margin-top: 3%; margin-left: 2%;color:#420c7a"><b>Courses</b></h1>
             <form class="form-signin" style="width:120 " method="post" action="/users/register">
  
             <div class="btn-toolbar mb-2 mb-md-0">
               <div class="btn-group mr-2">
-            <h1 class="h3 mb-3 font-weight-normal" style="color:#420c7a; margin-top: 10%; margin-left:9%;">Edit Your Profile as you desire</h1>
-        <label for="fname" class="sr-only" >First Name</label>
-        <input type="fname" id="fname" class="form-control" placeholder="First Name" style ="margin-top: 10%;margin-left:9%" required autofocus name="fname">
-        <label for="lname" class="sr-only" >Last Name</label>
-        <input type="lname" id="lname" class="form-control" placeholder="Last Name" style ="margin-top: 5%;margin-left:9%" required autofocus name="lname">
-        <!-- <label for="course" class="sr-only" >Add Course</label>
-        <input type="course" id="course" class="form-control" placeholder="Add Course" style ="margin-top: 5%;margin-left:9%" required autofocus name="course"> -->
+                <input type="text" id="myInput" placeholder="Add Course...  ">
+                <span onclick="newElement()" class="btn btn-lg btn-primary " type="submit" style="background: #7f00c7; margin-top: 10%; width:25; margin-left:35%;">Add Course</span>
 
-        <label for="inputContact" class="sr-only">Contact No.</label>
-        <input type="tel" id="inputContact" class="form-control" placeholder="Contact No." style ="margin-top: 5%;margin-left:9%" required autofocus name="ContactNumber">
-        <label for="inputPassword" class="sr-only">Enter New Password</label>
-        <input type="password" id="inputOldPassword" class="form-control" placeholder="Enter New Password" style ="margin-top: 5%;margin-left:9%" required autofocus name="password">
-        <label for="inputPassword" class="sr-only">Confirm Password</label>
-        <input type="password" id="inputNewPassword" class="form-control" placeholder="Confirm Password" style ="margin-top: 5%;margin-left:9%" required autofocus name="password2">
-                                        <!-- redirect to template page -->
-         <a href="http://google.com"><button class="btn btn-lg btn-primary " type="submit" style="background: #7f00c7; margin-top: 10%; width:20; margin-left:35%; ">Save Changes</button></a>
+         <!-- <a href="http://google.com"><button class="btn btn-lg btn-primary " type="submit" style="background: #7f00c7; margin-top: 10%; width:20; margin-left:35%; ">Add Course</button></a> -->
         
-          </div>
+              </div>
 
-          <!-- <canvas class="my-4 w-100" id="myChart" width="900" height="50"></canvas> -->
-          <!-- <table width="80%" align="" style="margin-top: -2%" border=”2”> -->
-
-          <div id="head_nav">
-
-                <!-- <button class="btn btn-sm btn-outline-secondary" style="margin-top:1%;margin-left:75%">Edit</button>
- -->
-          
+          <div id="head_nav">          
         </main>
 
       </div>
     </div>
+
+    <!-- Creates a list -->
+    <ul id = "myUL"></ul>
+
+    <script>
+    // Create a "close" button and append it to each list item
+    var myNodelist = document.getElementsByTagName("LI");
+    var i;
+    for (i = 0; i < myNodelist.length; i++) {
+      var span = document.createElement("SPAN");
+      //var txt = document.createTextNode("\u00D7");
+      /*span.className = "close";*/
+      //span.appendChild(txt);
+      myNodelist[i].appendChild(span);
+    }
+
+/*    // Click on a close button to hide the current list item
+    var close = document.getElementsByClassName("close");
+    var i;
+    for (i = 0; i < close.length; i++) {
+      close[i].onclick = function() {
+        var div = this.parentElement;
+        div.style.display = "none";
+      }
+    }*/
+
+    // Add a "checked" symbol when clicking on a list item
+    /*var list = document.querySelector('ul');
+    list.addEventListener('click', function(ev) {
+      if (ev.target.tagName === 'LI') {
+        ev.target.classList.toggle('checked');
+      }
+    }, false);*/
+
+    // Create a new list item when clicking on the "Add" button
+    function newElement() {
+      var li = document.createElement("li");
+      var inputValue = document.getElementById("myInput").value;
+      var t = document.createTextNode(inputValue);
+      li.appendChild(t);
+      if (inputValue === '') {
+        alert("You must write something!");
+      } else {
+        document.getElementById("myUL").appendChild(li);
+      }
+      document.getElementById("myInput").value = "";
+
+      var span = document.createElement("SPAN");
+      //var txt = document.createTextNode("\u00D7");
+      //span.className = "close";
+      //span.appendChild(txt);
+      li.appendChild(span);
+
+      for (i = 0; i < close.length; i++) {
+        close[i].onclick = function() {
+          var div = this.parentElement;
+          div.style.display = "none";
+        }
+      }
+    }
+    </script>
+
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
