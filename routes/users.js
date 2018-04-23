@@ -36,6 +36,36 @@ router.get('/login', function(req, res){
 	res.render('./layouts/SignInSignUp');
 });
 
+router.post('/addCourse', function(req, res){
+	var courseName = req.body.courseName;
+	console.log(courseName)
+	req.checkBody('courseName', 'courseName is required').notEmpty();
+
+	var errors = req.validationErrors();
+	console.log(errors)
+	if(errors){
+		res.render('./layouts/courseList',{
+			errors:errors
+		});
+	} else {
+		toAdd = {
+			"Course" : courseName,
+			"InstructorEmail" : req.user.email
+		}
+		db.collection('courses').insertOne(toAdd, function(err, doc) {
+        	if (err) {
+          		handleError(res, err.message, "Failed add to file DB.");
+        	}
+        	else{
+        		req.flash('success_msg', 'Course Added');
+		   		res.redirect('/courses');
+        	}
+      	});
+
+	}
+
+});
+
 // Register User
 router.post('/register', function(req, res){
 	var firstName = req.body.firstName;
