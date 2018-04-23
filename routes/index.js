@@ -37,7 +37,9 @@ router.get('/Software', ensureAuthenticated, function(req,res){
 })
 
 router.get('/courses', ensureAuthenticated, function(req,res) {
-	res.render('./layouts/courseList');
+	res.render('./layouts/courseList', {
+		courses : ["AP", "Software", "Cal"]
+	});
 })
 
 router.get('/assignments', ensureAuthenticated, function(req,res){
