@@ -24,7 +24,7 @@
     font-size: 20px;
   }
 
-  .btn-group button {
+  .btn-group a {
     background-color: #7f00c7; /* Green background */
     border: 1px solid black; /* Green border */
     color: white; /* White text */
@@ -34,15 +34,6 @@
     display: block; /* Make the buttons appear below each other */
     margin-left: 45%;
     margin-top: 12%;
-  }
-
-  .btn-group button:not(:last-child) {
-      border-bottom: none; /* Prevent double borders */
-  }
-
-  /* Add a background color on hover */
-  .btn-group button:hover {
-      background-color: #3e8e41;
   }
 
   </style>
@@ -80,7 +71,7 @@
                 </a>
               </li>
 
-              <li class="nav-item">
+              <li class="nav-item" class="dropDown">
                 <a class="nav-link" href="/courses" style="color:#420c7a">
                   <span data-feather="layers"></span>
                   COURSES
@@ -110,13 +101,15 @@
       </div>
     </div>
 
-    <div class="btn-group" id="myList"></div>
+    <div class="btn-group" id="myList">
+      <a href="/SoftWare">Software Engineering</a>
+    </div>
 
     <script>
 
     // Create a new list item when clicking on the "Add" button
     function newElement() {
-      var bt = document.createElement("BUTTON");
+      var bt = document.createElement("A");
       var inputValue = document.getElementById("myInput").value;
       var t = document.createTextNode(inputValue);
       bt.appendChild(t);
