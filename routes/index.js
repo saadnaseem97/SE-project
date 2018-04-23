@@ -1,5 +1,11 @@
 var express = require('express');
 var router = express.Router();
+var mongo = require('mongodb');
+var assert = require('assert');
+
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://saadn22:Saad7223@ds131137.mlab.com:31137/tapro');
+var db = mongoose.connection;
 
 // Get Homepage
 // router.get('/', function(req, res){
@@ -41,6 +47,31 @@ router.get('/courses', ensureAuthenticated, function(req,res) {
 		courses : ["AP", "Software", "Cal"]
 	});
 })
+
+/*router.get('/getCourse', function(req, res, next){
+	var array1 = [];
+	var cursor = db.collection('course-data').find();
+	cursor.forEach(function(doc,err){
+		assert.equal(null,err);
+		array1.push(doc);
+		console.log(array1);
+	}, function(){
+		db.close();
+		res.render('./layouts/courseList', {items: array1});
+	});
+})*/
+
+/*router.post('/form-signin', function(req, res, next) {
+	var item = {
+		name: req.body.courseName 	
+	};
+
+	db.collectioon('course-data').insertOne(item, 
+		function(err, result) {
+			assert.equal(null,err);
+			db.close();
+		})
+})*/
 
 router.get('/assignments', ensureAuthenticated, function(req,res){
 	if(req.user.type == "Instructor")

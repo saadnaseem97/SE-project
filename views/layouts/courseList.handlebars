@@ -91,26 +91,55 @@
           <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <!-- <div style="float:right;margin-top:1%;margin-right: 80%"> -->
-        <form class="form-signin" method="post" action="/users/addCourse">
         <h1 class="h2" style="margin-right:-10%;margin-top: 3%; color:#420c7a ;position:relative "><b>Add Course</b></h1>
-        <!-- </div> -->
+
+        <form class="form-signin" method="post" action="/users/addCourse">
+
         <div style="margin-top:1%;margin-right: 80% ; margin-top:2%;position:relative ">
-          <label for="text" class="sr-only">Add Courses...</label>
+          <label for="courseName" class="sr-only">Add Courses...</label>
           <input type="text" id="inputCourse" class="form-control" placeholder="Add Courses..." required autofocus name = "courseName">
-          <div style="margin-top:5%;margin-right: 0% ;position:relative ">
-            <div class="checkbox mb-3">
-            </div>
-            <div>
-              <a href="http://google.com"><button class="btn btn-lg btn-primary btn-block" type="submit" style="background: #7f00c7">Add Course</button></a>
-            </div>
-          </div>
+          <!-- acts as space -->
+          <div style="margin-top:5%;margin-right: 0% ;position:relative "> </div>
+          <!-- onClick="newElement()" -->
+          <button class="btn btn-lg btn-primary btn-block" type="submit" style="background: #7f00c7">Add Course</button>
         </div>
-      </form>
+
+        </form>
+  
       </div>
 
-      <div class="btn-group" id="myList">
-      <a href="/SoftWare">Software Engineering</a>
-    </div>
+      <!-- <form class='getCourseList' method="get" action="/users/getCourse"> -->
+        <div style="margin-top:3%;margin-right: 0% ;position:relative"> </div>
+        <div class="btn-group" id="myList">
+          <a href="/SoftWare">Software Engineering</a>
+          <h3>Once Added, press Show Courses below</h3>
+          <a href="/users/getCourse">Show Courses</a>
+            <div> 
+              {{# each items}}
+              <a>{{this.Course}}</a>
+              <div style="margin-top:1%;margin-right: 0% ;position:relative"> </div>
+              {{/each}}
+            </div>
+        </div>
+      <!-- </form> -->
+    <script>
+
+    // Create a new list item when clicking on the "Add" button
+    function newElement() {
+      var bt = document.createElement("A");
+      var inputValue = document.getElementById("myInput").value;
+      var t = document.createTextNode(inputValue);
+      bt.appendChild(t);
+      if (inputValue === '') {
+        alert("You must write something!");
+      } else {
+        document.getElementById("myList").appendChild(bt);
+      }
+      document.getElementById("myInput").value = "";
+    }
+
+    </script>
+
   <!-- <main> -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>

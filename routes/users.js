@@ -6,6 +6,7 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://saadn22:Saad7223@ds131137.mlab.com:31137/tapro');
 var db = mongoose.connection;
+var assert = require('assert');
 
 var multer = require('multer')
 var storage = multer.diskStorage({
@@ -36,6 +37,19 @@ router.get('/login', function(req, res){
 	res.render('./layouts/SignInSignUp');
 });
 
+router.get('/getCourse', function(req, res, next){
+	var array1 = [];
+	var cursor = db.collection('courses').find();
+	cursor.forEach(function(doc,err){
+		assert.equal(null,err);
+		array1.push(doc);
+		console.log(array1);
+	}, function(){
+		db.close();
+		res.render('./layouts/courseList', {items: array1});
+	});
+});
+
 router.post('/addCourse', function(req, res){
 	var courseName = req.body.courseName;
 	console.log(courseName)
@@ -43,15 +57,17 @@ router.post('/addCourse', function(req, res){
 
 	var errors = req.validationErrors();
 	console.log(errors)
+	//console.log("good")
 	if(errors){
 		res.render('./layouts/courseList',{
 			errors:errors
 		});
 	} else {
 		toAdd = {
-			"Course" : courseName,
-			"InstructorEmail" : req.user.email
+			Course : courseName,
+			InstructorEmail : req.user.email
 		}
+		//console.log("good")
 		db.collection('courses').insertOne(toAdd, function(err, doc) {
         	if (err) {
           		handleError(res, err.message, "Failed add to file DB.");
