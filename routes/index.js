@@ -48,31 +48,6 @@ router.get('/courses', ensureAuthenticated, function(req,res) {
 	});
 })
 
-/*router.get('/getCourse', function(req, res, next){
-	var array1 = [];
-	var cursor = db.collection('course-data').find();
-	cursor.forEach(function(doc,err){
-		assert.equal(null,err);
-		array1.push(doc);
-		console.log(array1);
-	}, function(){
-		db.close();
-		res.render('./layouts/courseList', {items: array1});
-	});
-})*/
-
-/*router.post('/form-signin', function(req, res, next) {
-	var item = {
-		name: req.body.courseName 	
-	};
-
-	db.collectioon('course-data').insertOne(item, 
-		function(err, result) {
-			assert.equal(null,err);
-			db.close();
-		})
-})*/
-
 router.get('/assignments', ensureAuthenticated, function(req,res){
 	if(req.user.type == "Instructor")
 			res.render('./layouts/Assignment_Instructor');

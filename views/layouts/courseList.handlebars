@@ -14,6 +14,7 @@
       padding: 5px;
       text-align: left;
   }
+
   </style>
 
 </head>
@@ -88,7 +89,7 @@
 
           </div>        
         </nav>
-          <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+          <main role="main"    class="col-md-9 ml-sm-auto col-lg-10 px-4">
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <!-- <div style="float:right;margin-top:1%;margin-right: 80%"> -->
         <h1 class="h2" style="margin-right:-10%;margin-top: 3%; color:#420c7a ;position:relative "><b>Add Course</b></h1>
@@ -111,18 +112,21 @@
       <!-- <form class='getCourseList' method="get" action="/users/getCourse"> -->
         <div style="margin-top:3%;margin-right: 0% ;position:relative"> </div>
         <div class="btn-group" id="myList">
-          <a href="/SoftWare">Software Engineering</a>
-          <h3>Once Added, press Show Courses below</h3>
+          <!-- <a href="/SoftWare">Software Engineering</a> -->
+          <h4>Once Added, press Show Courses below:</h4>
           <a href="/users/getCourse">Show Courses</a>
+          <br>
+          <br>
             <div> 
               {{# each items}}
-              <a>{{this.Course}}</a>
-              <div style="margin-top:1%;margin-right: 0% ;position:relative"> </div>
+                <a style="display: block; color: black; font-size: 20px; font-weight: bold; text-transform: uppercase" href="/Software">{{ this.Course }}</a>
+                <!-- <div style="margin-top:1%;margin-right: 0%;position:relative"> </div>  -->  
               {{/each}}
             </div>
-        </div>
+          </div>
+
       <!-- </form> -->
-    <script>
+    <!-- <script>
 
     // Create a new list item when clicking on the "Add" button
     function newElement() {
@@ -138,7 +142,7 @@
       document.getElementById("myInput").value = "";
     }
 
-    </script>
+    </script> -->
 
   <!-- <main> -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -39,15 +39,17 @@ router.get('/login', function(req, res){
 
 router.get('/getCourse', function(req, res, next){
 	var array1 = [];
-	var cursor = db.collection('courses').find();
+	var cursor = db.collection('courses').find({InstructorEmail:req.user.email});
 	cursor.forEach(function(doc,err){
 		assert.equal(null,err);
 		array1.push(doc);
-		console.log(array1);
+		//console.log(array1);
 	}, function(){
-		db.close();
+		//db.close();
 		res.render('./layouts/courseList', {items: array1});
+		//console.log("Done?");
 	});
+	//console.log("Out?");
 });
 
 router.post('/addCourse', function(req, res){
