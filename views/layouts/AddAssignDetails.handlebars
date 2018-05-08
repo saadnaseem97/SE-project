@@ -69,33 +69,35 @@
           <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <!-- <div style="float:right;margin-top:1%;margin-right: 80%"> -->
-        <form class="form-signin" method="post" action="/users/addAssignment">
-        <h1 class="h2" style="margin-top:3%;margin-right:-10%; color:#420c7a ;position:relative "><b>Add Assignment</b></h1>
+        <form class="form-signin" method="post" action="/users/addAssignment" enctype="multipart/form-data">
+        <!-- <h1 class="h2" style="margin-top:3%;margin-right:-10%; color:#420c7a ;position:relative "><b>Add Assignment</b></h1> -->
         <!-- </div> -->
-        <div style="margin-top:2%;margin-right: 80% ;position:relative ">
-        <label for="inputName" class="sr-only">Assignment Name</label>
-        <input type="text" id="Name" class="form-control" placeholder="Assignment Name" required autofocus>
-        <div style="margin-top:5%;margin-right: 0% ;position:relative ">
-        <label for="inputDate" class="sr-only">Deadline Date</label>
-        <input type="date" id="Date" class="form-control" placeholder="Deadline Date" required autofocus>
-        </div>
-        <div style="margin-top:5%;margin-right: 0% ;position:relative ">
-        <label for="inputTime" class="sr-only">Deadline Time</label>
-        <input type="time" id="Time" class="form-control" placeholder="Deadline Time" required autofocus>
-        </div>
-        <div style="margin-top:5%;margin-right: 0% ;position:relative ">
-        <label for="File" class="sr-only">Directory</label>
-        <input type="file" id="file" class="form-control" placeholder="Directory" style="height:50%" required autofocus>
-        <div style="margin-top:5%;margin-right: 0% ;position:relative ">
-        <label for="inputMarks" class="sr-only">Maximum Marks</label>
-        <input type="number" id="Marks" class="form-control" placeholder="Maximum Marks" required autofocus>
-        </div>
-        </div>
-        <div>
-        <a><button class="btn btn-lg btn-primary btn-block" type="submit" style="background: #7f00c7;margin-top:7%">Upload Assignment</button></a>
-        </div>
+        <!-- <div style="margin-top:2%;margin-right: 80% ;position:relative "> -->
+        <!-- <label for="inputName" class="sr-only">Assignment Name</label> -->
+        <!-- <div style="margin-top:5%;margin-right: 0% ;position:relative "> -->
+        <!-- <label for="inputDate" class="sr-only">Deadline Date</label> -->
+        <!-- <input type="date" id="Date" class="form-control" placeholder="Deadline Date" required autofocus> -->
+        <!-- </div> -->
+        <!-- <div style="margin-top:5%;margin-right: 0% ;position:relative "> -->
+        <!-- <label for="inputTime" class="sr-only">Deadline Time</label> -->
+        <!-- <input type="time" id="Time" class="form-control" placeholder="Deadline Time" required autofocus> -->
+        <!-- </div> -->
+        <!-- <div style="margin-top:5%;margin-right: 0% ;position:relative "> -->
+        <!-- <label for="inputMarks" class="sr-only">Maximum Marks</label> -->
+        <!-- <label for="File" class="sr-only">Directory</label> -->
+        <!-- <input type="file" id="file" class="form-control" placeholder="Directory" style="height:50%" required autofocus> -->
+        <input type="file" name="fileToUpload" id="fileToUpload">
+        <input type="submit" value="Upload Image" name="submit">
+        <input type="text" id="Name" name = "AssignmentName" class="form-control" placeholder="Assignment Name" required autofocus>
+        <input type="number" id="Marks" class="form-control" name = "marks" placeholder="Maximum Marks" required autofocus>
+        <!-- <div style="margin-top:5%;margin-right: 0% ;position:relative "> -->
+        <!-- </div> -->
+        <!-- </div> -->
+        <!-- <div> -->
+        <!-- <a><button class="btn btn-lg btn-primary btn-block" type="submit" style="background: #7f00c7;margin-top:7%">Upload Assignment</button></a> -->
+        <!-- </div> -->
+      </form>
       </div>
-    </form>
       </div>
     </div>
   <!-- <main> -->

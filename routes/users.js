@@ -24,6 +24,7 @@ var User = require('../models/user');
 
 router.post('/addAssignment', upload, (req, res, next) => {
   console.log(req.files)
+  console.log(req.body)
   res.redirect('/')
 });
 
@@ -209,7 +210,60 @@ router.post('/registerStudent', function(req, res){
 	}
 });
 
-router.post('/addStudent', function(req, res){
+// router.post('/addStudent', function(req, res){
+// 	var email = req.body.email;
+// 	var password = req.body.password;
+
+// 	req.checkBody('email', 'Email is required').notEmpty();
+// 	req.checkBody('email', 'Email is not valid').isEmail();
+// 	req.checkBody('password', 'Password is required').notEmpty();
+// 	var errors = req.validationErrors();
+// 	console.log(errors)
+// 	if(errors){
+// 		res.render('./layouts/AddStudent',{
+// 			errors:errors
+// 		});
+// 	} else {
+
+// 		var emailCheck = false;
+// 		db.collection('users').findOne({email: email}, function(err, doc) {
+// 		    if (err) {
+// 		      console.log(err)
+// 		    } else {
+// 		    	if(doc) {
+// 		    		console.log("ERROR")
+// 		    		req.flash('error_msg', 'Email already exists');
+// 					res.redirect('/addStudent');
+// 		      	}
+// 		      	else{
+// 		      		var newUser = new User({
+// 						firstName: "",
+// 						lastName: "",
+// 						email:email,
+// 						password: password,
+// 						ContactNumber: "",
+// 						type: 'Student',
+// 						ParentName: "",
+// 						ParentContact: ""
+// 					});
+
+// 					User.createUser(newUser, function(err, user){
+// 						if(err) throw err;
+// 						console.log(user);
+// 					});
+// 					console.log("ADDED ")
+// 					req.flash('success_msg', 'Added User');
+// 					console.log('flash message')
+// 					res.redirect('/addStudent');
+// 		      	}
+// 		    }
+// 		});
+
+// 	}
+// });
+
+router.post('/addStudent/:courseChoice', function(req, res){
+	var courseName = req.params.courseChoice;
 	var email = req.body.email;
 	var password = req.body.password;
 
@@ -243,9 +297,9 @@ router.post('/addStudent', function(req, res){
 						ContactNumber: "",
 						type: 'Student',
 						ParentName: "",
-						ParentContact: ""
+						ParentContact: "",
+						Courses: [courseName]
 					});
-
 					User.createUser(newUser, function(err, user){
 						if(err) throw err;
 						console.log(user);
@@ -257,7 +311,6 @@ router.post('/addStudent', function(req, res){
 		      	}
 		    }
 		});
-
 	}
 });
 

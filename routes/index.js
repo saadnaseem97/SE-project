@@ -42,10 +42,16 @@ router.get('/Software', ensureAuthenticated, function(req,res){
 		res.render('./layouts/Resources_Student');
 })
 
+router.get('/selectCourse/:courseChoice', ensureAuthenticated, function(req,res){
+	var courseName = req.params.courseChoice;
+	if(req.user.type == "Instructor")
+			res.render('./layouts/Resources_Instructor', {course : courseName});
+	else if (req.user.type == "Student")
+		res.render('./layouts/Resources_Student', {course : courseName});
+})
+
 router.get('/courses', ensureAuthenticated, function(req,res) {
-	res.render('./layouts/courseList', {
-		courses : ["AP", "Software", "Cal"]
-	});
+	res.render('./layouts/courseList');
 })
 
 router.get('/assignments', ensureAuthenticated, function(req,res){
@@ -58,7 +64,13 @@ router.get('/assignments', ensureAuthenticated, function(req,res){
 router.get('/addAssignment', ensureAuthenticated, function(req,res){
 	res.render('./layouts/AddAssignDetails');
 })
-router.get('/addStudent', ensureAuthenticated, function(req,res){
-	res.render('./layouts/AddStudent');
+
+// router.get('/addStudent', ensureAuthenticated, function(req,res){
+// 	res.render('./layouts/AddStudent');
+// })
+
+router.get('/addStudent/:courseChoice', ensureAuthenticated, function(req,res){
+	var courseName = req.params.courseChoice;
+	res.render('./layouts/AddStudent', {course : courseName});
 })
 module.exports = router;
