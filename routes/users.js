@@ -25,7 +25,7 @@ var User = require('../models/user');
 router.post('/addAssignment/:courseChoice', upload, (req, res, next) => {
 	var courseName = req.params.courseChoice;
 	var assignmentName = req.body.AssName;
-	var maxMarks = req.body.mark;
+	var maxMarks = req.body.marks;
 	var dueTime = req.body.dueTime;
 	var dueDate = req.body.dueDate;
 	toAdd = {
@@ -37,20 +37,20 @@ router.post('/addAssignment/:courseChoice', upload, (req, res, next) => {
 	}
 
 	req.checkBody('AssName', 'Assignment name is required').notEmpty();
-	req.checkBody('mark', 'Maximum marks are required').notEmpty();
+	req.checkBody('marks', 'Maximum marks are required').notEmpty();
 	req.checkBody('dueTime', 'Due time is required').notEmpty();
 	req.checkBody('dueDate', 'Due date is required').notEmpty();
 
 	var errors = req.validationErrors();
 	console.log(errors)
 	if(errors){
-		res.redirect('/',{
+		res.render('./layouts/AddAssignDetails',{
 			errors:errors
 		});
 	} 
 	else 
 	{
-		db.collection('assignments').findOne({name: AssName}, function(err, doc) {
+		db.collection('assignments').findOne({name: assignmentName}, function(err, doc) {
 		    if (err) {
 		      console.log(err)
 		    } 
@@ -72,7 +72,7 @@ router.post('/addAssignment/:courseChoice', upload, (req, res, next) => {
 				    	else
 				    	{
 				    		req.flash('success_msg', 'Assignment Added');
-							res.redirect('/')
+							res.redirect('/users/getassignments');
 				    	}
 				  	});
 		      	}
@@ -84,7 +84,7 @@ router.post('/addAssignment/:courseChoice', upload, (req, res, next) => {
 router.post('/addAssignment', upload, (req, res, next) => {
 	var courseName = req.params.courseChoice;
 	var assignmentName = req.body.AssName;
-	var maxMarks = req.body.mark;
+	var maxMarks = req.body.marks;
 	var dueTime = req.body.dueTime;
 	var dueDate = req.body.dueDate;
 	toAdd = {
@@ -96,20 +96,20 @@ router.post('/addAssignment', upload, (req, res, next) => {
 	}
 
 	req.checkBody('AssName', 'Assignment name is required').notEmpty();
-	req.checkBody('mark', 'Maximum marks are required').notEmpty();
+	req.checkBody('marks', 'Maximum marks are required').notEmpty();
 	req.checkBody('dueTime', 'Due time is required').notEmpty();
 	req.checkBody('dueDate', 'Due date is required').notEmpty();
 
 	var errors = req.validationErrors();
 	console.log(errors)
 	if(errors){
-		res.redirect('/',{
+		res.render('./layouts/AddAssignDetails',{
 			errors:errors
 		});
 	} 
 	else 
 	{
-		db.collection('assignments').findOne({name: AssName}, function(err, doc) {
+		db.collection('assignments').findOne({name: assignmentName}, function(err, doc) {
 		    if (err) {
 		      console.log(err)
 		    } 
@@ -131,7 +131,7 @@ router.post('/addAssignment', upload, (req, res, next) => {
 				    	else
 				    	{
 				    		req.flash('success_msg', 'Assignment Added');
-							res.redirect('/')
+							res.redirect('/users/getassignments');
 				    	}
 				  	});
 		      	}
@@ -174,9 +174,24 @@ router.get('/getassignments/:courseChoice', function(req, res, next){
 		array1.push(doc);
 	}, function(){
 		if(req.user.type == "Instructor")
-			res.render('./layouts/Assignment_Instructor', {course : courseName});
+			res.redirect('./layouts/Assignment_Instructor', {items: array1});
 		else if (req.user.type == "Student")
-			res.render('./layouts/Assignment_Student', {course : courseName});
+			res.render('./layouts/Assignment_Student', {items: array1});
+	});
+});
+
+router.get('/getassignments', function(req, res, next){
+	var courseName = req.params.courseChoice;
+	var array1 = [];
+	var cursor = db.collection('assignments').find();
+	cursor.forEach(function(doc,err){
+		assert.equal(null,err);
+		array1.push(doc);
+	}, function(){
+		if(req.user.type == "Instructor")
+			res.render('./layouts/Assignment_Instructor', {items: array1});
+		else if (req.user.type == "Student")
+			res.render('./layouts/Assignment_Student', {items: array1});
 	});
 });
 

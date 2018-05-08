@@ -79,7 +79,7 @@
             <h1 class="h3 mb-3 font-weight-normal" style="float:left;color:#420c7a; margin-top: 2%;margin-left: 2%;max-width: 20%; position: relative">
             Resource Name</h1>
             <h1 class="h3 mb-3 font-weight-normal" style="float:left;color:#420c7a; margin-top: 2%;margin-left: 8%;max-width: 20%; position: relative">
-            Date Uploaded</h1>
+            Max Marks</h1>
             <h1 class="h3 mb-3 font-weight-normal" style="float:left;color:#420c7a; margin-top: 2%;margin-left: 8%;max-width: 20%; position: relative">
             Due Date</h1>
             <h1 class="h3 mb-3 font-weight-normal" style="float:left;color:#420c7a; margin-top: 2%;margin-left: 8%;max-width: 20%; position: relative">
@@ -93,13 +93,13 @@
                 <!-- <div id="Test1" runat="server" width="100%"></div> -->
                 <!-- <div id="Test2" runat="server" width="100%"></div> -->
                 <div class="tab">
-                  {{# each xyz}}
+                  {{# each items}}
                   <button class="tablinks" onclick="">
                   
-                    <div style="max-width:0%; float:left">{{this}}</div>
-                    <div style="float:left;padding-left: 35%"><text>10/4/18</text></div>
-                    <div style="float:left;padding-left: 22%"><text style="">20/4/18</text></div>
-                    <div style="float:left;padding-left: 18%"><text style="">20:14</text></div></button>
+                    <div style="max-width:0%; float:left">{{this.name}}</div>
+                    <div style="float:left;padding-left: 35%"><text>{{this.maxMarks}}</text></div>
+                    <div style="float:left;padding-left: 22%"><text style="">{{this.dueDate}}</text></div>
+                    <div style="float:left;padding-left: 18%"><text style="">{{this.dueTime}}</text></div></button>
                   {{/each}}
 <!-- 
                  <button class="tablinks" onclick="openCity(event, 'Paris')">

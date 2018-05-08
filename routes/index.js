@@ -56,9 +56,9 @@ router.get('/courses', ensureAuthenticated, function(req,res) {
 
 router.get('/assignments', ensureAuthenticated, function(req,res){
 	if(req.user.type == "Instructor")
-			res.render('./layouts/Assignment_Instructor');
+			res.redirect('/users/getassignments');
 	else if (req.user.type == "Student")
-		res.render('./layouts/Assignment_Student');
+		res.render('/users/getassignments');
 })
 
 router.get('/addAssignment', ensureAuthenticated, function(req,res){
