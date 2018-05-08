@@ -22,10 +22,122 @@ var upload = multer({ storage: storage }).any();
 
 var User = require('../models/user');
 
+router.post('/addAssignment/:courseChoice', upload, (req, res, next) => {
+	var courseName = req.params.courseChoice;
+	var assignmentName = req.body.AssName;
+	var maxMarks = req.body.mark;
+	var dueTime = req.body.dueTime;
+	var dueDate = req.body.dueDate;
+	toAdd = {
+		'course' : courseName,
+		'name' : assignmentName,
+		'maxMarks' : maxMarks,
+		'dueTime' : dueTime,
+		'dueDate' : dueDate
+	}
+
+	req.checkBody('AssName', 'Assignment name is required').notEmpty();
+	req.checkBody('mark', 'Maximum marks are required').notEmpty();
+	req.checkBody('dueTime', 'Due time is required').notEmpty();
+	req.checkBody('dueDate', 'Due date is required').notEmpty();
+
+	var errors = req.validationErrors();
+	console.log(errors)
+	if(errors){
+		res.redirect('/',{
+			errors:errors
+		});
+	} 
+	else 
+	{
+		db.collection('assignments').findOne({name: AssName}, function(err, doc) {
+		    if (err) {
+		      console.log(err)
+		    } 
+		    else 
+		    {
+		    	if(doc) 
+		    	{
+		    		req.flash('error_msg', 'Assignment Name already exists');
+		    		console.log("REDIRECT DUPLICATE")
+					res.render('./layouts/AddAssignDetails');
+		      	}
+		      	else
+		      	{
+					db.collection('assignments').insertOne(toAdd, function(err, doc) {
+				    	if (err) 
+				    	{
+				      		handleError(res, err.message, "Failed add to file DB.");
+				    	}
+				    	else
+				    	{
+				    		req.flash('success_msg', 'Assignment Added');
+							res.redirect('/')
+				    	}
+				  	});
+		      	}
+		    }
+		});
+	}
+});
+
 router.post('/addAssignment', upload, (req, res, next) => {
-  console.log(req.files)
-  console.log(req.body)
-  res.redirect('/')
+	var courseName = req.params.courseChoice;
+	var assignmentName = req.body.AssName;
+	var maxMarks = req.body.mark;
+	var dueTime = req.body.dueTime;
+	var dueDate = req.body.dueDate;
+	toAdd = {
+		'course' : courseName,
+		'name' : assignmentName,
+		'maxMarks' : maxMarks,
+		'dueTime' : dueTime,
+		'dueDate' : dueDate
+	}
+
+	req.checkBody('AssName', 'Assignment name is required').notEmpty();
+	req.checkBody('mark', 'Maximum marks are required').notEmpty();
+	req.checkBody('dueTime', 'Due time is required').notEmpty();
+	req.checkBody('dueDate', 'Due date is required').notEmpty();
+
+	var errors = req.validationErrors();
+	console.log(errors)
+	if(errors){
+		res.redirect('/',{
+			errors:errors
+		});
+	} 
+	else 
+	{
+		db.collection('assignments').findOne({name: AssName}, function(err, doc) {
+		    if (err) {
+		      console.log(err)
+		    } 
+		    else 
+		    {
+		    	if(doc) 
+		    	{
+		    		req.flash('error_msg', 'Assignment Name already exists');
+		    		console.log("REDIRECT DUPLICATE")
+					res.render('./layouts/AddAssignDetails');
+		      	}
+		      	else
+		      	{
+					db.collection('assignments').insertOne(toAdd, function(err, doc) {
+				    	if (err) 
+				    	{
+				      		handleError(res, err.message, "Failed add to file DB.");
+				    	}
+				    	else
+				    	{
+				    		req.flash('success_msg', 'Assignment Added');
+							res.redirect('/')
+				    	}
+				  	});
+		      	}
+		    }
+		});
+	}
 });
 
 // Register
@@ -53,6 +165,21 @@ router.get('/getCourse', function(req, res, next){
 	//console.log("Out?");
 });
 
+router.get('/getassignments/:courseChoice', function(req, res, next){
+	var courseName = req.params.courseChoice;
+	var array1 = [];
+	var cursor = db.collection('assignments').find({course:courseName});
+	cursor.forEach(function(doc,err){
+		assert.equal(null,err);
+		array1.push(doc);
+	}, function(){
+		if(req.user.type == "Instructor")
+			res.render('./layouts/Assignment_Instructor', {course : courseName});
+		else if (req.user.type == "Student")
+			res.render('./layouts/Assignment_Student', {course : courseName});
+	});
+});
+
 router.post('/addCourse', function(req, res){
 	var courseName = req.body.courseName;
 	console.log(courseName)
@@ -66,23 +193,39 @@ router.post('/addCourse', function(req, res){
 			errors:errors
 		});
 	} else {
-		toAdd = {
-			Course : courseName,
-			InstructorEmail : req.user.email
-		}
-		//console.log("good")
-		db.collection('courses').insertOne(toAdd, function(err, doc) {
-        	if (err) {
-          		handleError(res, err.message, "Failed add to file DB.");
-        	}
-        	else{
-        		req.flash('success_msg', 'Course Added');
-		   		res.redirect('/courses');
-        	}
-      	});
 
+		db.collection('course').findOne({Course: courseName , InstructorEmail:req.user.email}, function(err, doc) {
+		    if (err) {
+		      console.log(err)
+		    } 
+		    else 
+		    {
+		    	if(doc) 
+		    	{
+		    		req.flash('error_msg', 'Course Name already exists');
+		    		console.log("REDIRECT DUPLICATE")
+					res.render('./layouts/courseList');
+		      	}
+		      	else
+		      	{
+					toAdd = {
+						Course : courseName,
+						InstructorEmail : req.user.email
+					}
+					//console.log("good")
+					db.collection('courses').insertOne(toAdd, function(err, doc) {
+			        	if (err) {
+			          		handleError(res, err.message, "Failed add to file DB.");
+			        	}
+			        	else{
+			        		req.flash('success_msg', 'Course Added');
+					   		res.redirect('/courses');
+			        	}
+			      	});
+		      	}
+		    }
+		});
 	}
-
 });
 
 // Register User
