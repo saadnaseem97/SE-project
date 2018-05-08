@@ -93,28 +93,28 @@
                 <!-- <div id="Test1" runat="server" width="100%"></div> -->
                 <!-- <div id="Test2" runat="server" width="100%"></div> -->
                 <div class="tab">
-                  <button class="tablinks" onclick="openCity(event, 'London')">
+                  {{# each xyz}}
+                  <button class="tablinks" onclick="">
                   
-                    <div style="max-width:0%; float:left">Assignment1.pdf</div>
+                    <div style="max-width:0%; float:left">{{this}}</div>
                     <div style="float:left;padding-left: 35%"><text>10/4/18</text></div>
                     <div style="float:left;padding-left: 22%"><text style="">20/4/18</text></div>
                     <div style="float:left;padding-left: 18%"><text style="">20:14</text></div></button>
-                    
-
+                  {{/each}}
+<!-- 
                  <button class="tablinks" onclick="openCity(event, 'Paris')">
                   
                     <div style="max-width:0%; float:left">Assignment2.pdf</div>
                     <div style="float:left;padding-left: 35%"><text>10/4/18</text></div>
                     <div style="float:left;padding-left: 22%"><text style="">20/4/18</text></div>
                     <div style="float:left;padding-left: 18%"><text style="">20:14</text></div></button>
-
                  <button class="tablinks" onclick="openCity(event, 'NewYork')">
                   
                     <div style="max-width:0%; float:left">Assignment3.pdf</div>
                     <div style="float:left;padding-left: 35%"><text>10/4/18</text></div>
                     <div style="float:left;padding-left: 22%"><text style="">20/4/18</text></div>
                     <div style="float:left;padding-left: 18%"><text style="">20:14</text></div></button>
-
+ -->
                 </div>
               </div>
             </div>
