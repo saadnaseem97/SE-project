@@ -76,7 +76,7 @@
             <h1 class="h2 mb-3 font-weight-normal" style="margin-top: 4%;margin-left:2%; color:#420c7a; position: relative"><b>Assignments </b></h1>
         
             <h1 class="h3 mb-3 font-weight-normal" style="float:left;color:#420c7a; margin-top: 2%;margin-left: 2%;max-width: 20%; position: relative">
-            Resource Name</h1>
+            Assignment Name</h1>
             <h1 class="h3 mb-3 font-weight-normal" style="float:left;color:#420c7a; margin-top: 2%;margin-left: 8%;max-width: 20%; position: relative">
             Date Uploaded</h1>
             <h1 class="h3 mb-3 font-weight-normal" style="float:left;color:#420c7a; margin-top: 2%;margin-left: 8%;max-width: 20%; position: relative">
@@ -93,7 +93,7 @@
                 <!-- <div id="Test2" runat="server" width="100%"></div> -->
                 <div class="tab">
                   {{# each items}}
-                  <a href="/users/selectAssignment/{{this.assignmentID}}"><button class="tablinks" onclick="">
+                  <a href="/users/download/{{this.assignmentID}}"><button class="tablinks" onclick="">
                   
                     <div style="max-width:0%; float:left">{{this.name}}</div>
                     <div style="float:left;padding-left: 35%"><text>{{this.maxMarks}}</text></div>
