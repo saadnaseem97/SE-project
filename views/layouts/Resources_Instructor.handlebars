@@ -72,7 +72,8 @@
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-         
+          <form action="/users/uploadresources" method="post" class="form-signin" enctype="multipart/form-data">
+        
             <h1 class="h2 mb-3 font-weight-normal" style="margin-top: 4%;margin-left:2%; color:#420c7a; position: relative"><b>Resources </b></h1>
         
             <h1 class="h3 mb-3 font-weight-normal" style="float:left;color:#420c7a; margin-top: 2%;margin-left: 2%;max-width: 20%; position: relative">
@@ -112,14 +113,14 @@
             </div>
                                               <!-- Upload Resources -->
             <span class="btn btn-lg btn-file" style="background: #7f00c7; margin-left: 67%;margin-top:5% ;color: white;position: relative">
-            Add Resource <input type="file"> 
+            Add Resource <input type="file" id="file" name="file"> 
             </span>
         
+          </form>
           </div>
 
 
           <div id="head_nav">
-
         </main>
           
 
