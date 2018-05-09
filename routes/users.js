@@ -37,7 +37,10 @@ router.post('/addAssignment', upload, (req, res, next) => {
 				var maxMarks = req.body.marks;
 				var dueTime = req.body.dueTime;
 				var dueDate = req.body.dueDate;
+
+				id = courseID+assignmentName+makeid()
 				toAdd = {
+					'assignmentID': id,
 					'course' : courseID,
 					'name' : assignmentName,
 					'maxMarks' : maxMarks,
@@ -93,66 +96,57 @@ router.post('/addAssignment', upload, (req, res, next) => {
 	});
 });
 
-// router.post('/addResource', upload, (req, res, next) => {
-// 	db.collection('userstate').findOne({name: assignmentName}, function(err, doc) {
-// 	    if (err) {
-// 	      console.log(err);
-// 	    } 
-// 	    else
-// 	    {
-// 	    	if(doc) 
-// 	    	{
-// 				var courseName = doc.status;
-// 				var resourceName = req.files.originalname;
-// 				var date = Date.now()
-// 				toAdd = {
-// 					'course' : courseName,
-// 					'name' : resourceName,
-// 					'date' : date
-// 				}
+router.post('/addResource', upload, (req, res, next) => {
+	console.log("Add Resource Called")
+	db.collection('userstate').findOne({email: req.user.email}, function(err, doc) {
+	    if (err) {
+	      console.log(err);
+	    } 
+	    else
+	    {
+	    	if(doc) 
+	    	{
+	    		console.log(req.files)
+	    		console.log(doc)
+				var courseID = doc.state;
+				var resourceName = req.files.originalfile;
+				var date = Date.now()
+				toAdd = {
+					'course' : courseID,
+					'name' : resourceName,
+					'date' : date
+				}
 
-// 				var errors = req.validationErrors();
-// 				console.log(errors)
-// 				if(errors){
-// 					res.render('./layouts/AddAssignDetails',{
-// 						errors:errors
-// 					});
-// 				} 
-// 				else 
-// 				{
-// 					db.collection('assignments').findOne({name: assignmentName}, function(err, doc) {
-// 					    if (err) {
-// 					      console.log(err)
-// 					    } 
-// 					    else 
-// 					    {
-// 					    	if(doc) 
-// 					    	{
-// 					    		req.flash('error_msg', 'Assignment Name already exists');
-// 					    		console.log("REDIRECT DUPLICATE")
-// 								res.render('./layouts/AddAssignDetails');
-// 					      	}
-// 					      	else
-// 					      	{
-// 								db.collection('assignments').insertOne(toAdd, function(err, doc) {
-// 							    	if (err) 
-// 							    	{
-// 							      		handleError(res, err.message, "Failed add to file DB.");
-// 							    	}
-// 							    	else
-// 							    	{
-// 							    		req.flash('success_msg', 'Assignment Added');
-// 										res.redirect('/users/getassignments');
-// 							    	}
-// 							  	});
-// 					      	}
-// 					    }
-// 					});
-// 				}
-// 	    	}
-// 	    }
-// 	});
-// });
+				req.checkBody('AssName', 'Assignment name is required').notEmpty();
+				req.checkBody('marks', 'Maximum marks are required').notEmpty();
+				req.checkBody('dueTime', 'Due time is required').notEmpty();
+				req.checkBody('dueDate', 'Due date is required').notEmpty();
+
+				var errors = req.validationErrors();
+				console.log(errors)
+				if(errors){
+					res.render('./layouts/AddAssignDetails',{
+						errors:errors
+					});
+				} 
+				else 
+				{
+					db.collection('resources').insertOne(toAdd, function(err, doc) {
+				    	if (err) 
+				    	{
+				    		console.log(err)
+				    	}
+				    	else
+				    	{
+				    		req.flash('success_msg', 'Resource Added');
+							res.redirect('/users/getassignments');
+				    	}
+				  	});
+				}
+	    	}
+	    }
+	});
+});
 
 // Register
 router.get('/register', function(req, res){
