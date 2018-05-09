@@ -69,7 +69,7 @@
           <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <!-- <div style="float:right;margin-top:1%;margin-right: 80%"> -->
-        <h1 class="h2" style="margin-top:3%;margin-right:-10%; color:#420c7a ;position:relative "><b>Assignment3 - Student4 - Closed</b></h1>
+        <h1 class="h2" style="margin-top:3%;margin-right:-10%; color:#420c7a ;position:relative "><b>{{Aname}} - {{Lname}} - Closed</b></h1>
         <!-- </div> -->
         <div style="margin-top:2%;margin-right: 80% ;position:relative ">
         
@@ -82,8 +82,8 @@
           </div>
         </div>
         
-        <div style="padding-left:10px;float:left"><text><b>20/10/15</b></text></div>
-        <div style="padding-left: 300px"><text><b>11:55</b></text></div>
+        <div style="padding-left:10px;float:left"><text><b>{{Adate}}</b></text></div>
+        <div style="padding-left: 300px"><text><b>{{Atime}}</b></text></div>
 
 
 
@@ -94,26 +94,29 @@
 
 <!--     DOWNLOAD ASSIGNMENT --> 
          <div style="float:left;margin-left:17%">
-          <a href="http://google.com"><button class="btn btn-lg btn-file" type="submit" style="color:white;background: #7f00c7;"><text style="font-size: 12px"><b>Download Assignment</b></text></button></a>
+          <a href="/users/download/{{AID}}"><button class="btn btn-lg btn-file" type="submit" style="color:white;background: #7f00c7;"><text style="font-size: 12px"><b>Download Assignment</b></text></button></a>
           </div>
 
 <!--           DONWLOAD STUDENT's SUBMISSION-->
 
           <div style="padding-left:10px;float:left">
-          <a href="http://google.com"><button class="btn btn-lg btn-file" type="submit" style="color:white;background: #7f00c7"><text style="font-size: 12px"><b>Download Student Submission</b></text></button></a>
+          <a href="/users/downloadSubmission/{{AID}}/{{Semail}}"><button class="btn btn-lg btn-file" type="submit" style="color:white;background: #7f00c7"><text style="font-size: 12px"><b>Download Student Submission</b></text></button></a>
           </div>
 
-          <div style="width:400px;height:220px;margin-left:17%;margin-top:5%">
-            <textarea style="resize:none" cols="70" rows=10 name="comment" value='Instructor Comment'></textarea>
-          </div>
 
 
           
 <!--           COMMENT ADDED HERE -->
-
-          <div style="margin-left: 49%;margin-top:1%;width:150px">
-           <a href="http://google.com"><button class="btn btn-lg btn-file" type="submit" style="color:white;background: #7f00c7;"><text style="font-size: 16px">Add Comment</text></button></a>
+          <form action="/users/addComment" method="post" enctype="multipart/form-data">
+          <div style="width:400px;height:220px;margin-left:17%;margin-top:5%">
+            <textarea style="resize:none" cols="70" rows=10 name="comment" value='Instructor Comment'></textarea>
           </div>
+          <div style="margin-left: 49%;margin-top:1%;width:150px">
+           
+           <button class="btn btn-lg btn-file" type="submit" style="color:white;background: #7f00c7;"><text style="font-size: 16px">Add Comment</text></button>
+           
+          </div>
+         </form>
   <!-- <main> -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>

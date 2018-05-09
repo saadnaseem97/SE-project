@@ -764,9 +764,11 @@ router.get('/selectAssignment/:assignID', function(req, res){
 									    		array1 = []
 									    		var f = doccc.Students.length
 									    		doccc.Students.forEach(x=> {
-									    			student = db.collection('courses').findOne({email: x})
-									    			array1.push(student)
-									    			--f || res.render('./layouts/Assignment_inst_closed',{roster: array1})
+									    			db.collection('users').findOne({email: x}, (err,data) => {
+									    				array1.push(data)
+									    				console.log(array1)
+									    				--f || res.render('./layouts/Assignment_inst_closed',{roster: array1, AID: assignID})
+									    			})
 									    		})
 									    	}
 									    }
@@ -778,6 +780,58 @@ router.get('/selectAssignment/:assignID', function(req, res){
 				}
 	    	}
 		})
+});
+
+router.get('/viewStudSub/:AID/:email', function(req, res){
+	var assignID = req.params.AID;
+	var sEmail = req.params.email;
+	db.collection('users').findOne({email: sEmail}, function(err, doc) {
+	    if (err) {
+	      console.log(err);
+	    } 
+	    else
+	    {
+	    	if(doc) 
+	    	{
+	    		lastName = doc.lastName;
+
+	    		db.collection('assignments').findOne({assignmentID: assignID}, function(errr, docc) {
+				    if (errr) {
+				      console.log(errr);
+				    } 
+				    else
+				    {
+				    	if(docc) 
+				    	{
+				    		date = docc.dueDate;
+				    		time = docc.dueTime;
+							res.render('/.layouts/Instr_Comment', {AID:assignID, Lname = lastName, Adate : date, Atime:time, Semail:sEmail})
+				    	}
+				    }
+				});
+	    	}
+	    }
+	});
+});
+
+router.get('/downloadSubmission/:AID/:email', function(req, res){
+	var assignID = req.params.AID;
+	var sEmail = req.params.email;.
+	db.collection('submissions').findOne({assignmentID: AID, email:sEmail}, function(err, doc) {
+	    if (err) {
+	      console.log(err);
+	    } 
+	    else
+	    {
+	    	if(doc) 
+	    	{
+	    		originalname = doc.original;
+	    		fileKey = doc.key;
+	    		console.log('Download file')
+				res.download(  './public/uploads/' + fileKey , originalname)
+	    	}
+	    }
+	});
 });
 
 router.get('/downloadsubmission/:AID', function(req, res){
