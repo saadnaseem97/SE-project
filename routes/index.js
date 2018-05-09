@@ -66,7 +66,7 @@ router.get('/selectCourse/:courseChoice', ensureAuthenticated, function(req,res)
 	      	}
 	    }
 	});
-	res.redirect('/getResource');
+	res.redirect('/users/getResource');
 })
 
 router.get('/courses', ensureAuthenticated, function(req,res) {
