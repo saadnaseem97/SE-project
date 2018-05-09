@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TA_Pro</title>
+  <link rel="stylesheet" href="/css/bootstrap.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <!-- <link rel="stylesheet" href="/css/dashboard.css" /> -->
+
+  <style>
+  table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+  }
+  th, td {
+      padding: 5px;
+      text-align: left;
+  }
+  </style>
+
+</head>
+<body>
+  <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right" style="margin-top:5%;margin-right: 15%">
+              <li role="presentation"><a href="/users/logout" style="color:#420c7a">Logout</a></li>
+          </ul>
+        </nav>
+        <!-- <h3 class="text-muted">Instructor's Name</h3> -->
+
+<!-- <ul class="nav nav-tabs" style="margin-top:5%;">
+  <li class="active"><a href="#">Home</a></li>
+  <li><a href="#">Menu 1</a></li>
+  <li><a href="#">Menu 2</a></li>
+  <li><a href="#">Menu 3</a></li>
+</ul>
+ -->      </div>
+    </div>
+ <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="margin-top: 2%;position:relative ">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link active" href="/" style="color:#420c7a">
+                  <span data-feather="home"></span>
+                  HOME <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/profile" style="color:#420c7a">
+                  <span data-feather="file"></span>
+                  PROFILE
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/courses" style="color:#420c7a">
+                  <span data-feather="layers"></span>
+                  COURSES
+                </a>
+              </li>
+            </ul>
+
+          </div>        
+        </nav>
+
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <!-- <h1 class="h2">Welcome Instructor!</h1> -->
+            <h1 class="h2 mb-3 font-weight-normal" style="margin-left:0%; color:#420c7a"><b>Welcome Student! </b></h1>
+ 
+            <div style="margin-top:3%;max-width: 400px"><text><b>Welcome to TApro! The teaching assistant both you and your instructor had dreamed of. We've kept navigation as simple as it can be for you, but here's a quick guide to help you get used to TApro:</b></text>
+        
+          </div>
+          <div></div>
+          <div style="margin-top:1%;max-width: 400px"><text><b>Your courses are visible on the tabs to the left of the browser and each course has it's own set of tabs that will be visible on the top of the page. You can mark your attendance, download and uplaod assignments, download resources and view your grades for each course. Keep your scores high, otherwise the instructor will be notified if you perform poorly in the assignments.</b></text></div>
+
+          <div style="margin-top: 1%"><b>Have fun!</b></div>
+          <!-- <canvas class="my-4 w-100" id="myChart" width="900" height="50"></canvas> -->
+          <!-- <table width="80%" align="" style="margin-top: -2%" border=”2”> -->
+
+          <div id="head_nav">
+
+                <!-- <button class="btn btn-sm btn-outline-secondary" style="margin-top:1%;margin-left:75%">Edit</button>
+ -->
+        </main>
+
+      </div>
+    </div>
+           <div style="float:right;margin-right:20%;margin-top: -25%"><img src="https://www.predictly.co/wp-content/uploads/2016/10/commerce-icon-machine-learning.png" height="400px" width="400px"></div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../../../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../../../dist/js/bootstrap.min.js"></script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+
+    <!-- Graphs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    
+  </body>
+</html>
