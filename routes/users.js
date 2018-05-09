@@ -14,7 +14,8 @@ var storage = multer.diskStorage({
         cb(null, 'public/uploads/');
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + file.originalname);
+    	file.NewName = Date.now() + file.originalname + makeid();
+        cb(null, file.NewName);
     }
 });
 
@@ -23,6 +24,7 @@ var upload = multer({ storage: storage }).any();
 var User = require('../models/user');
 
 router.post('/addAssignment', upload, (req, res, next) => {
+	console.log(req.files[0].NewName)
 	db.collection('userstate').findOne({email: req.user.email}, function(err, doc) {
 	    if (err) {
 	      console.log(err);
@@ -40,6 +42,7 @@ router.post('/addAssignment', upload, (req, res, next) => {
 
 				id = courseID+assignmentName+makeid()
 				toAdd = {
+					'key' : req.files[0].NewName,
 					'assignmentID': id,
 					'course' : courseID,
 					'name' : assignmentName,
@@ -76,15 +79,30 @@ router.post('/addAssignment', upload, (req, res, next) => {
 					      	}
 					      	else
 					      	{
-								db.collection('assignments').insertOne(toAdd, function(err, doc) {
-							    	if (err) 
+								db.collection('assignments').insertOne(toAdd, function(errrr, doc) {
+							    	if (errrr) 
 							    	{
-							      		handleError(res, err.message, "Failed add to file DB.");
+							    		console.log(errrr)
 							    	}
 							    	else
 							    	{
-							    		req.flash('success_msg', 'Assignment Added');
-										res.redirect('/users/getassignments');
+							    		toAdd2 = {
+							    			'assignmentID': id,
+							    			'key':req.files[0].NewName,
+							    			'original': req.files[0].originalname
+
+							    		}
+							    		db.collection('files').insertOne(toAdd2, function(errr, docc) {
+									    	if (errr) 
+									    	{
+							    				console.log(errr)
+									    	}
+									    	else
+									    	{
+									    		req.flash('success_msg', 'Assignment Added');
+												res.redirect('/users/getassignments');	
+									    	}
+									    });
 							    	}
 							  	});
 					      	}
@@ -109,9 +127,12 @@ router.post('/addResource', upload, (req, res, next) => {
 	    		console.log(req.files)
 	    		console.log(doc)
 				var courseID = doc.state;
-				var resourceName = req.files.originalfile;
+				var resourceName = req.files[0].originalname;
 				var date = Date.now()
+				id = courseID+resourceName+makeid()
 				toAdd = {
+					'key' : req.files[0].NewName,
+					'resourceID': id,
 					'course' : courseID,
 					'name' : resourceName,
 					'date' : date
@@ -138,11 +159,46 @@ router.post('/addResource', upload, (req, res, next) => {
 				    	}
 				    	else
 				    	{
-				    		req.flash('success_msg', 'Resource Added');
-							res.redirect('/users/getassignments');
+
+				    		toAdd2 = {
+				    			'resourceID': id,
+				    			'key':req.files[0].NewName,
+				    			'original': req.files[0].originalname
+
+				    		}
+				    		db.collection('files').insertOne(toAdd2, function(errr, docc) {
+						    	if (errr) 
+						    	{
+				    				console.log(errr)
+						    	}
+						    	else
+						    	{
+						    		req.flash('success_msg', 'Resource Added');
+									res.redirect('/users/getassignments');	
+						    	}
+						    });
 				    	}
 				  	});
 				}
+	    	}
+	    }
+	});
+});
+
+
+//Download a File
+router.get('/download/:fileKey', function(req, res){
+	var fileKey = req.params.fileKey;
+	db.collection('files').findOne({key: fileKey}, function(err, doc) {
+	    if (err) {
+	      console.log(err);
+	    } 
+	    else
+	    {
+	    	if(doc) 
+	    	{
+	    		originalname = doc.original;
+				res.download(__dirname + '/public/uploads/' + fileKey , originalname)
 	    	}
 	    }
 	});
