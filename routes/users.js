@@ -265,7 +265,7 @@ router.get('/download/:fileid', function(req, res){
 	    		originalname = doc.original;
 	    		fileKey = doc.key;
 	    		console.log('Download file')
-				res.download(__dirname + '/public/uploads/' + filekey , originalname)
+				res.download(  './public/uploads/' + fileKey , originalname)
 	    	}
 	    }
 	});
