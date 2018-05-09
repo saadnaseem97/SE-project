@@ -31,7 +31,8 @@ router.post('/addAssignment', upload, (req, res, next) => {
 	    {
 	    	if(doc) 
 	    	{
-				var courseID = doc.status;
+	    		console.log(doc)
+				var courseID = doc.state;
 				var assignmentName = req.body.AssName;
 				var maxMarks = req.body.marks;
 				var dueTime = req.body.dueTime;
@@ -43,7 +44,6 @@ router.post('/addAssignment', upload, (req, res, next) => {
 					'dueTime' : dueTime,
 					'dueDate' : dueDate
 				}
-				console.log(toAdd)
 
 				req.checkBody('AssName', 'Assignment name is required').notEmpty();
 				req.checkBody('marks', 'Maximum marks are required').notEmpty();
@@ -188,7 +188,7 @@ router.get('/getassignments', function(req, res, next){
 	    {
 	    	if(doc) 
 	    	{
-				var courseID = doc.status;
+				var courseID = doc.state;
 				var array1 = [];
 				var cursor = db.collection('assignments').find({course:courseID});
 				cursor.forEach(function(doc,err){
@@ -389,7 +389,7 @@ router.post('/addStudent', function(req, res){
 	    {
 	    	if(doc)
 	    	{
-				var courseID = doc.status;
+				var courseID = doc.state;
 				var email = req.body.email;
 				var password = req.body.password;
 				req.checkBody('email', 'Email is required').notEmpty();
