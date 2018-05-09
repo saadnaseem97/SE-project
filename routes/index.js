@@ -66,10 +66,7 @@ router.get('/selectCourse/:courseChoice', ensureAuthenticated, function(req,res)
 	      	}
 	    }
 	});
-	if(req.user.type == "Instructor")
-			res.render('./layouts/Resources_Instructor');
-	else if (req.user.type == "Student")
-		res.render('./layouts/Resources_Student');
+	res.redirect('/getResource');
 })
 
 router.get('/courses', ensureAuthenticated, function(req,res) {

@@ -358,6 +358,7 @@ router.get('/getResource', function(req, res, next){
 					assert.equal(null,err);
 					array1.push(doc);
 				}, function(){
+					console.log(array1)
 					if(req.user.type == "Instructor")
 						res.render('./layouts/Resources_Instructor', {items: array1});
 					else if (req.user.type == "Student")
