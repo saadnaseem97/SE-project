@@ -113,11 +113,17 @@
             </div>
                                               <!-- Upload Resources -->
             <span class="btn btn-lg btn-file" style="background: #7f00c7; margin-left: 67%;margin-top:5% ;color: white;position: relative">
-            Add Resource <input type="file" id="file" name="file"> 
+            Add Resource <input type="file" id="file" name="file" onchange="this.form.submit()"> 
             </span>
         
           </form>
           </div>
+          <form action="/users/addResource" method="post" enctype="multipart/form-data">
+    Select image to upload:
+    <input type="file" name="fileToUpload" id="fileToUpload">
+    <input type="submit" value="Upload Image" name="submit">
+</form>
+
 
 
           <div id="head_nav">
