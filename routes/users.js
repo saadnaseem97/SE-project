@@ -39,76 +39,141 @@ router.post('/addAssignment', upload, (req, res, next) => {
 				var maxMarks = req.body.marks;
 				var dueTime = req.body.dueTime;
 				var dueDate = req.body.dueDate;
+				var year, month, day;
+				var timeHours, timeMinutes;
+				var a = dueTime.split(':');
+				var b = a[Symbol.iterator]();
+				timeHours = b.next().value;
+				timeMinutes = b.next().value;
+				// console.log(timeHours)
+				// console.log(timeMinutes)
+				// var time=dueDate.slice(12,16);
+				// console.log(dueTime)
+				var c=dueDate.split('-');
+				var e=c[Symbol.iterator]();
+				year = e.next().value;
+				month = e.next().value; 
+				day = e.next().value;
+				console.log(month)
 
-				id = courseID+assignmentName+makeid()
-				toAdd = {
-					'key' : req.files[0].NewName,
-					'assignmentID': id,
-					'course' : courseID,
-					'name' : assignmentName,
-					'maxMarks' : maxMarks,
-					'dueTime' : dueTime,
-					'dueDate' : dueDate
+				var today = new Date();
+				console.log(today.getDate())
+				console.log(today.getMonth())
+				console.log(today.getFullYear())
+				// if (today.getDate() <= day && today.getMonth() <= 9) {
+				//   console.log("It's October 3rd.");
+				// } else {
+				//   console.log("It's not October 3rd.");
+				// }
+				// console.log(d)
+				// if(dueDate>d){
+				// 	console.log('okayy to proceed')
+				// }
+				// console.log(today.getHours())
+				// console.log(today.getMinutes())
+
+				if(today.getFullYear() < year){
+					console.log('herreee1')
+					
+					check = true;
+				}
+				else if(today.getFullYear() == year && today.getMonth()+1 < month ){
+					console.log('herreee2')
+					
+					check = true;
+				}
+				else if(today.getFullYear() == year && today.getMonth()+1 == month && today.getDate() < day){
+					console.log('herreee3')
+					check = true;
+				}
+				else if(today.getFullYear() == year && today.getMonth()+1 == month && today.getDate() == day && today.getHours() < timeHours){
+					console.log('herreee4')
+					
+					check = true;	
+				}
+				else if(today.getFullYear() == year && today.getMonth()+1 == month && today.getDate() == day && today.getHours() == timeHours && today.getMinutes() < timeMinutes){
+					console.log('herreee5')
+					
+					check = true;
+				}
+				else{
+					check = false;
 				}
 
-				req.checkBody('AssName', 'Assignment name is required').notEmpty();
-				req.checkBody('marks', 'Maximum marks are required').notEmpty();
-				req.checkBody('dueTime', 'Due time is required').notEmpty();
-				req.checkBody('dueDate', 'Due date is required').notEmpty();
+				if(check == true){
+						id = courseID+assignmentName+makeid()
+						toAdd = {
+							'key' : req.files[0].NewName,
+							'assignmentID': id,
+							'course' : courseID,
+							'name' : assignmentName,
+							'maxMarks' : maxMarks,
+							'dueTime' : dueTime,
+							'dueDate' : dueDate
+						}
 
-				var errors = req.validationErrors();
-				console.log(errors)
-				if(errors){
-					res.render('./layouts/AddAssignDetails',{
-						errors:errors
-					});
-				} 
-				else 
-				{
-					db.collection('assignments').findOne({name: assignmentName}, function(err, doc) {
-					    if (err) {
-					      console.log(err)
-					    } 
-					    else 
-					    {
-					    	if(doc) 
-					    	{
-					    		req.flash('error_msg', 'Assignment Name already exists');
-					    		console.log("REDIRECT DUPLICATE")
-								res.render('./layouts/AddAssignDetails');
-					      	}
-					      	else
-					      	{
-								db.collection('assignments').insertOne(toAdd, function(errrr, doc) {
-							    	if (errrr) 
-							    	{
-							    		console.log(errrr)
-							    	}
-							    	else
-							    	{
-							    		toAdd2 = {
-							    			'assignmentID': id,
-							    			'key':req.files[0].NewName,
-							    			'original': req.files[0].originalname
+						req.checkBody('AssName', 'Assignment name is required').notEmpty();
+						req.checkBody('marks', 'Maximum marks are required').notEmpty();
+						req.checkBody('dueTime', 'Due time is required').notEmpty();
+						req.checkBody('dueDate', 'Due date is required').notEmpty();
 
-							    		}
-							    		db.collection('files').insertOne(toAdd2, function(errr, docc) {
-									    	if (errr) 
+						var errors = req.validationErrors();
+						console.log(errors)
+						if(errors){
+							res.render('./layouts/AddAssignDetails',{
+								errors:errors
+							});
+						} 
+						else 
+						{
+							db.collection('assignments').findOne({name: assignmentName}, function(err, doc) {
+							    if (err) {
+							      console.log(err)
+							    } 
+							    else 
+							    {
+							    	if(doc) 
+							    	{
+							    		req.flash('error_msg', 'Assignment Name already exists');
+							    		console.log("REDIRECT DUPLICATE")
+										res.render('./layouts/AddAssignDetails');
+							      	}
+							      	else
+							      	{
+										db.collection('assignments').insertOne(toAdd, function(errrr, doc) {
+									    	if (errrr) 
 									    	{
-							    				console.log(errr)
+									    		console.log(errrr)
 									    	}
 									    	else
 									    	{
-									    		req.flash('success_msg', 'Assignment Added');
-												res.redirect('/users/getassignments');	
+									    		toAdd2 = {
+									    			'assignmentID': id,
+									    			'key':req.files[0].NewName,
+									    			'original': req.files[0].originalname
+
+									    		}
+									    		db.collection('files').insertOne(toAdd2, function(errr, docc) {
+											    	if (errr) 
+											    	{
+									    				console.log(errr)
+											    	}
+											    	else
+											    	{
+											    		req.flash('success_msg', 'Assignment Added');
+														res.redirect('/users/getassignments');	
+											    	}
+											    });
 									    	}
-									    });
-							    	}
-							  	});
-					      	}
-					    }
-					});
-				}
+									  	});
+							      	}
+							    }
+							});
+						}
+	    			}
+	    			else{
+	    				console.log('Saad add here')
+	    			}
 	    	}
 	    }
 	});
@@ -215,48 +280,17 @@ router.get('/login', function(req, res){
 });
 
 router.get('/getCourse', function(req, res, next){
-	if (req.user.type == 'Instructor')
-	{
-		var array1 = [];
-		var cursor = db.collection('courses').find({InstructorEmail:req.user.email});
-		cursor.forEach(function(doc,err){
-			assert.equal(null,err);
-			array1.push(doc);
-			//console.log(array1);
-		}, function(){
-			//db.close();
-			res.render('./layouts/courseList', {items: array1});
-			//console.log("Done?");
-		});
-	}
-	else{
-		db.collection('users').findOne({email: req.user.email}, function(err, doc) {
-		    if (err) {
-		      console.log(err)
-		    } 
-		    else 
-		    {
-		    	if(doc) 
-		    	{
-		    		var array1 = [];
-		    		doc.Courses.forEach(function(x,e){
-						db.collection('courses').findOne({CourseID:x}, function(errr,docc) {
-							if (errr)
-							{
-								console.log(errr)
-							}
-							if (docc)
-							{
-								array1.push(docc)
-							}
-						});
-		    		});
-		    		console.log(array1)
-		    		res.render('./layouts/courseList', {items: array1});
-		    	}
-		    }
-		});
-	}
+	var array1 = [];
+	var cursor = db.collection('courses').find({InstructorEmail:req.user.email});
+	cursor.forEach(function(doc,err){
+		assert.equal(null,err);
+		array1.push(doc);
+		//console.log(array1);
+	}, function(){
+		//db.close();
+		res.render('./layouts/courseList', {items: array1});
+		//console.log("Done?");
+	});
 	//console.log("Out?");
 });
 
@@ -534,7 +568,7 @@ router.post('/addStudent', function(req, res){
 									type: 'Student',
 									ParentName: "",
 									ParentContact: "",
-									Courses: [courseID]
+									Courses: [courseName]
 								});
 								User.createUser(newUser, function(err, user){
 									if(err) throw err;
