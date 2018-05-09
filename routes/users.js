@@ -101,79 +101,79 @@ router.post('/addAssignment', upload, (req, res, next) => {
 				}
 
 				if(check == true){
-						id = courseID+assignmentName+makeid()
-						toAdd = {
-							'key' : req.files[0].NewName,
-							'assignmentID': id,
-							'course' : courseID,
-							'name' : assignmentName,
-							'maxMarks' : maxMarks,
-							'dueTime' : dueTime,
-							'dueDate' : dueDate
-						}
+					id = courseID+assignmentName+makeid()
+					toAdd = {
+						'key' : req.files[0].NewName,
+						'assignmentID': id,
+						'course' : courseID,
+						'name' : assignmentName,
+						'maxMarks' : maxMarks,
+						'dueTime' : dueTime,
+						'dueDate' : dueDate
+					}
+					req.checkBody('AssName', 'Assignment name is required').notEmpty();
+					req.checkBody('marks', 'Maximum marks are required').notEmpty();
+					req.checkBody('dueTime', 'Due time is required').notEmpty();
+					req.checkBody('dueDate', 'Due date is required').notEmpty();
 
-						req.checkBody('AssName', 'Assignment name is required').notEmpty();
-						req.checkBody('marks', 'Maximum marks are required').notEmpty();
-						req.checkBody('dueTime', 'Due time is required').notEmpty();
-						req.checkBody('dueDate', 'Due date is required').notEmpty();
+					var errors = req.validationErrors();
+					console.log(errors)
+					if(errors){
+						res.render('./layouts/AddAssignDetails',{
+							errors:errors
+						});
+					} 
+					else 
+					{
+						db.collection('assignments').findOne({name: assignmentName}, function(err, doc) {
+						    if (err) {
+						      console.log(err)
+						    } 
+						    else 
+						    {
+						    	if(doc) 
+						    	{
+						    		req.flash('error_msg', 'Assignment Name already exists');
+						    		console.log("REDIRECT DUPLICATE")
+									res.render('./layouts/AddAssignDetails');
+						      	}
+						      	else
+						      	{
+									db.collection('assignments').insertOne(toAdd, function(errrr, doc) {
+								    	if (errrr) 
+								    	{
+								    		console.log(errrr)
+								    	}
+								    	else
+								    	{
+								    		toAdd2 = {
+								    			'assignmentID': id,
+								    			'key':req.files[0].NewName,
+								    			'original': req.files[0].originalname
 
-						var errors = req.validationErrors();
-						console.log(errors)
-						if(errors){
-							res.render('./layouts/AddAssignDetails',{
-								errors:errors
-							});
-						} 
-						else 
-						{
-							db.collection('assignments').findOne({name: assignmentName}, function(err, doc) {
-							    if (err) {
-							      console.log(err)
-							    } 
-							    else 
-							    {
-							    	if(doc) 
-							    	{
-							    		req.flash('error_msg', 'Assignment Name already exists');
-							    		console.log("REDIRECT DUPLICATE")
-										res.render('./layouts/AddAssignDetails');
-							      	}
-							      	else
-							      	{
-										db.collection('assignments').insertOne(toAdd, function(errrr, doc) {
-									    	if (errrr) 
-									    	{
-									    		console.log(errrr)
-									    	}
-									    	else
-									    	{
-									    		toAdd2 = {
-									    			'assignmentID': id,
-									    			'key':req.files[0].NewName,
-									    			'original': req.files[0].originalname
-
-									    		}
-									    		db.collection('files').insertOne(toAdd2, function(errr, docc) {
-											    	if (errr) 
-											    	{
-									    				console.log(errr)
-											    	}
-											    	else
-											    	{
-											    		req.flash('success_msg', 'Assignment Added');
-														res.redirect('/users/getassignments');	
-											    	}
-											    });
-									    	}
-									  	});
-							      	}
-							    }
-							});
-						}
-	    			}
-	    			else{
-	    				console.log('Saad add here')
-	    			}
+								    		}
+								    		db.collection('files').insertOne(toAdd2, function(errr, docc) {
+										    	if (errr) 
+										    	{
+								    				console.log(errr)
+										    	}
+										    	else
+										    	{
+										    		req.flash('success_msg', 'Assignment Added');
+													res.redirect('/users/getassignments');	
+										    	}
+										    });
+								    	}
+								  	});
+						      	}
+						    }
+						});
+					}
+    			}
+    			else{
+    				req.flash('error_msg', 'Due Date less than current date');
+					res.render('./layouts/AddAssignDetails');
+    			}
 	    	}
 	    }
 	});
@@ -263,6 +263,7 @@ router.get('/download/:fileKey', function(req, res){
 	    	if(doc) 
 	    	{
 	    		originalname = doc.original;
+	    		console.log('Download file')
 				res.download(__dirname + '/public/uploads/' + fileKey , originalname)
 	    	}
 	    }
@@ -280,17 +281,53 @@ router.get('/login', function(req, res){
 });
 
 router.get('/getCourse', function(req, res, next){
-	var array1 = [];
-	var cursor = db.collection('courses').find({InstructorEmail:req.user.email});
-	cursor.forEach(function(doc,err){
-		assert.equal(null,err);
-		array1.push(doc);
-		//console.log(array1);
-	}, function(){
-		//db.close();
-		res.render('./layouts/courseList', {items: array1});
-		//console.log("Done?");
-	});
+	if (req.user.type == 'Instructor')
+	{
+		var array1 = [];
+		var cursor = db.collection('courses').find({InstructorEmail:req.user.email});
+		cursor.forEach(function(doc,err){
+			assert.equal(null,err);
+			array1.push(doc);
+			//console.log(array1);
+		}, function(){
+			//db.close();
+			res.render('./layouts/courseList', {items: array1});
+			//console.log("Done?");
+		});
+	}
+	else{
+		db.collection('users').findOne({email: req.user.email}, function(err, doc) {
+		    if (err) {
+		      console.log(err)
+		    } 
+		    else 
+		    {
+		    	if(doc) 
+		    	{
+		    		var array1 = [];
+		    		var f = doc.Courses.length
+		    		doc.Courses.forEach(function(x,e){
+		    			console.log(x)
+						db.collection('courses').findOne({CourseID:x}, function(errr,docc) {
+							if (errr)
+							{
+								console.log(errr)
+							}
+							if (docc)
+							{
+								array1.push(docc)
+								if ((--f) == 0) {
+						    		res.render('./layouts/courseList', {items: array1});							
+				    			}
+							}
+						});
+		    		});
+		    		// console.log(array1)
+		    		// res.render('./layouts/courseList', {items: array1});
+		    	}
+		    }
+		});
+	}
 	//console.log("Out?");
 });
 

@@ -80,7 +80,7 @@ router.get('/assignments', ensureAuthenticated, function(req,res){
 	if(req.user.type == "Instructor")
 			res.redirect('/users/getassignments');
 	else if (req.user.type == "Student")
-		res.render('/users/getassignments');
+		res.redirect('/users/getassignments');
 })
 
 router.get('/addAssignment', ensureAuthenticated, function(req,res){
