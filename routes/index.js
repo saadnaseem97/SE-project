@@ -83,6 +83,14 @@ router.get('/assignments', ensureAuthenticated, function(req,res){
 		res.redirect('/users/getassignments');
 })
 
+router.get('/resources', ensureAuthenticated, function(req,res){
+	if(req.user.type == "Instructor")
+			res.render('./layouts/Resources_Instructor');
+	else if (req.user.type == "Student")
+		res.render('./layouts/Resources_Student');
+})
+
+
 router.get('/addAssignment', ensureAuthenticated, function(req,res){
 	res.render('./layouts/AddAssignDetails');
 })
