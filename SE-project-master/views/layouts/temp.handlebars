@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TA_Pro</title>
+  <link rel="stylesheet" href="/css/bootstrap.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <!-- <link rel="stylesheet" href="/css/dashboard.css" /> -->
+
+  <style>
+  table, th, td {
+      border: 1.5px solid black;
+      border-collapse: collapse;
+  }
+  th, td {
+      padding: 5px;
+      text-align: left;
+  }
+
+  /* Style the input */
+  input {
+    width: 85%;
+    padding: 10px;
+    float: left;
+    font-size: 20px;
+  }
+
+  .btn-group a {
+    background-color: #7f00c7; /* Green background */
+    border: 1px solid black; /* Green border */
+    color: white; /* White text */
+    padding: 10px 24px; /* Some padding */
+    cursor: pointer; /* Pointer/hand icon */
+    width: 100%; /* Set a width if needed */
+    display: block; /* Make the buttons appear below each other */
+    margin-left: 45%;
+    margin-top: 12%;
+  }
+
+  </style>
+
+</head>
+<body>
+  <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right" style="margin-top:5%;margin-right: 10%">
+              <li role="presentation"><a href="/users/logout" style="color:#420c7a">Logout</a></li>
+          </ul>
+        </nav>
+
+<ul class="nav nav-tabs" style="margin-top:5%;"></ul>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="margin-top: 2%;">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <!-- redirect to Template page -->
+                <a class="nav-link active" href="/" style="color:#420c7a">
+                  <span data-feather="home"></span>
+                  HOME <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/profile" style="color:#420c7a">
+                  <span data-feather="file"></span>
+                  PROFILE
+                </a>
+              </li>
+
+              <li class="nav-item" class="dropDown">
+                <a class="nav-link" href="/courses" style="color:#420c7a">
+                  <span data-feather="layers"></span>
+                  COURSES
+                </a>
+              </li>
+            </ul>
+
+          </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <!-- <h1 class="h2">Welcome Instructor!</h1> -->
+            <h1 class="h2 mb-3 font-weight-normal" style="margin-top: 3%; margin-left: 2%;color:#420c7a"><b>Courses</b></h1>
+            <form class="form-signin" style="width:120 " method="post" action="/users/addCourse">
+ 
+            <div class="btn-toolbar mb-2 mb-md-0">
+              <div class="btn-group mr-2">
+                <input type="text" id="myInput" placeholder="Add Course...  ">
+                <span onclick="newElement()" class="btn btn-lg btn-primary " type="submit" style="background: #7f00c7; margin-top: 10%; width:25; margin-left:35%; border: 1px solid black;">Add Course</span>
+
+              </div>
+
+          <div id="head_nav">   
+          </form>       
+        </main>
+
+      </div>
+    </div>
+
+    <div class="btn-group" id="myList">
+      <a href="/SoftWare">Software Engineering</a>
+    </div>
+
+    <script>
+
+    // Create a new list item when clicking on the "Add" button
+    function newElement() {
+      var bt = document.createElement("A");
+      var inputValue = document.getElementById("myInput").value;
+      var t = document.createTextNode(inputValue);
+      bt.appendChild(t);
+      if (inputValue === '') {
+        alert("You must write something!");
+      } else {
+        document.getElementById("myList").appendChild(bt);
+      }
+      document.getElementById("myInput").value = "";
+    }
+
+    </script>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../../../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../../../dist/js/bootstrap.min.js"></script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+
+    <!-- Graphs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    
+  </body>
+</html>
