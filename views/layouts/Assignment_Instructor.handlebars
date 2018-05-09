@@ -94,12 +94,12 @@
                 <!-- <div id="Test2" runat="server" width="100%"></div> -->
                 <div class="tab">
                   {{# each items}}
-                  <button class="tablinks" onclick="">
+                  <button class="tablinks">
                   
-                    <div style="max-width:0%; float:left">{{this.name}}</div>
+                    <a href="/selectcourse/{{this.name}}"><div style="max-width:0%; float:left">{{this.name}}</div>
                     <div style="float:left;padding-left: 35%"><text>{{this.maxMarks}}</text></div>
                     <div style="float:left;padding-left: 22%"><text style="">{{this.dueDate}}</text></div>
-                    <div style="float:left;padding-left: 18%"><text style="">{{this.dueTime}}</text></div></button>
+                    <div style="float:left;padding-left: 18%"><text style="">{{this.dueTime}}</text></div></button></a>
                   {{/each}}
 <!-- 
                  <button class="tablinks" onclick="openCity(event, 'Paris')">
