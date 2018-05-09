@@ -16,7 +16,8 @@ var UserSchema = new Schema({
 	ContactNumber: String,
 	type: String,
 	ParentName: String,
-	ParentContact: String
+	ParentContact: String,
+	Courses: [String],
 });
 
 var User = module.exports = mongoose.model('User', UserSchema);

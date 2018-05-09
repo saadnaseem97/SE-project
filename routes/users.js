@@ -605,16 +605,31 @@ router.post('/addStudent', function(req, res){
 									type: 'Student',
 									ParentName: "",
 									ParentContact: "",
-									Courses: [courseName]
+									Courses: [courseID]
 								});
 								User.createUser(newUser, function(err, user){
 									if(err) throw err;
 									console.log(user);
 								});
-								console.log("ADDED ")
-								req.flash('success_msg', 'Added User');	
-								console.log('flash message')
-								res.redirect('/addStudent');
+
+								db.collection('courses').findOne({CourseID: courseID}, function(err, docc) {
+								    if (err) {
+								      console.log(err)
+								    } else {
+								    	if(docc) {
+								    		docc.Students.push(req.user.email);
+									    	db.collection('courses').updateOne({ Course: courseID }, {$set : docc}, function(errr, docy) {
+									          	if (errr) {
+									            	console.log(errr);
+									           }
+									        	console.log("ADDED ")
+												req.flash('success_msg', 'Added User');	
+												console.log('flash message')
+												res.redirect('/addStudent');
+									        });
+								    	}
+								    }
+								});
 					      	}
 					    }
 					});
