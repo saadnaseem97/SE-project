@@ -28,7 +28,7 @@
 <body>
 
 <ul class="nav nav-tabs" style="max-width:750px;margin-top:-3%; margin-left: 19.5%; position: relative">
-  <li class="active"><a href="/">Resources</a></li>
+  <li class="active"><a href="#">Resources</a></li>
   <li><a href="/assignments" style="color:#420c7a">Assignments</a></li>
   <li><a href="#" style="color:#420c7a">Gradebook</a></li>
   <li><a href="#" style="color:#420c7a">Attendance</a></li>
@@ -45,21 +45,21 @@
             <ul class="nav flex-column">
               <li class="nav-item">
                                             <!-- redirect to studentmain.handlebars -->
-                <a class="nav-link active" href="/" style="color:#420c7a">
+                <a class="nav-link active" href="http://google.com" style="color:#420c7a">
                   <span data-feather="home"></span>
                   HOME <span class="sr-only">(current)</span>
                 </a>
               </li>
               <li class="nav-item">
                                               <!-- redirect to Edit_Profile_Student.handlebars -->
-                <a class="nav-link" href="/profile" style="color:#420c7a">
+                <a class="nav-link" href="http://google.com" style="color:#420c7a">
                   <span data-feather="file"></span>
                   PROFILE
                 </a>
               </li>
 
               <li class="nav-item">
-                <a class="nav-link" href="/courses" style="color:#420c7a">
+                <a class="nav-link" href="#" style="color:#420c7a">
                   <span data-feather="layers"></span>
                   COURSES
                 </a>
@@ -89,14 +89,23 @@
                 <!-- <div id="Test1" runat="server" width="100%"></div> -->
                 <!-- <div id="Test2" runat="server" width="100%"></div> -->
                 <div class="tab">
-                  {{# each items}}
-                  <button class="tablinks">
+                  <button class="tablinks" onclick="openCity(event, 'London')">
                   
-                    <a href=""><div style="max-width:0%; float:left">items.name</div>
+                    <div style="max-width:0%; float:left">Reading.pdf</div>
                     <div style="float:left;padding-left: 40%"><text>10/4/18</text></div>
-                    <div style="float:left;padding-left: 26%"><text style="">20:14</text></div></button></a>
-                  {{/each}}
+                    <div style="float:left;padding-left: 26%"><text style="">20:14</text></div></button>
+                  
 
+                 <button class="tablinks" onclick="openCity(event, 'Paris')">
+                  
+                    <div style="max-width:0%; float:left">MathProblems.pdf</div>
+                    <div style="float:left;padding-left: 40%"><text>10/4/18</text></div>
+                    <div style="float:left;padding-left: 26%"><text style="">20:14</text></div></button>
+                 <button class="tablinks" onclick="openCity(event, 'NewYork')">
+                  
+                    <div style="max-width:0%; float:left">HelpSheet.pdf</div>
+                    <div style="float:left;padding-left: 40%"><text>10/4/18</text></div>
+                    <div style="float:left;padding-left: 26%"><text style="">20:14</text></div></button>
                 </div>
               </div>
             </div>
