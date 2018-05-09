@@ -224,7 +224,6 @@ router.post('/addResource', upload, (req, res, next) => {
 				    	}
 				    	else
 				    	{
-
 				    		toAdd2 = {
 				    			'id': id,
 				    			'key':req.files[0].NewName,
@@ -252,10 +251,10 @@ router.post('/addResource', upload, (req, res, next) => {
 
 
 //Download a File
-router.get('/download/:fileKey', function(req, res){
-	var fileKey = req.params.fileKey;
-	console.log(fileKey)
-	db.collection('files').findOne({key: fileKey}, function(err, doc) {
+router.get('/download/:fileid', function(req, res){
+	var fileid = req.params.fileid;
+	console.log(fileid)
+	db.collection('files').findOne({id: fileid}, function(err, doc) {
 	    if (err) {
 	      console.log(err);
 	    } 
@@ -264,8 +263,9 @@ router.get('/download/:fileKey', function(req, res){
 	    	if(doc) 
 	    	{
 	    		originalname = doc.original;
+	    		fileKey = doc.key;
 	    		console.log('Download file')
-				res.download(__dirname + '/public/uploads/' + fileKey , originalname)
+				res.download(__dirname + '/public/uploads/' + filekey , originalname)
 	    	}
 	    }
 	});
