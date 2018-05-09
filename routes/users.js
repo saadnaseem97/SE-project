@@ -651,6 +651,23 @@ router.post('/addStudent', function(req, res){
 	});
 });
 
+router.get('/selectAssignment/:assignID', function(req, res){
+	var assignID = req.params.assignID;
+	if (req.user.type == 'Student')
+	{
+		// if(date&&TIME>currentDateand TIME)
+		if(1)
+		{
+			res.render('./layouts/StudentSubmission', {AID:assignID})
+		}
+		else
+		{
+			res.render('./layouts/StudentCommentView', {AID:assignID})
+		}
+	}
+});
+
+
 passport.use(new LocalStrategy( {usernameField: 'email',  
     passwordField: 'password'},
   function(email, password, done) {
