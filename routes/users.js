@@ -193,14 +193,14 @@ router.post('/addResource', upload, (req, res, next) => {
 	    		console.log(doc)
 				var courseID = doc.state;
 				var resourceName = req.files[0].originalname;
-				var date = Date.now()
+				var date = new Date();
 				id = courseID+resourceName+makeid()
 				toAdd = {
 					'key' : req.files[0].NewName,
 					'resourceID': id,
 					'course' : courseID,
 					'name' : resourceName,
-					'date' : date
+					'date' : `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`
 				}
 				db.collection('resources').insertOne(toAdd, function(err, doc) {
 			    	if (err) 
@@ -358,6 +358,7 @@ router.get('/getResource', function(req, res, next){
 					assert.equal(null,err);
 					array1.push(doc);
 				}, function(){
+					console.log(array1)
 					if(req.user.type == "Instructor")
 						res.render('./layouts/Resources_Instructor', {items: array1});
 					else if (req.user.type == "Student")
