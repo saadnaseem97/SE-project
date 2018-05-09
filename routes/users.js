@@ -147,7 +147,7 @@ router.post('/addAssignment', upload, (req, res, next) => {
 								    	else
 								    	{
 								    		toAdd2 = {
-								    			'assignmentID': id,
+								    			'id': id,
 								    			'key':req.files[0].NewName,
 								    			'original': req.files[0].originalname
 
@@ -226,7 +226,7 @@ router.post('/addResource', upload, (req, res, next) => {
 				    	{
 
 				    		toAdd2 = {
-				    			'resourceID': id,
+				    			'id': id,
 				    			'key':req.files[0].NewName,
 				    			'original': req.files[0].originalname
 
@@ -254,6 +254,7 @@ router.post('/addResource', upload, (req, res, next) => {
 //Download a File
 router.get('/download/:fileKey', function(req, res){
 	var fileKey = req.params.fileKey;
+	console.log(fileKey)
 	db.collection('files').findOne({key: fileKey}, function(err, doc) {
 	    if (err) {
 	      console.log(err);
