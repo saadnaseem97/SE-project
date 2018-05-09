@@ -14,6 +14,7 @@ var storage = multer.diskStorage({
         cb(null, 'public/uploads/');
     },
     filename: function (req, file, cb) {
+    	console.log(file.originalname)
     	file.NewName = Date.now() + file.originalname + makeid();
         cb(null, file.NewName);
     }
@@ -581,7 +582,7 @@ router.post('/addStudent', function(req, res){
 					    		else
 					    		{
 					    			doc.Courses.push(courseID)
-					    			db.collection('users').updateOne({ 'email': user.email }, {$set : doc}, function(errr, docy) {
+					    			db.collection('users').updateOne({ 'email': email }, {$set : doc}, function(errr, docy) {
 							          if (errr) {
 							             console.log(errr);
 							           }
@@ -590,8 +591,8 @@ router.post('/addStudent', function(req, res){
 										      console.log(err)
 										    } else {
 										    	if(docc) {
-										    		docc.Students.push(req.user.email);
-										    		db.collection('courses').updateOne({ Course: courseID }, {$set : docc}, function(errr, docy) {
+										    		docc.Students.push(email);
+										    		db.collection('courses').updateOne({ CourseID: courseID }, {$set : docc}, function(errr, docy) {
 											          if (errr) {
 											             console.log(errr);
 											           }
@@ -629,8 +630,8 @@ router.post('/addStudent', function(req, res){
 								      console.log(err)
 								    } else {
 								    	if(docc) {
-								    		docc.Students.push(req.user.email);
-									    	db.collection('courses').updateOne({ Course: courseID }, {$set : docc}, function(errr, docy) {
+								    		docc.Students.push(email);
+									    	db.collection('courses').updateOne({ CourseID: courseID }, {$set : docc}, function(errr, docy) {
 									          	if (errr) {
 									            	console.log(errr);
 									           }
@@ -653,18 +654,187 @@ router.post('/addStudent', function(req, res){
 
 router.get('/selectAssignment/:assignID', function(req, res){
 	var assignID = req.params.assignID;
-	if (req.user.type == 'Student')
-	{
-		// if(date&&TIME>currentDateand TIME)
-		if(1)
-		{
-			res.render('./layouts/StudentSubmission', {AID:assignID})
-		}
-		else
-		{
-			res.render('./layouts/StudentCommentView', {AID:assignID})
-		}
+
+		db.collection('assignments').findOne({assignmentID: assignID}, function(err, doc) {
+		    if (err) {
+		      console.log(err);
+		    } 
+		    else
+		    {
+		    	if(doc) 
+		    	{
+		    		var dueTime = doc.dueTime;
+					var dueDate = doc.dueDate;
+					var year, month, day;
+					var timeHours, timeMinutes;
+					var a = dueTime.split(':');
+					var b = a[Symbol.iterator]();
+					timeHours = b.next().value;
+					timeMinutes = b.next().value;
+					// console.log(timeHours)
+					// console.log(timeMinutes)
+					// var time=dueDate.slice(12,16);
+					// console.log(dueTime)
+					var c=dueDate.split('-');
+					var e=c[Symbol.iterator]();
+					year = e.next().value;
+					month = e.next().value; 
+					day = e.next().value;
+					// console.log(month)
+
+					var today = new Date();
+					// console.log(today.getDate())
+					// console.log(today.getMonth())
+					// console.log(today.getFullYear())
+
+					if(today.getFullYear() < year){
+					console.log('herreee1')	
+					checkNew = true;
+					}
+					else if(today.getFullYear() == year && today.getMonth()+1 < month ){
+						console.log('herreee2')
+						
+						checkNew = true;
+					}
+					else if(today.getFullYear() == year && today.getMonth()+1 == month && today.getDate() < day){
+						console.log('herreee3')
+						checkNew = true;
+					}
+					else if(today.getFullYear() == year && today.getMonth()+1 == month && today.getDate() == day && today.getHours() < timeHours){
+						console.log('herreee4')
+						
+						checkNew = true;	
+					}
+					else if(today.getFullYear() == year && today.getMonth()+1 == month && today.getDate() == day && today.getHours() == timeHours && today.getMinutes() < timeMinutes){
+						console.log('herreee5')
+						
+						checkNew = true;
+					}
+					else{
+						checkNew = false;
+					}
+				}
+				if(checkNew != true)
+				{
+					if (req.user.type == 'Student')
+					{
+						res.render('./layouts/StudentSubmission', {AID:assignID,Adate:dueDate,Atime:dueTime})
+					}
+				}
+				else // Time passed
+				{
+					if (req.user.type == 'Student')
+					{
+						db.collection('comments').findOne({assignmentID: AID, email:req.user.email}, function(err, doc) {
+						    if (err) {
+						      console.log(err);
+						    }
+						    else
+						    {
+						    	comment = 'No Comment';
+						    	if(doc)
+						    	{
+						    		comment = doc.comment;
+						    		res.render('./layouts/StudentCommentView', {AID:assignID,Adate:dueDate,Atime:dueTime, Acomment: comment});
+						    	}
+						    	else{
+									res.render('./layouts/StudentCommentView', {AID:assignID,Adate:dueDate,Atime:dueTime, Acomment: comment});
+						    	}
+						    }
+						});
+					}
+					else{
+						db.collection('userstate').findOne({email: req.user.email}, function(err, docc) {
+						    if (err) {
+						      console.log(err);
+						    } 
+						    else
+						    {
+						    	if(docc) 
+						    	{
+									var courseID = docc.state;
+									db.collection('courses').findOne({CourseID: courseID}, function(err, doccc) {
+									    if (err) {
+									      console.log(err);
+									    } 
+									    else
+									    {
+									    	if(doccc) 
+									    	{
+									    		array1 = []
+									    		var f = doccc.Students.length
+									    		doccc.Students.forEach(x=> {
+									    			student = db.collection('courses').findOne({email: x})
+									    			array1.push(student)
+									    			--f || res.render('./layouts/Assignment_inst_closed',{roster: array1})
+									    		})
+									    	}
+									    }
+									});
+								}
+							}
+						});
+					}
+				}
+	    	}
+		})
+});
+
+router.get('/downloadsubmission/:AID', function(req, res){
+	var AID = req.params.AID;
+	console.log(AID)
+	db.collection('submissions').findOne({assignmentID: AID}, function(err, doc) {
+	    if (err) {
+	      console.log(err);
+	    } 
+	    else
+	    {
+	    	if(doc) 
+	    	{
+	    		originalname = doc.original;
+	    		fileKey = doc.key;
+	    		console.log('Download file')
+				res.download(  './public/uploads/' + fileKey , originalname)
+	    	}
+	    }
+	});
+});
+
+
+router.post('/submitAssignment/:assignID', upload , function(req, res,next){
+	var assignID = req.params.assignID;
+	toAdd = {
+		assignmentID: assignID,
+		email: req.user.email,
+    	key : req.files[0].NewName,
+    	original : req.files[0].originalname
 	}
+	db.collection('submissions').insertOne(toAdd, function(errrr, doc) {
+    	if (errrr) 
+    	{
+    		console.log(errrr)
+    	}
+    	else
+    	{
+			toAdd2 = {
+				'key':req.files[0].NewName,
+				'original': req.files[0].originalname
+			}
+			db.collection('files').insertOne(toAdd2, function(errr, docc) {
+				if (errr) 
+				{
+					console.log(errr)
+				}
+				else
+				{
+					req.flash('success_msg', 'Assignment Submitted');
+					res.redirect('/users/getassignments');	
+				}
+			});
+    		console.log('AssignmentSubmitted')
+    	}
+    });
+
 });
 
 

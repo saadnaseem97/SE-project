@@ -83,8 +83,8 @@
           </div>
         </div>
         
-        <div style="padding-left:10px;float:left"><text><b>20/10/15</b></text></div>
-        <div style="padding-left: 300px"><text><b>11:55</b></text></div>
+        <div style="padding-left:10px;float:left"><text><b>{{Adate}}</b></text></div>
+        <div style="padding-left: 300px"><text><b>{{Atime}}</b></text></div>
 
 
 
@@ -95,20 +95,22 @@
 
 <!--     DOWNLOAD ASSIGNMENT --> 
          <div style="float:left;margin-left:17%">
-          <a href="http://google.com"><button class="btn btn-lg btn-file" type="submit" style="color:white;background: #7f00c7;"><text style="font-size: 12px"><b>Download Assignment</b></text></button></a>
+          <a href="/users/download/{{AID}}"><button class="btn btn-lg btn-file" type="submit" style="color:white;background: #7f00c7;"><text style="font-size: 12px"><b>Download Assignment</b></text></button></a>
           </div>
 
 
 <!--          SUBMISSION HEREEEEE-->    
 
   <div  style="width:300px;height:150px;margin-left:17%;margin-top:5%;border:3px solid black">
-    <input style="border:1px solid black;margin-left:10px;margin-top:10px" type=file>
+    <form action="/users/submitAssignment/{{AID}}" method="post" enctype="multipart/form-data">
+    <input type="file" name="name" style="border:1px solid black;margin-left:10px;margin-top:10px"  >
     <div class="checkbox mb-3" style="margin-left:80px">
-          <label>
+          <!-- <label> -->
             <input type="checkbox" value="honor"> Honor Pledge
-          </label>
+          <!-- </label> -->
         </div>
-      <a href="http://google.com"><button class="btn btn-lg btn-file" type="submit" style="margin-left:70px;padding:7px;color:white;background: #7f00c7;"><text style="font-size: 12px"><b>Submit Assignment</b></text></button></a>
+      <button class="btn btn-lg btn-file" type="submit" style="margin-left:70px;padding:7px;color:white;background: #7f00c7;"><text style="font-size: 12px"><b>Submit Assignment</b></text></button>
+    </form>
   </div>
 
   <!-- <main> -->
