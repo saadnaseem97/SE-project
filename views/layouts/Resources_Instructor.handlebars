@@ -39,6 +39,30 @@
   <li><a href="#" style="color:#420c7a">Research Log</a></li>
 </ul>
 
+<div class="row" style="clear:left">
+    <div class="col-lg-12">
+      {{#if success_msg}}
+        <div class="alert alert-success">{{success_msg}}</div>
+      {{/if}}
+
+      {{#if error_msg}}
+        <div class="alert alert-danger">{{error_msg}}</div>
+      {{/if}}
+
+      {{#if error}}
+        <div class="alert alert-danger">{{error}}</div>
+      {{/if}}
+      
+      {{{body}}}
+    </div>
+    <h2 class="page-header"></h2>
+        {{#if errors}}
+              {{#each errors}}
+                <div class="alert alert-danger">{{msg}}</div>
+              {{/each}}
+        {{/if}}
+      </div>
+
     <div class="container-fluid">
       <div class="row">
         <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="margin-top: 2%;">
