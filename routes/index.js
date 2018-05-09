@@ -35,19 +35,41 @@ router.get('/profile', ensureAuthenticated, function(req,res){
 	res.render('./layouts/ProfileInst');
 })
 
-router.get('/Software', ensureAuthenticated, function(req,res){
+router.get('/selectCourse/:courseChoice', ensureAuthenticated, function(req,res){
+	var courseName = req.params.courseChoice;
+	db.collection('userstate').findOne({'email': req.user.email}, function(err, doc) {
+	    if (err) {
+	      console.log(err);
+	    } 
+	    else
+	    {
+	    	if(doc) 
+	    	{
+	    		doc.state = courseName
+	    		db.collection('userstate').updateOne({ 'email': doc.email }, {$set : doc}, function(errr, docy) {
+	              if (errr) {
+	                 console.log(errr);
+	               }
+	            });
+	      	}
+	      	else
+	      	{
+	      		toAdd = {
+	      			"email": req.user.email,
+	      			'state':  courseName
+	      		}
+	      		db.collection('userstate').insertOne(toAdd, function(errrr, docc) {
+			    	if (errrr) {
+			      		console.log(errrr);
+			    	}
+			  	});
+	      	}
+	    }
+	});
 	if(req.user.type == "Instructor")
 			res.render('./layouts/Resources_Instructor');
 	else if (req.user.type == "Student")
 		res.render('./layouts/Resources_Student');
-})
-
-router.get('/selectCourse/:courseChoice', ensureAuthenticated, function(req,res){
-	var courseName = req.params.courseChoice;
-	if(req.user.type == "Instructor")
-			res.render('./layouts/Resources_Instructor', {course : courseName});
-	else if (req.user.type == "Student")
-		res.render('./layouts/Resources_Student', {course : courseName});
 })
 
 router.get('/courses', ensureAuthenticated, function(req,res) {
@@ -69,8 +91,7 @@ router.get('/addAssignment', ensureAuthenticated, function(req,res){
 // 	res.render('./layouts/AddStudent');
 // })
 
-router.get('/addStudent/:courseChoice', ensureAuthenticated, function(req,res){
-	var courseName = req.params.courseChoice;
-	res.render('./layouts/AddStudent', {course : courseName});
+router.get('/addStudent', ensureAuthenticated, function(req,res){
+	res.render('./layouts/AddStudent');
 })
 module.exports = router;
