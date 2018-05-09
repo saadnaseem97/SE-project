@@ -39,6 +39,30 @@
   <li><a href="#" style="color:#420c7a">Research Log</a></li>
 </ul>
 
+<div class="row" style="clear:left">
+    <div class="col-lg-12">
+      {{#if success_msg}}
+        <div class="alert alert-success">{{success_msg}}</div>
+      {{/if}}
+
+      {{#if error_msg}}
+        <div class="alert alert-danger">{{error_msg}}</div>
+      {{/if}}
+
+      {{#if error}}
+        <div class="alert alert-danger">{{error}}</div>
+      {{/if}}
+      
+      {{{body}}}
+    </div>
+    <h2 class="page-header"></h2>
+        {{#if errors}}
+              {{#each errors}}
+                <div class="alert alert-danger">{{msg}}</div>
+              {{/each}}
+        {{/if}}
+      </div>
+
     <div class="container-fluid">
       <div class="row">
         <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="margin-top: 2%;">
@@ -91,23 +115,14 @@
                 <!-- <div id="Test1" runat="server" width="100%"></div> -->
                 <!-- <div id="Test2" runat="server" width="100%"></div> -->
                 <div class="tab">
-                  <button class="tablinks" onclick="openCity(event, 'London')">
-                  
-                    <div style="max-width:0%; float:left">Reading.pdf</div>
-                    <div style="float:left;padding-left: 40%"><text>10/4/18</text></div>
-                    <div style="float:left;padding-left: 26%"><text style="">20:14</text></div></button>
-                  
 
-                 <button class="tablinks" onclick="openCity(event, 'Paris')">
-                  
-                    <div style="max-width:0%; float:left">MathProblems.pdf</div>
-                    <div style="float:left;padding-left: 40%"><text>10/4/18</text></div>
-                    <div style="float:left;padding-left: 26%"><text style="">20:14</text></div></button>
-                 <button class="tablinks" onclick="openCity(event, 'NewYork')">
-                  
-                    <div style="max-width:0%; float:left">HelpSheet.pdf</div>
-                    <div style="float:left;padding-left: 40%"><text>10/4/18</text></div>
-                    <div style="float:left;padding-left: 26%"><text style="">20:14</text></div></button>
+                  {{# each items}}
+                  <a href="/users/download/{{this.resourceID}}"><button class="tablinks">
+                     <div style="max-width:0%; float:left">{{this.name}}</div>
+                    <div style="float:left;padding-left: 40%"><text>{{this.date}}</text></div>
+                    <div style="float:left;padding-left: 26%"><text style=""></text></div></button></a>
+                  {{/each}}
+
                 </div>
               </div>
             </div>
