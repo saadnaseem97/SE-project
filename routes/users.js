@@ -202,48 +202,32 @@ router.post('/addResource', upload, (req, res, next) => {
 					'name' : resourceName,
 					'date' : date
 				}
+				db.collection('resources').insertOne(toAdd, function(err, doc) {
+			    	if (err) 
+			    	{
+			    		console.log(err)
+			    	}
+			    	else
+			    	{
+			    		toAdd2 = {
+			    			'id': id,
+			    			'key':req.files[0].NewName,
+			    			'original': req.files[0].originalname
 
-				req.checkBody('AssName', 'Assignment name is required').notEmpty();
-				req.checkBody('marks', 'Maximum marks are required').notEmpty();
-				req.checkBody('dueTime', 'Due time is required').notEmpty();
-				req.checkBody('dueDate', 'Due date is required').notEmpty();
-
-				var errors = req.validationErrors();
-				console.log(errors)
-				if(errors){
-					res.render('./layouts/AddAssignDetails',{
-						errors:errors
-					});
-				} 
-				else 
-				{
-					db.collection('resources').insertOne(toAdd, function(err, doc) {
-				    	if (err) 
-				    	{
-				    		console.log(err)
-				    	}
-				    	else
-				    	{
-				    		toAdd2 = {
-				    			'id': id,
-				    			'key':req.files[0].NewName,
-				    			'original': req.files[0].originalname
-
-				    		}
-				    		db.collection('files').insertOne(toAdd2, function(errr, docc) {
-						    	if (errr) 
-						    	{
-				    				console.log(errr)
-						    	}
-						    	else
-						    	{
-						    		req.flash('success_msg', 'Resource Added');
-									res.redirect('/users/getassignments');	
-						    	}
-						    });
-				    	}
-				  	});
-				}
+			    		}
+			    		db.collection('files').insertOne(toAdd2, function(errr, docc) {
+					    	if (errr) 
+					    	{
+			    				console.log(errr)
+					    	}
+					    	else
+					    	{
+					    		req.flash('success_msg', 'Resource Added');
+								res.redirect('/users/getResource');	
+					    	}
+					    });
+			    	}
+			  	});
 	    	}
 	    }
 	});
@@ -352,6 +336,32 @@ router.get('/getassignments', function(req, res, next){
 						res.render('./layouts/Assignment_Instructor', {items: array1});
 					else if (req.user.type == "Student")
 						res.render('./layouts/Assignment_Student', {items: array1});
+				});
+	    	}
+	    }
+	});
+});
+
+router.get('/getResource', function(req, res, next){
+	db.collection('userstate').findOne({email: req.user.email}, function(err, doc) {
+	    if (err) {
+	      console.log(err);
+	    } 
+	    else
+	    {
+	    	if(doc) 
+	    	{
+				var courseID = doc.state;
+				var array1 = [];
+				var cursor = db.collection('resources').find({course:courseID});
+				cursor.forEach(function(doc,err){
+					assert.equal(null,err);
+					array1.push(doc);
+				}, function(){
+					if(req.user.type == "Instructor")
+						res.render('./layouts/Resources_Instructor', {items: array1});
+					else if (req.user.type == "Student")
+						res.render('./layouts/Resources_Student', {items: array1});
 				});
 	    	}
 	    }
