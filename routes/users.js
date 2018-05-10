@@ -744,32 +744,107 @@ router.get('/selectAssignGB/:assignID', function(req, res){
 	    else
 	    {
 	    	array1 = []
-	    	console.log(doccc)
-	    	var f = doccc.length
-	    	doccc.forEach(function(doc,err){
+	    	var f=0
+	    	// console.log(`IM HEREEEE ${f}`)
+	    	doccc.forEach((doc,err) => {
+				f++
 	    		db.collection('users').findOne({email: doc.email}, function(err, docc) {
 				    if (err) {
 				      console.log(err);
 				    } 
 				    else
 				    {
-				    	console.log(docc)
-				    	docc.assignmentID = doc.assignmentID;
-				    	docc.key = doc.key;
-						array1.push(docc);
-						console.log(f)
-						if (--f==0) {
-							console.log("WEEEE")
-							if(req.user.type == "Instructor")
-								res.render('./layouts/gradebook_instr_displ', {items: array1});
-							else if (req.user.type == "Student")
-								res.render('./layouts/gradebook_instr_displ', {items: array1});
+				    	if (doc)
+				    	{
+
+				    		db.collection('marks').findOne({StudentEmail: doc.email, assignmentID:assignID}, function(err, doc2) {
+							    if (err) {
+							      console.log(err);
+							    } 
+							    else
+							    {
+							    	if (doc2)
+							    	{
+							    		docc.marks = doc2.mark;
+								    	docc.assignmentID = doc.assignmentID;
+								    	docc.key = doc.key;
+										array1.push(docc);
+										console.log(f)
+										if (--f==0)  
+										{
+											console.log("WEEEE")
+											console.log()
+											if(req.user.type == "Instructor")
+												res.render('./layouts/gradebook_instr_displ', {items: array1});
+											else if (req.user.type == "Student")
+												res.render('./layouts/gradebook_instr_displ', {items: array1});
+								    	}
+							    	}
+							    	else{
+							    		docc.assignmentID = doc.assignmentID;
+								    	docc.key = doc.key;
+										array1.push(docc);
+							    		if(--f==0) {
+											console.log("WEEEE")
+											if(req.user.type == "Instructor")
+												res.render('./layouts/gradebook_instr_displ', {items: array1});
+											else if (req.user.type == "Student")
+												res.render('./layouts/gradebook_instr_displ', {items: array1});
+
+							    		}
+							    	}
+							    }
+							});
+
+
+
+
+
+
+
+				    	}
+				    	else{
+				    		if(--f==0) {
+								console.log("WEEEE")
+								if(req.user.type == "Instructor")
+									res.render('./layouts/gradebook_instr_displ', {items: array1});
+								else if (req.user.type == "Student")
+									res.render('./layouts/gradebook_instr_displ', {items: array1});
+
+				    		}
 				    	}
 					}
 				});
 			});
 	    }
 	});
+});
+
+router.get('/addMarks/:assignmentID/:email',function(req,res){
+	var assignID = req.params.assignmentID;
+	var Semail = req.params.email;
+	res.render('./layouts/addMarks', {AID:assignID ,student:Semail})
+});
+
+router.post('/addMarksFin/:assignmentID/:email',function(req,res){
+	var assignID = req.params.assignmentID;
+	var Semail = req.params.email;
+	var marks = req.body.marks;
+	toAdd = {
+		assignmentID: assignID,
+		StudentEmail: Semail,
+		mark: marks
+	}
+	db.collection('marks').insertOne(toAdd, function(errrr, doc) {
+    	if (errrr) 
+    	{
+    		console.log(errrr)
+    	}
+    	else
+    	{
+			res.redirect('/users/selectAssignGB/'+assignID)
+    	}
+    });
 });
 
 router.get('/selectAssignment/:assignID', function(req, res){
