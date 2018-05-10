@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TA_Pro</title>
+  <link rel="stylesheet" href="/css/bootstrap.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+  table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+  }
+  th, td {
+      padding: 5px;
+      text-align: left;
+  }
+  </style>
+
+</head>
+<body>
+  <div class="container">
+      <div class="header clearfix">
+        
+<ul class="nav nav-tabs" style="margin-top:5%; margin-left: 9%; position: relative">
+  <li><a href="/resources" style="color:#420c7a">Resources</a></li>
+  <li><a href="/assignments" style="color:#420c7a">Assignments</a></li>
+  <li><a href="/users/getassignmentsGB" style="color:#420c7a">Gradebook</a></li>
+  <!-- <li><a href="#" style="color:#420c7a">Attendance</a></li> -->
+  <li><a href="/users/getRoster" style="color:#420c7a">Roster</a></li>
+  <li class="active" style="color:#420c7a"><a href="#">Add Student</a></li>
+  <!-- <li><a href="#" style="color:#420c7a">Research Log</a></li> -->
+  <nav>
+          <ul class="nav nav-pills pull-right" style="margin-right: 10%">
+              <li role="presentation"><a href="/users/logout" style="color:#420c7a">Logout</a></li>
+          </ul>
+        </nav>
+</ul>
+
+      </div>
+    </div>
+
+     <div class="row">
+  <img src="http://telesens-academy.com/wp-content/uploads/2016/11/cropped-TA-Logo-Violet-Background.png" width=130 height=130 style="margin-left: 4% ; margin-top: -5%;position:relative;float:left">
+</div>
+
+    <div class="row">
+    <div class="col-lg-12">
+      {{#if success_msg}}
+        <div class="alert alert-success " style="margin-left:18.5%">{{success_msg}}</div>
+      {{/if}}
+
+      {{#if error_msg}}
+        <div class="alert alert-danger" style="margin-left:18.5%">{{error_msg}}</div>
+      {{/if}}
+
+      {{#if error}}
+        <div class="alert alert-danger" style="margin-left:18.5%">{{error}}</div>
+      {{/if}}
+      
+      {{{body}}}
+    </div>
+    <!-- <h2 class="page-header"></h2> -->
+        {{#if errors}}
+              {{#each errors}}
+                <div class="alert alert-danger">{{msg}}</div>
+              {{/each}}
+        {{/if}}
+      </div>
+
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="margin-top: 2%;position:relative ">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link active" href="/" style="color:#420c7a">
+                  <span data-feather="home"></span>
+                  HOME <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/profile" style="color:#420c7a">
+                  <span data-feather="file"></span>
+                  PROFILE
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/courses" style="color:#420c7a">
+                  <span data-feather="layers"></span>
+                  COURSES
+                </a>
+              </li>
+            </ul>
+
+          </div>        
+        </nav>
+          <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <!-- <div style="float:right;margin-top:1%;margin-right: 80%"> -->
+        <form class="form-signin" method="post" action="/users/addStudent">
+        <h1 class="h2" style="margin-right:-10%;margin-top: 3%; color:#420c7a ;position:relative "><b>Add Student</b></h1>
+        <!-- </div> -->
+        <div style="margin-top:1%;margin-right: 80% ; margin-top:2%;position:relative ">
+          <label for="inputEmail" class="sr-only">Email address</label>
+          <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus name = "email">
+          <div style="margin-top:5%;margin-right: 0% ;position:relative ">
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="Password" id="inputPassword" class="form-control" placeholder="Password" required name = "password">
+            <div class="checkbox mb-3">
+            </div>
+            <div>
+              <a href="http://google.com"><button class="btn btn-lg btn-primary btn-block" type="submit" style="background: #7f00c7">Add Student</button></a>
+            </div>
+          </div>
+        </div>
+      </form>
+      </div>
+  <!-- <main> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../../../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../../../dist/js/bootstrap.min.js"></script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+
+    <!-- Graphs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+  </main>
+<!-- </main> -->
+</div>
+</div>
+</body>
+</html>
