@@ -77,6 +77,10 @@ router.get('/assign', ensureAuthenticated, function(req,res) {
 	res.render('./layouts/AddAssignDetails');
 })
 
+router.get('/gradebook', ensureAuthenticated, function(req,res) {
+	res.render('./layouts/gradebook_Instructor');
+})
+
 
 router.get('/assignments', ensureAuthenticated, function(req,res){
 	if(req.user.type == "Instructor")
