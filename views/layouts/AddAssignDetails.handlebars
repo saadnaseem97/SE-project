@@ -21,12 +21,12 @@
   <div class="container">
       <div class="header clearfix">
 
-<ul class="nav nav-tabs" style="margin-top:5%; margin-left: 9%; position: relative">
+<ul class="nav nav-tabs" style="margin-top:5%; margin-left: 10%; position: relative">
   <li><a href="/resources" style="color:#420c7a">Resources</a></li>
   <li class="active" style="color:#420c7a"><a href="/assignments">Assignments</a></li>
-  <li><a href="#" style="color:#420c7a">Gradebook</a></li>
-  <li><a href="#" style="color:#420c7a">Attendance</a></li>
-  <li><a href="#" style="color:#420c7a">Roster</a></li>
+  <li><a href="/users/getassignmentsGB" style="color:#420c7a">Gradebook</a></li>
+  <!-- <li><a href="#" style="color:#420c7a">Attendance</a></li> -->
+  <li><a href="/users/getRoster" style="color:#420c7a">Roster</a></li>
   <li><a href="/addStudent" style="color:#420c7a">Add Student</a></li>
   <li><a href="#" style="color:#420c7a">Research Log</a></li>
         <nav>
@@ -38,6 +38,10 @@
 
       </div>
     </div>
+
+<div class="row">
+  <img src="http://telesens-academy.com/wp-content/uploads/2016/11/cropped-TA-Logo-Violet-Background.png" width=130 height=130 style="margin-left: 4% ; margin-top: -5%;position:relative;float:left">
+</div>
 
     <div class="row" style="clear:left">
     <div class="col-lg-12">
@@ -55,7 +59,7 @@
       
       {{{body}}}
     </div>
-    <h2 class="page-header"></h2>
+    <!-- <h2 class="page-header"></h2> -->
         {{#if errors}}
               {{#each errors}}
                 <div class="alert alert-danger">{{msg}}</div>
