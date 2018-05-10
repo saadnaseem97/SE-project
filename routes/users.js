@@ -725,7 +725,7 @@ router.get('/selectAssignment/:assignID', function(req, res){
 				{
 					if (req.user.type == 'Student')
 					{
-						db.collection('comments').findOne({assignmentID: AID, email:req.user.email}, function(err, doc) {
+						db.collection('comments').findOne({AID: assignmentID, email:req.user.email}, function(err, doc) {
 						    if (err) {
 						      console.log(err);
 						    }
@@ -735,9 +735,11 @@ router.get('/selectAssignment/:assignID', function(req, res){
 						    	if(doc)
 						    	{
 						    		comment = doc.comment;
+						    		console.log(assignID)
 						    		res.render('./layouts/StudentCommentView', {AID:assignID,Adate:dueDate,Atime:dueTime, Acomment: comment});
 						    	}
 						    	else{
+						    		console.log(assignID)
 									res.render('./layouts/StudentCommentView', {AID:assignID,Adate:dueDate,Atime:dueTime, Acomment: comment});
 						    	}
 						    }
@@ -765,9 +767,10 @@ router.get('/selectAssignment/:assignID', function(req, res){
 									    		var f = doccc.Students.length
 									    		doccc.Students.forEach(x=> {
 									    			db.collection('users').findOne({email: x}, (err,data) => {
+									    				data.AID = assignID;
 									    				array1.push(data)
-									    				console.log(array1)
-									    				--f || res.render('./layouts/Assignment_inst_closed',{roster: array1, AID: assignID})
+									    				console.log(assignID)
+									    				--f || res.render('./layouts/Assignment_inst_closed',{roster: array1})
 									    			})
 									    		})
 									    	}
@@ -781,6 +784,43 @@ router.get('/selectAssignment/:assignID', function(req, res){
 	    	}
 		})
 });
+
+router.get('/getRoster', function(req, res){
+	db.collection('userstate').findOne({email: req.user.email}, function(err, doc) {
+	    if (err) {
+	      console.log(err);
+	    } 
+	    else
+	    {
+	    	if(doc) 
+	    	{
+				var courseID = doc.state;
+				db.collection('courses').findOne({CourseID: courseID}, function(err, docc) {
+			    if (err) {
+				      console.log(err);
+				    } 
+				    else
+				    {
+				    	if(docc) 
+				    	{
+				    		array1 = []
+				    		var f = docc.Students.length
+				    		docc.Students.forEach(x=> {
+				    			db.collection('users').findOne({email: x}, (err,data) => {
+				    				data.AID = assignID;
+				    				array1.push(data)
+				    				console.log(assignID)
+				    				--f || res.render('./layouts/Roster',{roster: array1})
+				    			})
+				    		})
+				    	}
+				    }
+				});
+			}
+		}
+	});
+});
+
 
 router.get('/viewStudSub/:AID/:email', function(req, res){
 	var assignID = req.params.AID;
@@ -805,7 +845,22 @@ router.get('/viewStudSub/:AID/:email', function(req, res){
 				    	{
 				    		date = docc.dueDate;
 				    		time = docc.dueTime;
-							res.render('/.layouts/Instr_Comment', {AID:assignID, Lname = lastName, Adate : date, Atime:time, Semail:sEmail})
+				    		db.collection('comments').findOne({assignmentID: assignID, email:sEmail}, function(err, doccc) {
+							    if (err) {
+							      console.log(err);
+							    }
+							    else
+							    {
+							    	console.log(doccc)
+							    	if(doccc)
+							    	{
+										res.render('./layouts/StudentCommentView' , {AID:assignID,Adate:date,Atime:time, Acomment: doccc.comment})
+							    	}
+							    	else{
+										res.render('./layouts/Instr_Comment', {AID:assignID, Lname : lastName, Adate : date, Atime:time, Semail:sEmail})
+							    	}
+							    }
+							});
 				    	}
 				    }
 				});
@@ -816,7 +871,7 @@ router.get('/viewStudSub/:AID/:email', function(req, res){
 
 router.get('/downloadSubmission/:AID/:email', function(req, res){
 	var assignID = req.params.AID;
-	var sEmail = req.params.email;.
+	var sEmail = req.params.email;
 	db.collection('submissions').findOne({assignmentID: AID, email:sEmail}, function(err, doc) {
 	    if (err) {
 	      console.log(err);
@@ -854,6 +909,41 @@ router.get('/downloadsubmission/:AID', function(req, res){
 	});
 });
 
+router.post('/addComment/:AID/:email', upload , function(req, res,next){
+	var assignID = req.params.AID;
+	var sEmail = req.params.email;
+	var comm = req.body.comment;
+	toAdd = {
+		assignmentID: assignID,
+		email: sEmail,
+    	comment : comm
+	}
+	db.collection('comments').insertOne(toAdd, function(errrr, doc) {
+    	if (errrr) 
+    	{
+    		console.log(errrr)
+    	}
+    	else
+    	{
+    		db.collection('assignments').findOne({assignmentID: assignID}, function(errr, docc) {
+			    if (errr) {
+			      console.log(errr);
+			    } 
+			    else
+			    {
+			    	if(docc) 
+			    	{
+			    		date = docc.dueDate;
+			    		time = docc.dueTime;
+						res.render('./layouts/StudentCommentView' , {AID:assignID,Adate:date,Atime:time, Acomment: comm})
+			    	}
+			    }
+			});
+			
+    	}
+    });
+
+});
 
 router.post('/submitAssignment/:assignID', upload , function(req, res,next){
 	var assignID = req.params.assignID;
