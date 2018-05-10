@@ -343,6 +343,88 @@ router.get('/getassignments', function(req, res, next){
 	});
 });
 
+router.get('/getassignmentsGB', function(req, res, next){
+	db.collection('userstate').findOne({email: req.user.email}, function(err, docc) {
+	    if (err) {
+	      console.log(err);
+	    } 
+	    else
+	    {
+	    	if(docc) 
+	    	{
+				var courseID = docc.state;
+				var array1 = [];
+				db.collection('assignments').find({course:courseID},(err,data) => {
+					data.forEach(function(doc,err){
+						assert.equal(null,err);
+
+						var dueTime = doc.dueTime;
+						var dueDate = doc.dueDate;
+						var year, month, day;
+						var timeHours, timeMinutes;
+						var a = dueTime.split(':');
+						var b = a[Symbol.iterator]();
+						timeHours = b.next().value;
+						timeMinutes = b.next().value;
+						// console.log(timeHours)
+						// console.log(timeMinutes)
+						// var time=dueDate.slice(12,16);
+						// console.log(dueTime)
+						var c=dueDate.split('-');
+						var e=c[Symbol.iterator]();
+						year = e.next().value;
+						month = e.next().value; 
+						day = e.next().value;
+						// console.log(month)
+
+						var today = new Date();
+						// console.log(today.getDate())
+						// console.log(today.getMonth())
+						// console.log(today.getFullYear())
+
+						if(today.getFullYear() < year){
+						console.log('herreee1')	
+						checkNew = true;
+						}
+						else if(today.getFullYear() == year && today.getMonth()+1 < month ){
+							console.log('herreee2')
+							
+							checkNew = true;
+						}
+						else if(today.getFullYear() == year && today.getMonth()+1 == month && today.getDate() < day){
+							console.log('herreee3')
+							checkNew = true;
+						}
+						else if(today.getFullYear() == year && today.getMonth()+1 == month && today.getDate() == day && today.getHours() < timeHours){
+							console.log('herreee4')
+							
+							checkNew = true;	
+						}
+						else if(today.getFullYear() == year && today.getMonth()+1 == month && today.getDate() == day && today.getHours() == timeHours && today.getMinutes() < timeMinutes){
+							console.log('herreee5')
+							
+							checkNew = true;
+						}
+						else{
+							checkNew = false;
+						}
+						if(checkNew == true) // Valid
+						{
+							array1.push(doc);
+						}
+					}, function(){
+						console.log(array1)
+						if(req.user.type == "Instructor")
+							res.render('./layouts/gradebook_Instructor', {items: array1});
+						else if (req.user.type == "Student")
+							res.render('./layouts/gradebook_Instructor', {items: array1});
+					});
+				});
+	    	}
+	    }
+	});
+});
+
 router.get('/getResource', function(req, res, next){
 	db.collection('userstate').findOne({email: req.user.email}, function(err, doc) {
 	    if (err) {
@@ -652,137 +734,175 @@ router.post('/addStudent', function(req, res){
 	});
 });
 
+router.get('/selectAssignGB/:assignID', function(req, res){
+	var assignID = req.params.assignID;
+
+	db.collection('submissions').find({assignmentID: assignID}, function(err, doccc) {
+	    if (err) {
+	      console.log(err);
+	    } 
+	    else
+	    {
+	    	array1 = []
+	    	console.log(doccc)
+	    	var f = doccc.length
+	    	doccc.forEach(function(doc,err){
+	    		db.collection('users').findOne({email: doc.email}, function(err, docc) {
+				    if (err) {
+				      console.log(err);
+				    } 
+				    else
+				    {
+				    	console.log(docc)
+				    	docc.assignmentID = doc.assignmentID;
+				    	docc.key = doc.key;
+						array1.push(docc);
+						console.log(f)
+						if (--f==0) {
+							console.log("WEEEE")
+							if(req.user.type == "Instructor")
+								res.render('./layouts/gradebook_instr_displ', {items: array1});
+							else if (req.user.type == "Student")
+								res.render('./layouts/gradebook_instr_displ', {items: array1});
+				    	}
+					}
+				});
+			});
+	    }
+	});
+});
+
 router.get('/selectAssignment/:assignID', function(req, res){
 	var assignID = req.params.assignID;
 
-		db.collection('assignments').findOne({assignmentID: assignID}, function(err, doc) {
-		    if (err) {
-		      console.log(err);
-		    } 
-		    else
-		    {
-		    	if(doc) 
-		    	{
-		    		var dueTime = doc.dueTime;
-					var dueDate = doc.dueDate;
-					var year, month, day;
-					var timeHours, timeMinutes;
-					var a = dueTime.split(':');
-					var b = a[Symbol.iterator]();
-					timeHours = b.next().value;
-					timeMinutes = b.next().value;
-					// console.log(timeHours)
-					// console.log(timeMinutes)
-					// var time=dueDate.slice(12,16);
-					// console.log(dueTime)
-					var c=dueDate.split('-');
-					var e=c[Symbol.iterator]();
-					year = e.next().value;
-					month = e.next().value; 
-					day = e.next().value;
-					// console.log(month)
+	db.collection('assignments').findOne({assignmentID: assignID}, function(err, doc) {
+	    if (err) {
+	      console.log(err);
+	    } 
+	    else
+	    {
+	    	if(doc) 
+	    	{
+	    		var dueTime = doc.dueTime;
+				var dueDate = doc.dueDate;
+				var year, month, day;
+				var timeHours, timeMinutes;
+				var a = dueTime.split(':');
+				var b = a[Symbol.iterator]();
+				timeHours = b.next().value;
+				timeMinutes = b.next().value;
+				// console.log(timeHours)
+				// console.log(timeMinutes)
+				// var time=dueDate.slice(12,16);
+				// console.log(dueTime)
+				var c=dueDate.split('-');
+				var e=c[Symbol.iterator]();
+				year = e.next().value;
+				month = e.next().value; 
+				day = e.next().value;
+				// console.log(month)
 
-					var today = new Date();
-					// console.log(today.getDate())
-					// console.log(today.getMonth())
-					// console.log(today.getFullYear())
+				var today = new Date();
+				// console.log(today.getDate())
+				// console.log(today.getMonth())
+				// console.log(today.getFullYear())
 
-					if(today.getFullYear() < year){
-					console.log('herreee1')	
+				if(today.getFullYear() < year){
+				console.log('herreee1')	
+				checkNew = true;
+				}
+				else if(today.getFullYear() == year && today.getMonth()+1 < month ){
+					console.log('herreee2')
+					
 					checkNew = true;
-					}
-					else if(today.getFullYear() == year && today.getMonth()+1 < month ){
-						console.log('herreee2')
-						
-						checkNew = true;
-					}
-					else if(today.getFullYear() == year && today.getMonth()+1 == month && today.getDate() < day){
-						console.log('herreee3')
-						checkNew = true;
-					}
-					else if(today.getFullYear() == year && today.getMonth()+1 == month && today.getDate() == day && today.getHours() < timeHours){
-						console.log('herreee4')
-						
-						checkNew = true;	
-					}
-					else if(today.getFullYear() == year && today.getMonth()+1 == month && today.getDate() == day && today.getHours() == timeHours && today.getMinutes() < timeMinutes){
-						console.log('herreee5')
-						
-						checkNew = true;
-					}
-					else{
-						checkNew = false;
-					}
 				}
-				if(checkNew != true)
-				{
-					if (req.user.type == 'Student')
-					{
-						res.render('./layouts/StudentSubmission', {AID:assignID,Adate:dueDate,Atime:dueTime})
-					}
+				else if(today.getFullYear() == year && today.getMonth()+1 == month && today.getDate() < day){
+					console.log('herreee3')
+					checkNew = true;
 				}
-				else // Time passed
+				else if(today.getFullYear() == year && today.getMonth()+1 == month && today.getDate() == day && today.getHours() < timeHours){
+					console.log('herreee4')
+					
+					checkNew = true;	
+				}
+				else if(today.getFullYear() == year && today.getMonth()+1 == month && today.getDate() == day && today.getHours() == timeHours && today.getMinutes() < timeMinutes){
+					console.log('herreee5')
+					
+					checkNew = true;
+				}
+				else{
+					checkNew = false;
+				}
+			}
+			if(checkNew == true)
+			{
+				if (req.user.type == 'Student')
 				{
-					if (req.user.type == 'Student')
-					{
-						db.collection('comments').findOne({AID: assignmentID, email:req.user.email}, function(err, doc) {
-						    if (err) {
-						      console.log(err);
-						    }
-						    else
-						    {
-						    	comment = 'No Comment';
-						    	if(doc)
-						    	{
-						    		comment = doc.comment;
-						    		console.log(assignID)
-						    		res.render('./layouts/StudentCommentView', {AID:assignID,Adate:dueDate,Atime:dueTime, Acomment: comment});
-						    	}
-						    	else{
-						    		console.log(assignID)
-									res.render('./layouts/StudentCommentView', {AID:assignID,Adate:dueDate,Atime:dueTime, Acomment: comment});
-						    	}
-						    }
-						});
-					}
-					else{
-						db.collection('userstate').findOne({email: req.user.email}, function(err, docc) {
-						    if (err) {
-						      console.log(err);
-						    } 
-						    else
-						    {
-						    	if(docc) 
-						    	{
-									var courseID = docc.state;
-									db.collection('courses').findOne({CourseID: courseID}, function(err, doccc) {
-									    if (err) {
-									      console.log(err);
-									    } 
-									    else
-									    {
-									    	if(doccc) 
-									    	{
-									    		array1 = []
-									    		var f = doccc.Students.length
-									    		doccc.Students.forEach(x=> {
-									    			db.collection('users').findOne({email: x}, (err,data) => {
-									    				data.AID = assignID;
-									    				array1.push(data)
-									    				console.log(assignID)
-									    				--f || res.render('./layouts/Assignment_inst_closed',{roster: array1})
-									    			})
-									    		})
-									    	}
-									    }
-									});
-								}
+					res.render('./layouts/StudentSubmission', {AID:assignID,Adate:dueDate,Atime:dueTime})
+				}
+			}
+			else // Time passed
+			{
+				if (req.user.type == 'Student')
+				{
+					db.collection('comments').findOne({assignmentID: assignID, email:req.user.email}, function(err, doc) {
+					    if (err) {
+					      console.log(err);
+					    }
+					    else
+					    {
+					    	comment = 'No Comment';
+					    	if(doc)
+					    	{
+					    		comment = doc.comment;
+					    		console.log(assignID)
+					    		res.render('./layouts/StudentCommentView', {AID:assignID,Adate:dueDate,Atime:dueTime, Acomment: comment});
+					    	}
+					    	else{
+					    		console.log(assignID)
+								res.render('./layouts/StudentCommentView', {AID:assignID,Adate:dueDate,Atime:dueTime, Acomment: comment});
+					    	}
+					    }
+					});
+				}
+				else{
+					db.collection('userstate').findOne({email: req.user.email}, function(err, docc) {
+					    if (err) {
+					      console.log(err);
+					    } 
+					    else
+					    {
+					    	if(docc) 
+					    	{
+								var courseID = docc.state;
+								db.collection('courses').findOne({CourseID: courseID}, function(err, doccc) {
+								    if (err) {
+								      console.log(err);
+								    } 
+								    else
+								    {
+								    	if(doccc) 
+								    	{
+								    		array1 = []
+								    		var f = doccc.Students.length
+								    		doccc.Students.forEach(x=> {
+								    			db.collection('users').findOne({email: x}, (err,data) => {
+								    				data.AID = assignID;
+								    				array1.push(data)
+								    				console.log(assignID)
+								    				--f || res.render('./layouts/Assignment_inst_closed',{roster: array1})
+								    			})
+								    		})
+								    	}
+								    }
+								});
 							}
-						});
-					}
+						}
+					});
 				}
-	    	}
-		})
+			}
+    	}
+	})
 });
 
 router.get('/getRoster', function(req, res){
@@ -807,9 +927,7 @@ router.get('/getRoster', function(req, res){
 				    		var f = docc.Students.length
 				    		docc.Students.forEach(x=> {
 				    			db.collection('users').findOne({email: x}, (err,data) => {
-				    				data.AID = assignID;
 				    				array1.push(data)
-				    				console.log(assignID)
 				    				--f || res.render('./layouts/Roster',{roster: array1})
 				    			})
 				    		})

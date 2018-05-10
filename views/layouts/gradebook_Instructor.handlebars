@@ -96,7 +96,7 @@
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-          <form action="/users/addResource" method="post" class="form-signin" enctype="multipart/form-data">
+          <!-- <form action="/users/addResource" method="post" class="form-signin" enctype="multipart/form-data"> -->
             <!-- <div class="row"> -->
             <div class="row" style="margin-top: 3%;margin-left:2%; color:#420c7a; position: relative">
             <h1 class="h2 mb-3 font-weight-normal" style="float:left;margin-right: 3%"><b>Gradebook </b></h1>
@@ -124,7 +124,7 @@
                 <div class="tab">
 
                   {{# each items}}
-                  <a href="/users/download/{{this.resourceID}}"><button class="tablinks">
+                  <a href="/users/selectAssignGB/{{this.assignmentID}}"><button class="tablinks">
                      <div style="max-width:0%; float:left">{{this.name}}</div>
                     <div style="float:left;padding-left: 40%"><text>{{this.date}}</text></div>
                     <div style="float:left;padding-left: 26%"><text style=""></text></div></button></a>
@@ -138,7 +138,7 @@
             Update <input type="file" id="file" name="file" onchange="this.form.submit()"> 
             </span>
         
-          </form>
+          <!-- </form> -->
           </div>
           <!-- <form action="/users/addResource" method="post" enctype="multipart/form-data">
     Select image to upload:
