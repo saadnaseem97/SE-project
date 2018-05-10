@@ -30,39 +30,43 @@
 <ul class="nav nav-tabs" style="max-width:750px;margin-top:-3%; margin-left: 19.5%; position: relative">
   <li class="active"><a href="#">Resources</a></li>
   <li><a href="/assignments" style="color:#420c7a">Assignments</a></li>
-  <li><a href="#" style="color:#420c7a">Gradebook</a></li>
-  <li><a href="#" style="color:#420c7a">Attendance</a></li>
-  <li><a href="#" style="color:#420c7a">Roster</a></li>
+  <li><a href="/users/getassignmentsGB" style="color:#420c7a">Gradebook</a></li>
+  <!-- <li><a href="#" style="color:#420c7a">Attendance</a></li> -->
+  <li><a href="/users/getRoster" style="color:#420c7a">Roster</a></li>
                 <!-- Should go to AddStudent screen -->
   <li><a href="/addStudent" style="color:#420c7a">Add Student</a></li>
 
-  <li><a href="#" style="color:#420c7a">Research Log</a></li>
+  <!-- <li><a href="#" style="color:#420c7a">Research Log</a></li> -->
 </ul>
+
+</div>
+    <div class="row">
+  <img src="http://telesens-academy.com/wp-content/uploads/2016/11/cropped-TA-Logo-Violet-Background.png" width=130 height=130 style="margin-left: 4% ; margin-top: -5%;position:relative;float:left">
+</div>
 
 <div class="row" style="clear:left">
     <div class="col-lg-12">
       {{#if success_msg}}
-        <div class="alert alert-success">{{success_msg}}</div>
+        <div class="alert alert-success" style="margin-left:18.5%" >{{success_msg}}</div>
       {{/if}}
 
       {{#if error_msg}}
-        <div class="alert alert-danger">{{error_msg}}</div>
+        <div class="alert alert-danger" style="margin-left:18.5%">{{error_msg}}</div>
       {{/if}}
 
       {{#if error}}
-        <div class="alert alert-danger">{{error}}</div>
+        <div class="alert alert-danger" style="margin-left:18.5%">{{error}}</div>
       {{/if}}
       
       {{{body}}}
     </div>
-    <h2 class="page-header"></h2>
+    <!-- <h2 class="page-header"></h2> -->
         {{#if errors}}
               {{#each errors}}
-                <div class="alert alert-danger">{{msg}}</div>
+                <div class="alert alert-danger" style="margin-left:18.5%">{{msg}}</div>
               {{/each}}
         {{/if}}
-      </div>
-
+      
     <div class="container-fluid">
       <div class="row">
         <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="margin-top: 2%;">
@@ -98,14 +102,14 @@
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
           <form action="/users/addResource" method="post" class="form-signin" enctype="multipart/form-data">
         
-            <h1 class="h2 mb-3 font-weight-normal" style="margin-top: 4%;margin-left:2%; color:#420c7a; position: relative"><b>Resources </b></h1>
+            <h1 class="h2 mb-3 font-weight-normal" style="margin-top: 2%;margin-left:2%; color:#420c7a; position: relative"><b>Resources </b></h1>
         
             <h1 class="h3 mb-3 font-weight-normal" style="float:left;color:#420c7a; margin-top: 2%;margin-left: 2%;max-width: 20%; position: relative">
             Resource Name</h1>
             <h1 class="h3 mb-3 font-weight-normal" style="float:left;color:#420c7a; margin-top: 2%;margin-left: 10%;max-width: 20%; position: relative">
             Date Uploaded</h1>
-            <h1 class="h3 mb-3 font-weight-normal" style="float:left;color:#420c7a; margin-top: 2%;margin-left: 12.5%;max-width: 0%; position: relative">
-            Time</h1>
+<!--             <h1 class="h3 mb-3 font-weight-normal" style="float:left;color:#420c7a; margin-top: 2%;margin-left: 12.5%;max-width: 0%; position: relative">
+            Time</h1> -->
             <!-- <div class="boxed">
               Resource Name
             </div> --> 
