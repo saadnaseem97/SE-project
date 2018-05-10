@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="/css/style.css" />
   <!-- <link rel="stylesheet" href="/css/dashboard.css" /> -->
 
+
   <style>
   table, th, td {
       border: 1px solid black;
@@ -28,40 +29,67 @@
 <body>
 
 <ul class="nav nav-tabs" style="max-width:750px;margin-top:-3%; margin-left: 19.5%; position: relative">
-                         <!-- Should go to Resources_Instructor screen -->
-  <li><a href="/resources" style="color:#420c7a">Resources</a></li>
-  <li><a href="/Assignments" style="color:#420c7a">Assignments</a></li>
-  <li><a href="#" style="color:#420c7a">Gradebook</a></li>
-  <li><a href="#" style="color:#420c7a">Attendance</a></li>
-  <li class="active" ><a href="#">Roster</a></li>
+  <li><a href="/users/getResource" style="color:#420c7a">Resources</a></li>
+  <li><a href="/assignments" style="color:#420c7a">Assignments</a></li>
+  <li><a href="/users/getassignmentsGB" style="color:#420c7a">Gradebook</a></li>
+  <!-- <li><a href="#" style="color:#420c7a">Attendance</a></li> -->
+  <li class="active"><a href="#">Roster</a></li>
                 <!-- Should go to AddStudent screen -->
   <li><a href="/addStudent" style="color:#420c7a">Add Student</a></li>
 
-  <li><a href="#" style="color:#420c7a">Research Log</a></li>
+  <!-- <li><a href="#" style="color:#420c7a">Research Log</a></li> -->
 </ul>
 
+</div>
+    <div class="row">
+  <img src="http://telesens-academy.com/wp-content/uploads/2016/11/cropped-TA-Logo-Violet-Background.png" width=130 height=130 style="margin-left: 4% ; margin-top: -5%;position:relative;float:left">
+</div>
+
+<div class="row" style="clear:left">
+    <div class="col-lg-12">
+      {{#if success_msg}}
+        <div class="alert alert-success" style="margin-left:18.5%" >{{success_msg}}</div>
+      {{/if}}
+
+      {{#if error_msg}}
+        <div class="alert alert-danger" style="margin-left:18.5%">{{error_msg}}</div>
+      {{/if}}
+
+      {{#if error}}
+        <div class="alert alert-danger" style="margin-left:18.5%">{{error}}</div>
+      {{/if}}
+      
+      {{{body}}}
+    </div>
+    <!-- <h2 class="page-header"></h2> -->
+        {{#if errors}}
+              {{#each errors}}
+                <div class="alert alert-danger" style="margin-left:18.5%">{{msg}}</div>
+              {{/each}}
+        {{/if}}
+      
     <div class="container-fluid">
       <div class="row">
         <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="margin-top: 2%;">
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
               <li class="nav-item">
-                                            <!-- redirect to studentmain.handlebars -->
-                <a class="nav-link active" href="http://google.com" style="color:#420c7a">
+                                            <!-- redirect to TEMPLATE.handlebars -->
+                <a class="nav-link active" href="/" style="color:#420c7a">
                   <span data-feather="home"></span>
                   HOME <span class="sr-only">(current)</span>
                 </a>
               </li>
               <li class="nav-item">
-                                              <!-- redirect to Edit_Profile_Student.handlebars -->
-                <a class="nav-link" href="http://google.com" style="color:#420c7a">
+                                              <!-- redirect to ProfileInst.handlebars -->
+                <a class="nav-link" href="/profile" style="color:#420c7a">
                   <span data-feather="file"></span>
                   PROFILE
                 </a>
               </li>
 
               <li class="nav-item">
-                <a class="nav-link" href="#" style="color:#420c7a">
+                <a class="nav-link" href="/courses" style="color:#420c7a">
                   <span data-feather="layers"></span>
                   COURSES
                 </a>
@@ -71,10 +99,10 @@
           </div>
         </nav>
 
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
          
-            <h1 class="h2 mb-3 font-weight-normal" style="margin-top: 4%;margin-left:2%; color:#420c7a; position: relative"><b>Roster </b></h1>
+            <h1 class="h2 mb-3 font-weight-normal" style="margin-top:2%;margin-left:2%; color:#420c7a; position: relative"><b>Roster </b></h1>
         
             <h1 class="h3 mb-3 font-weight-normal" style="float:left;color:#420c7a; margin-top: 2%;margin-left: 2%;max-width: 20%; position: relative">
             Student Name</h1>
@@ -82,7 +110,6 @@
             Overall%</h1> -->
             <!-- <h1 class="h3 mb-3 font-weight-normal" style="float:left;color:#420c7a; margin-top: 2%;margin-left: 10%;max-width: 20%; position: relative">
             Date Uploaded</h1>
-
             <h1 class="h3 mb-3 font-weight-normal" style="float:left;color:#420c7a; margin-top: 2%;margin-left: 12.5%;max-width: 0%; position: relative">
             Time</h1>
             
@@ -101,14 +128,13 @@
                   
                      {{this.firstName}} {{this.lastName}}
                   </button>
-
                     <div style="float:left;padding-left: 35%"><text>{{this.Marks}}</text></div>
 <!                     <div style="float:left;padding-left: 22%"><text style="">{{this.dueDate}}</text></div>
                     <div style="float:left;padding-left: 18%"><text style="">{{this.dueTime}}</text></div></button>
                   {{/each}} --> 
 
                 {{# each roster}}
-                <a href="/users/viewStudSub/{{this.firstName}}/{{this.lastName}}"><div class="tab" style="background:white;border: 1px white;">
+                <a href="/users/viewStudSub/{{this.firstName}}/{{this.lastName}}">
                   <button class="tablinks"  style="width:25%">
                   
                     {{this.firstName}} {{this.lastName}}
@@ -116,12 +142,13 @@
                   </button></a>
                     
                   {{/each}}             
-<!--                   <button class="tablinks" onclick="openCity(event, 'London')">
+
+<!--              
+     <button class="tablinks" onclick="openCity(event, 'London')">
                   
                     <div style="max-width:0%; float:left">Rashna</div>
                     <div style="float:left;padding-left: 50%"><text>100%</text></div>
                     <div style="float:left;padding-left: 26%"><text style="">20:14</text></div></button>
-
                  <button class="tablinks" onclick="openCity(event, 'Paris')">
                   
                     <div style="max-width:0%; float:left">Danyal</div>
