@@ -78,8 +78,8 @@
         
             <h1 class="h3 mb-3 font-weight-normal" style="float:left;color:#420c7a; margin-top: 2%;margin-left: 2%;max-width: 20%; position: relative">
             Student Name</h1>
-            <h1 class="h3 mb-3 font-weight-normal" style="float:left;color:#420c7a; margin-top: 2%;margin-left: 20.5%;max-width: 0%; position: relative">
-            Overall%</h1>
+<!--             <h1 class="h3 mb-3 font-weight-normal" style="float:left;color:#420c7a; margin-top: 2%;margin-left: 20.5%;max-width: 0%; position: relative">
+            Overall%</h1> -->
             <!-- <h1 class="h3 mb-3 font-weight-normal" style="float:left;color:#420c7a; margin-top: 2%;margin-left: 10%;max-width: 20%; position: relative">
             Date Uploaded</h1>
 
@@ -95,16 +95,37 @@
                 <!-- <div id="Test1" runat="server" width="100%"></div> -->
                 <!-- <div id="Test2" runat="server" width="100%"></div> -->
                 <div class="tab">
-                  <button class="tablinks" onclick="openCity(event, 'London')">
+     
+<!--                   {{# each roster}}
+                  <button class="tablinks" onclick="">
+                  
+                     {{this.firstName}} {{this.lastName}}
+                  </button>
+
+                    <div style="float:left;padding-left: 35%"><text>{{this.Marks}}</text></div>
+<!                     <div style="float:left;padding-left: 22%"><text style="">{{this.dueDate}}</text></div>
+                    <div style="float:left;padding-left: 18%"><text style="">{{this.dueTime}}</text></div></button>
+                  {{/each}} --> 
+
+                {{# each roster}}
+                <a href="/users/viewStudSub/{{this.firstName}}/{{this.lastName}}"><div class="tab" style="background:white;border: 1px white;">
+                  <button class="tablinks"  style="width:25%">
+                  
+                    {{this.firstName}} {{this.lastName}}
+                   
+                  </button></a>
+                    
+                  {{/each}}             
+<!--                   <button class="tablinks" onclick="openCity(event, 'London')">
                   
                     <div style="max-width:0%; float:left">Rashna</div>
                     <div style="float:left;padding-left: 50%"><text>100%</text></div>
-                    <!-- <div style="float:left;padding-left: 26%"><text style="">20:14</text></div></button> -->
+                    <div style="float:left;padding-left: 26%"><text style="">20:14</text></div></button>
 
                  <button class="tablinks" onclick="openCity(event, 'Paris')">
                   
                     <div style="max-width:0%; float:left">Danyal</div>
-                    <div style="float:left;padding-left: 50%"><text>99.9%</text></div>
+                    <div style="float:left;padding-left: 50%"><text>99.9%</text></div> -->
 <!--                  <button class="tablinks" onclick="openCity(event, 'NewYork')">
                   
                     <div style="max-width:0%; float:left">HelpSheet.pdf</div>
