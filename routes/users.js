@@ -580,6 +580,76 @@ router.post('/register', function(req, res){
 	}
 });
 
+router.post('/editInstProf', function(req, res){
+	var firstName = req.body.firstName;
+	var lastName = req.body.lastName;
+	// var username = req.body.username;
+	var password = req.body.password;
+	var password2 = req.body.password2;
+	var ContactNumber = req.body.ContactNumber;
+
+	// console.log(req.body)
+
+	// Validation
+	req.checkBody('firstName', 'First Name is required').notEmpty();
+	req.checkBody('lastName', 'Last Name is required').notEmpty();
+	req.checkBody('ContactNumber', 'Contact Number is required').notEmpty();
+	req.checkBody('password', 'Password is required').notEmpty();
+	req.checkBody('password', 'Passwords do not match').equals(req.body.password2);
+
+
+	var errors = req.validationErrors();
+	console.log(errors)
+	if(errors){
+		res.render('./layouts/ProfileInst',{
+			errors:errors
+		});
+	} else {
+
+	// 	User.getUserByEmail(email, function(err, user){
+	// 	   	if(err) {
+	// 	   		console.log(err)
+	// 	   	};
+	// 	   	if(user){
+	// 	   		console.log("DUPLICATE");
+	// req.flash('success_msg', 'You are logged out');
+	// 	   		// req.flash('error_msg', 'Email already exists');
+	// 	   		res.redirect('/users/login');
+	// 	   	}
+	//    	});
+		db.collection('users').findOne({email: req.user.email}, function(err, doc) {
+		    if (err) {
+		      console.log(err)
+		    } else {
+		    	if(doc) {
+		    		var email = doc.email;
+		    		var newUser = new User({
+						firstName: firstName,
+						lastName: lastName,
+						email:email,
+						password: password,
+						ContactNumber: ContactNumber,
+						type: 'Instructor',
+						ParentName: null,
+						ParentContact: null
+					});
+
+		    		db.collection('users').remove({email: email})
+		    		User.createUser(newUser, function(err, user){
+						if(err) throw err;
+						console.log(user);
+					});
+		    		req.flash('success_msg', 'Edit Profile Successful');
+					console.log('flash message')
+					res.redirect('/');
+		      	}					
+		    }
+		});
+	}
+});
+
+
+
 router.post('/registerStudent', function(req, res){
 	var firstName = req.body.firstName;
 	var lastName = req.body.lastName;
