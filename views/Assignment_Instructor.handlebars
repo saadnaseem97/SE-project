@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TA_Pro</title>
+  <link rel="stylesheet" href="/css/bootstrap.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <!-- <link rel="stylesheet" href="/css/dashboard.css" /> -->
+
+  <style>
+  table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+  }
+  th, td {
+      padding: 5px;
+      text-align: left;
+  }
+  </style>
+
+</head>
+  <div class="container">
+      <div class="header clearfix">
+          <ul class="nav nav-pills pull-right" style="margin-top:5%;margin-right: 10%;position: relative">
+              <li><a href="/users/logout" style="color:#420c7a;position: relative">Logout</a></li>
+          </ul>
+      </div>
+    </div>
+<body>
+
+<ul class="nav nav-tabs" style="max-width:750px;margin-top:-3%; margin-left: 19.5%; position: relative">
+                         <!-- Should go to Resources_Instructor screen -->
+  <li><a href="/resources" style="color:#420c7a">Resources</a></li>
+  <li class="active"><a href="#">Assignments</a></li>
+  <li><a href="/users/getassignmentsGB" style="color:#420c7a">Gradebook</a></li>
+  <!-- <li><a href="#" style="color:#420c7a">Attendance</a></li> -->
+  <li><a href="/users/getRoster" style="color:#420c7a">Roster</a></li>
+                <!-- Should go to AddStudent screen -->
+  <li><a href="/addStudent" style="color:#420c7a">Add Student</a></li>
+
+  <!-- <li><a href="#" style="color:#420c7a">Research Log</a></li> -->
+</ul>
+
+<div class="row">
+  <img src="http://telesens-academy.com/wp-content/uploads/2016/11/cropped-TA-Logo-Violet-Background.png" width=130 height=130 style="margin-left: 4% ; margin-top: -5%;position:relative;float:left">
+</div>
+
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="margin-top: 2%;">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                                            <!-- redirect to TEMPLATE.handlebars -->
+                <a class="nav-link active" href="/" style="color:#420c7a">
+                  <span data-feather="home"></span>
+                  HOME <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                                              <!-- redirect to ProfileInst.handlebars -->
+                <a class="nav-link" href="/profile" style="color:#420c7a">
+                  <span data-feather="file"></span>
+                  PROFILE
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="/courses" style="color:#420c7a">
+                  <span data-feather="layers"></span>
+                  COURSES
+                </a>
+              </li>
+            </ul>
+
+          </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+         
+            <h1 class="h2 mb-3 font-weight-normal" style="margin-top: 2%;margin-left:2%; color:#420c7a; position: relative"><b>Assignments </b></h1>
+        
+            <h1 class="h3 mb-3 font-weight-normal" style="float:left;color:#420c7a; margin-top: 2%;margin-left: 2%;max-width: 20%; position: relative">
+            Resource Name</h1>
+            <h1 class="h3 mb-3 font-weight-normal" style="float:left;color:#420c7a; margin-top: 2%;margin-left: 8%;max-width: 20%; position: relative">
+            Max Marks</h1>
+            <h1 class="h3 mb-3 font-weight-normal" style="float:left;color:#420c7a; margin-top: 2%;margin-left: 8%;max-width: 20%; position: relative">
+            Due Date</h1>
+            <h1 class="h3 mb-3 font-weight-normal" style="float:left;color:#420c7a; margin-top: 2%;margin-left: 8%;max-width: 20%; position: relative">
+            Due Time</h1>
+            <!-- <div class="boxed">
+              Resource Name
+            </div> --> 
+            <div class="panel-body" runat="server" style="clear:left;overflow-y: scroll; height: 500px; margin-right:22%; margin-top: 1%;position: relative">
+              <div class="mid-width wrapItems" style="background-color:#f1f1f1; height:800px; margin-top: -0.5%; margin-left: 1%; position: relative">
+
+                <!-- <div id="Test1" runat="server" width="100%"></div> -->
+                <!-- <div id="Test2" runat="server" width="100%"></div> -->
+                <div class="tab">
+                  {{# each items}}
+                  <a href="/users/selectAssignment/{{this.assignmentID}}"><button  class="tablinks">
+                  
+                    <div style="max-width:0%; float:left">{{this.name}}</div>
+                    <div style="float:left;padding-left: 35%"><text>{{this.maxMarks}}</text></div>
+                    <div style="float:left;padding-left: 22%"><text style="">{{this.dueDate}}</text></div>
+                    <div style="float:left;padding-left: 18%"><text style="">{{this.dueTime}}</text></div></button></a>
+                  {{/each}}
+<!-- 
+                 <button class="tablinks" onclick="openCity(event, 'Paris')">
+                  
+                    <div style="max-width:0%; float:left">Assignment2.pdf</div>
+                    <div style="float:left;padding-left: 35%"><text>10/4/18</text></div>
+                    <div style="float:left;padding-left: 22%"><text style="">20/4/18</text></div>
+                    <div style="float:left;padding-left: 18%"><text style="">20:14</text></div></button>
+                 <button class="tablinks" onclick="openCity(event, 'NewYork')">
+                  
+                    <div style="max-width:0%; float:left">Assignment3.pdf</div>
+                    <div style="float:left;padding-left: 35%"><text>10/4/18</text></div>
+                    <div style="float:left;padding-left: 22%"><text style="">20/4/18</text></div>
+                    <div style="float:left;padding-left: 18%"><text style="">20:14</text></div></button>
+ -->
+                </div>
+              </div>
+            </div>
+                                      <!-- Should go to AddAssignDetails -->
+            <a href="/addAssignment"><button class="btn btn-lg btn-file" style="background: #7f00c7; margin-left: 62%;margin-top:5% ;color: white;position: relative">
+            Add Assignment </button></a>
+            </span>
+        
+          </div>
+
+
+          <div id="head_nav">
+
+        </main>
+          
+
+      </div>
+    </div>
+  </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../../../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../../../dist/js/bootstrap.min.js"></script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+
+    <!-- Graphs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    
+  </body>
+</html>
