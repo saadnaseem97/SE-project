@@ -39,26 +39,31 @@
 
       </div>
     </div>
+
+    <div class="row">
+  <img src="http://telesens-academy.com/wp-content/uploads/2016/11/cropped-TA-Logo-Violet-Background.png" width=130 height=130 style="margin-left: 4% ; margin-top: -5%;position:relative;float:left">
+</div>
+
     <div class="row" style="clear:left">
     <div class="col-lg-12">
       {{#if success_msg}}
-        <div class="alert alert-success">{{success_msg}}</div>
+        <div class="alert alert-success" style="margin-left:18.5%">{{success_msg}}</div>
       {{/if}}
 
       {{#if error_msg}}
-        <div class="alert alert-danger">{{error_msg}}</div>
+        <div class="alert alert-danger" style="margin-left:18.5%">{{error_msg}}</div>
       {{/if}}
 
       {{#if error}}
-        <div class="alert alert-danger">{{error}}</div>
+        <div class="alert alert-danger" style="margin-left:18.5%">{{error}}</div>
       {{/if}}
       
       {{{body}}}
     </div>
-    <h2 class="page-header"></h2>
+    <!-- <h2 class="page-header"></h2> -->
         {{#if errors}}
               {{#each errors}}
-                <div class="alert alert-danger">{{msg}}</div>
+                <div class="alert alert-danger" style="margin-left:18.5%">{{msg}}</div>
               {{/each}}
         {{/if}}
       </div>
