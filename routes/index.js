@@ -32,7 +32,11 @@ function ensureAuthenticated(req, res, next){
 }
 
 router.get('/profile', ensureAuthenticated, function(req,res){
-	res.render('./layouts/ProfileInst');
+
+	if(req.user.type == "Instructor")
+			res.render('./layouts/ProfileInst');
+	else if (req.user.type == "Student")
+		res.render('./layouts/Edit_Profile_Student');
 })
 
 router.get('/selectCourse/:courseChoice', ensureAuthenticated, function(req,res){
