@@ -180,6 +180,178 @@ router.post('/addAssignment', upload, (req, res, next) => {
 	});
 });
 
+router.get('/getSchedule', function(req, res, next){
+	if (req.user.type == 'Instructor')
+	{
+		console.log("GET?")
+		db.collection('schedule').findOne({InstructorEmail:req.user.email}, function(err, tuple) {
+			if (err) {
+		      console.log(err)
+		    }
+		    else {
+		    	if (tuple) {
+		    		var tempArray = tuple.Array
+		    		res.render('./layouts/TEMPLATE', {items:tempArray})
+		    	}
+		    }
+		});
+	}
+});
+
+router.post('/addInSchedule', function(req, res){
+	var courseName = req.body.courseName;
+	let array = [
+		["08:00 - 09:00","-","-","-","-","-","-"],
+		["09:00 - 10:00","-","-","-","-","-","-"],
+		["10:00 - 11:00","-","-","-","-","-","-"],
+		["11:00 - 12:00","-","-","-","-","-","-"],
+		["12:00 - 13:00","-","-","-","-","-","-"],
+		["13:00 - 14:00","-","-","-","-","-","-"],
+		["14:00 - 15:00","-","-","-","-","-","-"],
+	]
+	//console.log(array)
+	//console.log(courseName)
+	req.checkBody('courseName', 'courseName is required').notEmpty();
+
+	var day = req.body.day;
+	//console.log(day)
+	req.checkBody('day', 'Day is required').notEmpty();
+
+	var y = -1;
+
+	if (req.validationErrors()) {
+		res.render('./layouts/editSchedule',{
+			errors:errors
+		});
+	} else {
+		if (day == "Monday" || day == "monday"){
+			y = 1
+		}
+		if (day == "Tuesday" || day == "tuesday"){
+			y = 2
+		}
+		if (day == "Wednesday" || day == "wednesday"){
+			y = 3
+		}
+		if (day == "Thursday" || day == "thursday"){
+			y = 4
+		}
+		if (day == "Friday" || day == "friday"){
+			y = 5
+		}
+		if (day == "Saturday" || day == "saturday"){
+			y = 6
+		}
+	}
+
+	var x = -1;
+	var timeSlot = req.body.timeSlot;
+	//console.log(timeSlot)
+	req.checkBody('timeSlot', 'TimeSlot is required').notEmpty();
+
+	if (req.validationErrors()) {
+		res.render('./layouts/editSchedule',{
+			errors:errors
+		});
+	} else {
+		if (timeSlot == "08:00 - 09:00"){
+			x = 0
+		}
+		if (timeSlot == "09:00 - 10:00"){
+			x = 1
+		}
+		if (timeSlot == "10:00 - 11:00"){
+			x = 2
+		}
+		if (timeSlot == "11:00 - 12:00"){
+			x = 3
+		}
+		if (timeSlot == "12:00 - 13:00"){
+			x = 4
+		}
+		if (timeSlot == "13:00 - 14:00"){
+			x = 5
+		}
+		if (timeSlot == "14:00 - 15:00"){
+			x = 6
+		}
+	}
+
+
+	var errors = req.validationErrors();
+
+	if(errors){
+		res.render('./layouts/editSchedule',{
+			errors:errors
+		});
+	} else {
+		db.collection('schedule').findOne({InstructorEmail:req.user.email}, function(err, doc) {
+		    if (err) {
+		      console.log(err)
+		    } 
+		    else 
+		    {
+		    	if(doc) 
+		    	{
+		    		//console.log("Not Found!")
+		      		db.collection('schedule').findOne({InstructorEmail:req.user.email}, function(err, tuple) {
+		      			if (err) {
+		      				console.log(err)
+		      			}
+		      			else {
+		      				//console.log("works?")
+		      				
+		      				var tempArray = tuple.Array
+		      				//console.log(tempArray)
+		      				tempArray[x][y] = courseName
+		      				toAdd = {
+								Array : tempArray,
+								InstructorEmail : req.user.email
+							}
+
+							db.collection('schedule').remove({InstructorEmail:req.user.email}, function(err, tuple) {
+				      			if (err) {
+				      				console.log(err)
+				      			}
+				      			else {
+				      				console.log("Old tuple Removed!")
+				      				db.collection('schedule').insertOne(toAdd, function(err, doc) {
+							        	if (err) {
+							          		handleError(res, err.message, "Failed add to file DB.");
+							        	}
+							        	else{
+							        		req.flash('success_msg', 'Schedule Updated!');
+									   		res.render('./layouts/TEMPLATE');
+							        	}
+							      	});
+								}
+							})
+		      			}
+		      		})
+		      	}
+		      	else
+		      	{
+		      		console.log("Found!")
+					array[x][y] = courseName
+					toAdd = {
+						Array : array,
+						InstructorEmail : req.user.email
+					}
+					db.collection('schedule').insertOne(toAdd, function(err, doc) {
+			        	if (err) {
+			          		handleError(res, err.message, "Failed add to file DB.");
+			        	}
+			        	else{
+			        		req.flash('success_msg', 'Schedule Updated!');
+					   		res.render('./layouts/TEMPLATE');
+			        	}
+			      	});
+		      	}
+		    }
+		});
+	}
+});
+
 router.post('/addResource', upload, (req, res, next) => {
 	console.log("Add Resource Called")
 	db.collection('userstate').findOne({email: req.user.email}, function(err, doc) {
@@ -504,6 +676,17 @@ router.post('/addCourse', function(req, res){
 
 // Register User
 router.post('/register', function(req, res){
+
+	let array = [
+		["08:00 - 09:00","-","-","-","-","-","-"],
+		["09:00 - 10:00","-","-","-","-","-","-"],
+		["10:00 - 11:00","-","-","-","-","-","-"],
+		["11:00 - 12:00","-","-","-","-","-","-"],
+		["12:00 - 13:00","-","-","-","-","-","-"],
+		["13:00 - 14:00","-","-","-","-","-","-"],
+		["14:00 - 15:00","-","-","-","-","-","-"],
+	]
+
 	var firstName = req.body.firstName;
 	var lastName = req.body.lastName;
 	var email = req.body.email;
@@ -571,6 +754,17 @@ router.post('/register', function(req, res){
 						console.log(user);
 					});
 
+					toAdd = {
+								Array : array,
+								InstructorEmail : email
+							}
+
+					db.collection('schedule').insertOne(toAdd, function(err, doc) {
+			        	if (err) {
+			          		handleError(res, err.message, "Failed add to file DB.");
+			        	}
+			      	});
+
 					req.flash('success_msg', 'You are registered and can now login');
 					console.log('flash message')
 					res.redirect('/users/login');
@@ -579,7 +773,6 @@ router.post('/register', function(req, res){
 		});
 	}
 });
-
 router.post('/editInstProf', function(req, res){
 	var firstName = req.body.firstName;
 	var lastName = req.body.lastName;

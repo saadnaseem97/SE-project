@@ -22,25 +22,18 @@
   <div class="container">
       <div class="header clearfix">
         <nav>
-          <ul class="nav nav-pills pull-right" style="margin-top:5%;margin-right: 10px" >
+          <ul class="nav nav-pills pull-right" style="margin-top:5px;margin-right: 10px" >
               <li role="presentation"><a href="/users/logout" style="color: #420c7a">Logout</a></li>
           </ul>
         </nav>
         <!-- <h3 class="text-muted">Instructor's Name</h3> -->
-
 
 <ul class="nav nav-tabs" position=absolute style="margin-top:60px;margin-left:120px">
  <!--  <li class="active"><a href="#">Home</a></li>
   <li><a href="#" style="color: #420c7a">Menu 1</a></li>
   <li><a href="#" style="color: #420c7a">Menu 2</a></li>
   <li><a href="#" style="color: #420c7a">Menu 3</a></li> -->
-<!--   <div class="row">
-  <img src="http://telesens-academy.com/wp-content/uploads/2016/11/cropped-TA-Logo-Violet-Background.png" width=130 height=130 style="margin-left: -15% ; margin-top: -3%;position:relative;float:left">
-</div> -->
-
 </ul>
-
-
 
       </div>
     </div>
@@ -54,7 +47,7 @@
         </li>
       </ul>
     </nav> -->
-    
+
     <div class="container-fluid">
       <div class="row">
         <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="margin-top: 2%;">
@@ -148,12 +141,55 @@
             </div> -->
           </div>
 
+          <!-- EDIT SCHEDULE BUTTON -->
+
+          <a href="/schedule"><button class="btn btn-lg btn-file" style="margin-top:1%;margin-left:74%;background: #7f00c7;color:white">Edit</button> </a>         
+
           <canvas class="my-4 w-100" id="myChart" width="900" height="50"></canvas>
           <table width="80%" align="" style="margin-top: -2%" border=”2”>
+            <div class="btn-group" id="myList">
+            <!-- <script>
+             function bizzah(){
+              console.log("TABLE")
+              document.write("<table>");
+                for (var x=0; x < 7; x++) {
+                    document.write("<tr>");
+                    for(var y=0; y<6; y++) {
+                        document.write("<td>"items[x][y]"</td>");
+                    }
+                document.write("</tr>");
+                }
+                document.write("</table>");
+              }
+            </script> 
+             -->
+              <a href="/users/getSchedule">REFRESH SCHEDULE</a>
+              <tr> <th>Time</th>
 
+              <th>Monday</th>
+
+              <th>Tuesday</th>
+
+              <th>Wednesday</th>
+
+              <th>Thrusday</th>
+
+              <th>Friday</th>
+
+              <th>Saturday</th>
+
+              </tr>
+              {{# each items}}
+                <tr> 
+                {{# each this}}
+                  <th>{{this}}</th>
+                {{/each}}
+                </tr>
+              {{/each}}
           <div id="head_nav">
-
-          <tr> <th>Time</th>
+            </div>
+          </div>
+<!--           <tr> <th>Time</th>
 
           <th>Monday</th>
 
@@ -173,7 +209,27 @@
 
           <tr>
 
-          <th>08:00 - 10:00</th>
+          <th>08:00 - 09:00</th>
+
+          <td> - </td>
+
+          <td> - </td>
+
+          <td> - </td>
+
+          <td> - </td>
+
+          <td> - </td>
+
+          <td> - </td>
+
+          </div>
+
+          </tr>
+
+          <tr>
+
+          <th>09:00 - 10:00</th>
 
           <td> - </td>
 
@@ -231,7 +287,7 @@
 
           </tr>
 
-          <tr> <th>12:00 - 01:00</td>
+          <tr> <th>12:00 - 13:00</td>
 
           <td> - </th>
 
@@ -251,7 +307,7 @@
 
           <tr>
 
-          <th>01:00 - 02:00</th>
+          <th>13:00 - 14:00</th>
 
           <td>Applied Mathematics</td>
 
@@ -269,7 +325,7 @@
 
           <tr>
 
-          <th>02:00 - 03:00</th>
+          <th>14:00 - 15:00</th>
 
           <td>Applied Mathematics</td>
 
@@ -285,13 +341,9 @@
 
           </div>
 
-          </tr>
+          </tr> -->
 
           </table>
-
-          <!-- EDIT SCHEDULE BUTTON -->
-
-                <a href="http://google.com"><button class="btn btn-lg btn-file" style="margin-top:1%;margin-left:74%;background: #7f00c7;color:white">Edit</button></a>
         </main>
       </div>
     </div>

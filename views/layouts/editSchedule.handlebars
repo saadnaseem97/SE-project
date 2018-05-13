@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TA_Pro</title>
+  <link rel="stylesheet" href="/css/bootstrap.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <!-- <link rel="stylesheet" href="/css/dashboard.css" /> -->
+
+  <style>
+  table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+  }
+  th, td {
+      padding: 5px;
+      text-align: left;
+  }
+  </style>
+
+</head>
+<body>
+  <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right" style="margin-top:5%;margin-right: 10%">
+              <li role="presentation"><a href="/users/logout" style="color:#420c7a">Logout</a></li>
+          </ul>
+        </nav>
+        <!-- <h3 class="text-muted">Instructor's Name</h3> -->
+
+<ul class="nav nav-tabs" style="margin-top:5%;">
+  
+</ul>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="margin-top: 2%;">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                                              <!-- redirect to Template page -->
+                <a class="nav-link active" href="/" style="color:#420c7a">
+                  <span data-feather="home"></span>
+                  HOME <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/profile" style="color:#420c7a">
+                  <span data-feather="file"></span>
+                  PROFILE
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="/courses" style="color:#420c7a">
+                  <span data-feather="layers"></span>
+                  COURSES
+                </a>
+              </li>
+            </ul>
+
+          </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <!-- <h1 class="h2">Welcome Instructor!</h1> -->
+            <h1 class="h2 mb-3 font-weight-normal" style="margin-top: 3%; margin-left: 2%;color:#420c7a"><b>EDIT YOUR SCHEDULE </b></h1>
+<!--             <form class="form-signin" style="width:120 " method="post" action="/users/register"> -->
+ 
+            <div class="btn-toolbar mb-2 mb-md-0">
+              <div class="btn-group mr-2">
+            <h1 class="h3 mb-3 font-weight-normal" style="color:#420c7a; margin-top: 10%; margin-left:9%;">Add Course</h1>
+
+            <form class="form-signin" method="post" action="/users/addInSchedule">
+        <label for="courseName" class="sr-only" >Course Name</label>
+        <input type="courseName" id="courseNname" class="form-control" placeholder="Course Name" style ="margin-top: 10%;margin-left:9%" required autofocus name="courseName">
+        <label for="day" class="sr-only" >Day</label>
+        <input type="day" id="day" class="form-control" placeholder="day" style ="margin-top: 5%;margin-left:9%" required autofocus name="day">
+        <!-- <label for="timeSlot" class="sr-only">Time</label>
+        <input type="text" name="myText" value="Norway" id="timeSlot" class="form-control" placeholder="timeSlot" style ="margin-top: 5%;margin-left:9%" required autofocus name="timeSlot" selectBoxOptions="Canada;Denmark;Finland;Germany;Mexico"> -->
+
+<!--        <script type="text/javascript">
+        createEditableSelect(document.forms[0].myText);
+        </script>
+ -->                                       
+
+        <select id="timeSlot" name="timeSlot" class="form-control" style ="margin-top: 5%;margin-left:9%" required autofocus name="timeSlot">
+          <option value="08:00 - 09:00">08:00 - 09:00</option>
+          <option value="09:00 - 10:00">09:00 - 10:00</option>
+          <option value="10:00 - 11:00">10:00 - 11:00</option>
+          <option value="11:00 - 12:00">11:00 - 12:00</option>
+          <option value="12:00 - 13:00">12:00 - 13:00</option>
+          <option value="13:00 - 14:00">13:00 - 14:00</option>
+          <option value="14:00 - 15:00">14:00 - 15:00</option>
+        </select>
+
+         <!-- <a href="/backToSchedule"> --><button class="btn btn-lg btn-primary " type="submit" style="background: #7f00c7; margin-top: 10%; width:20; margin-left:35%;">Save Changes</button>
+
+          </form> 
+
+
+          </div>
+          <div id="head_nav">
+          
+        </main>
+
+      </div>
+    </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../../../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../../../dist/js/bootstrap.min.js"></script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+
+    <!-- Graphs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    
+  </body>
+</html>
