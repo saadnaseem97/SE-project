@@ -39,6 +39,14 @@ router.get('/profile', ensureAuthenticated, function(req,res){
 		res.render('./layouts/Edit_Profile_Student');
 })
 
+router.get('/schedule', ensureAuthenticated, function(req,res){
+	res.render('./layouts/editSchedule');
+})
+
+
+
+
+
 router.get('/selectCourse/:courseChoice', ensureAuthenticated, function(req,res){
 	var courseName = req.params.courseChoice;
 	db.collection('userstate').findOne({'email': req.user.email}, function(err, doc) {
