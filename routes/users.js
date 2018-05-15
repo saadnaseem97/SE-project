@@ -586,7 +586,7 @@ router.post('/register', function(req, res){
 			          		handleError(res, err.message, "Failed add to file DB.");
 			        	}
 			      	});
-					
+
 
 					User.createUser(newUser, function(err, user){
 						if(err) throw err;
@@ -1384,7 +1384,7 @@ router.get('/logout', function(req, res){
 });
 
 
-+router.get('/getSchedule', function(req, res, next){
+router.get('/getSchedule', function(req, res, next){
 	if (req.user.type == 'Instructor')
 	{
 		console.log("GET?")
