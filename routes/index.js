@@ -105,9 +105,9 @@ router.get('/addAssignment', ensureAuthenticated, function(req,res){
 	res.render('./layouts/AddAssignDetails');
 })
 
-router.get('/schedule', ensureAuthenticated, function(req,res){
-	res.render('./layouts/editSchedule');
-})
+// router.get('/addStudent', ensureAuthenticated, function(req,res){
+// 	res.render('./layouts/AddStudent');
+// })
 
 router.get('/addStudent', ensureAuthenticated, function(req,res){
 	res.render('./layouts/AddStudent');

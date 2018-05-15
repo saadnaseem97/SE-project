@@ -1,0 +1,378 @@
+const socket = io()
+let state = {}
+
+let user_name = ''
+let oponent_name = ''
+let tag = ''
+let my_turn = false
+let click_button = false
+let prevState = ''
+let Message = ''
+
+array = new Array(8).fill(0).map(e => new Array(8).fill(0))
+array[3][3] = '-1'
+array[3][4] = '1'
+array[4][3] = '1'
+array[4][4] = '-1'
+
+
+const setState = updates => {
+	Object.assign(state, updates)
+
+	if (state.curr_state === 'initialize')
+		Root = initialState
+	if (state.curr_state === 'game_disp')
+		Root = game_disp
+	if (state.curr_state === 'wait')
+		Root = wait
+	if (state.curr_state === 'gameOver')
+		Root = gameOver
+
+	ReactDOM.render(React.createElement(Root,state), document.getElementById('root'))
+}
+
+function sendName(ev) {
+	socket.emit('send_name', state.user_name)
+	user_name = state.user_name
+	setState({curr_state: 'wait'})
+}
+
+const gameOver = () =>
+	React.createElement('h1', null, Message)
+
+const initialState = ({user_name}) =>
+	React.createElement('form', {onSubmit: sendName},
+		React.createElement('input' ,{
+			value: user_name , type:'text' ,
+			onChange: ev => setState({user_name: ev.target.value})
+		}),
+		React.createElement('input' , {type: 'submit' , value: 'Send'}))
+
+const wait = () =>
+	React.createElement('div' , null, 'Waiting for the other player')
+
+const move = (id) =>{
+	if (my_turn)
+		socket.emit('after_move', tag, id,user_name)
+}
+
+const showPossibleMove = (id) =>{
+	a = parseInt(id[0])
+	b = parseInt(id[1])
+	prevState = array[a][b]
+	if (validMove(id))
+	{
+		array[a][b] = tag
+		setState({curr_state: 'game_disp'})
+	}
+}
+
+const outPossibleMove = (id) =>{
+	if (click_button !== true)
+	{
+		a = parseInt(id[0])
+		b = parseInt(id[1])
+		array[a][b] = prevState
+		setState({curr_state: 'game_disp'})
+	}
+	click_button = false
+}
+
+socket.on('setOpMove', (my_tag, id, turn,valid, board) => {
+	console.log(valid)
+	if (valid)
+	{
+		click_button = true
+		a = parseInt(id[0])
+		b = parseInt(id[1])
+		array = board
+		my_turn = turn
+		setState({curr_state: 'game_disp'})
+	}
+	
+})
+
+socket.on('game_ended' , win_tag => {
+	console.log(win_tag , ' WON')
+	if (win_tag === tag)
+		Message = `${user_name} Won the Match`
+	else if (win_tag === 0)
+		Message = 'MATCH DRAW'
+	else
+		Message = `${oponent_name} Won the Match`
+	setState({curr_state: 'gameOver'})
+})
+
+
+const board = () =>{
+	let rowNum = 0
+	return React.createElement('div', null,
+		array.map(row =>{
+			let colNum = 0
+			rowNum = rowNum + 1
+			return React.createElement('div', null ,
+				row.map(number =>{
+					colNum = colNum + 1 
+					let x = ' '
+					if (number === '1')
+						x = 'X'
+					else if (number === '-1')
+						x = 'O'
+					// my_color = (valid(id)) ? blue : white
+					return React.createElement('input', {
+						type: 'submit' ,value: x,
+						id: `${rowNum-1}${colNum-1}`, 
+						onClick : ev => move(ev.target.id),
+						onMouseOver: ev => showPossibleMove(ev.target.id),
+						onMouseOut: ev => outPossibleMove(ev.target.id),
+						className: 'gridButton'
+					})
+				})
+			)
+		})
+	)
+}
+
+const validMove = (id) =>
+{
+	let change = false
+	let op_present = false
+	a = parseInt(id[0])
+	b = parseInt(id[1])
+	if (array[a][b] !==0)
+		return false
+	let index = -1
+	if (a != 7)
+	{
+		for(i = a+1; i< 8; i++)
+		{
+			if (array[i][b] === tag)
+			{
+				index = i
+				break
+			}
+			else if (array[i][b] === 0)
+			{
+				index = -2
+				break
+			}
+			else
+				op_present = true
+		}
+	}
+	if (index > -1 && op_present === true)
+		change = true
+
+	index = -1
+	op_present = false
+	if (a != 0)
+	{
+		for(i = a-1; i >= 0; i--)
+		{
+			if (array[i][b] === tag)
+			{
+				index = i
+				break
+			}
+			else if (array[i][b] === 0)
+			{
+				index = -2
+				break
+			}
+			else
+				op_present = true
+		}
+	}
+
+	if (index > -1 && op_present === true)
+		change = true
+
+	index = -1
+	op_present = false
+	if (b != 7)
+	{
+		for(i = b+1; i< 8; i++)
+		{
+			if (array[a][i] === tag)
+			{
+				index = i
+				break
+			}
+			else if (array[a][i] === 0)
+			{
+				index = -2
+				break
+			}
+			else
+				op_present = true
+		}
+	}
+	if (index > -1 && op_present === true)
+		change = true
+
+	index = -1
+	op_present = false
+	if (b != 0)
+	{
+		for(i = b-1; i >= 0; i--)
+		{
+			if (array[a][i] === tag)
+			{
+				index = i
+				break
+			}
+			else if (array[a][i] === 0)
+			{
+				index = -2
+				break
+			}
+			else
+				op_present = true
+		}
+	}
+	if (index > -1 && op_present === true)
+		change = true
+
+	index = 0
+	op_present = false
+	while(1)
+	{
+		a++
+		b++
+		if (a > 7 || b > 7)
+		{
+			index = -2
+			break
+		}
+		else if (array[a][b] === tag)
+			break
+		else if (array[a][b] === 0)
+		{
+			index = -2
+			break
+		}
+		else
+			op_present = true
+
+		index++
+		
+	}
+	a = parseInt(id[0])
+	b = parseInt(id[1])
+	if (index > -1 && op_present === true)
+		change = true
+
+	index = 0
+	op_present = false
+	while(1)
+	{
+		a++
+		b--
+		if (a > 7 || b < 0)
+		{
+			index = -2
+			break
+		}
+		else if (array[a][b] === 0)
+		{
+			index = -2
+			break
+		}
+		else if (array[a][b] === tag)
+			break
+		else
+			op_present = true
+		index++
+
+	}
+	a = parseInt(id[0])
+	b = parseInt(id[1])
+	if (index > -1 && op_present === true)
+		change = true
+
+	index = 0
+	op_present = false
+	while(1)
+	{
+		a--
+		b++
+		if (a < 0 || b > 7)
+		{
+			index = -2
+			break
+		}
+		else if (array[a][b] === 0)
+		{
+			index = -2
+			break
+		}
+		else if (array[a][b] === tag)
+			break
+		else
+			op_present = true
+		index++
+	}
+	a = parseInt(id[0])
+	b = parseInt(id[1])
+	if (index > -1 && op_present === true)
+		change = true
+
+
+	index = 0
+	op_present = false
+	while(1)
+	{
+		a--
+		b--
+		if (a < 0 || b < 0)
+		{
+			index = -2
+			break
+		}
+		else if (array[a][b] === 0)
+		{
+			index = -2
+			break
+		}
+		else if (array[a][b] === tag)
+			break
+		else
+			op_present = true
+		index++
+	}
+	a = parseInt(id[0])
+	b = parseInt(id[1])
+	if (index > -1 && op_present === true)
+		change = true
+
+	if (change === false)
+		return false
+	else
+		return true
+}
+
+
+const game_disp = () =>{
+	if (my_turn === true)
+		to_disp = 'Take your Turn'
+	else
+		to_disp = 'Wait for your turn'
+	return React.createElement('div' , null,
+		React.createElement('h1' , null, `${user_name} VS ${oponent_name}`),
+		React.createElement('div', null, to_disp),
+		React.createElement(board)
+		)
+}
+
+socket.on('wait', data => {
+	console.log(data)
+	setState({curr_state: 'initialize'})
+})
+
+socket.on('Start_match', (my_tag , name,turn)  => {
+	tag = my_tag
+	console.log(name)
+	my_turn = turn
+	oponent_name = name
+	setState({curr_state: 'game_disp'})
+})
